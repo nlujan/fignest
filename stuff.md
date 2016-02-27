@@ -53,19 +53,32 @@ Places blah. places belong to an event. place is restaurant
   "event": (String) Id of event that generated this place,
   "name": (String) Name of place,
   "rating": (Number) Yelp rating. One of [1, 1.5, ... 5],
-  "price": (Nu,ber) One od [0, 1, 2, 3] where 2 corresponds to exactly $$$,
+  "price": (Number) One od [0, 1, 2, 3] where 2 corresponds to exactly $$$,
   "links": {
-  }
+    "reservation": (String) Reservation URL (SeatMe),
+    "delivery": (String) Delivery URL (Eat24),
+    "web": (String) Yelp web URL,
+    "mobile": (String) Yelp mobile URL,
+  },
+  "images": (Array) Image links (String) todo
 }
 ```
 
+###### Endpoints
 ```js
 GET /events/:eventId/places
 
-response:
-[Place Object, ...]
+response: (Array) Place Objects
 ```
-See: [`Place`]()
+
+```js
+GET /events/:eventId/solution
+
+response: Place Object
+```
+
+###### See
+[`Place`]()
 ___
 
 ```js
@@ -80,11 +93,3 @@ response:
 See: [`Action`]()
 ___
 
-```js
-GET /events/:eventId/solution
-
-response:
-Place Object
-```
-See: [`Place`]()
-___

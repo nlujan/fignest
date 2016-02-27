@@ -1,131 +1,95 @@
-`GET` `/users/:userId/invitations`
+### Events
 
-* `response`:
+An event is a fig. It is created by a single user who is able to invite others. Users perform actions on an event, resulting in solution.
+###### Representation
+```js
+{
+  "id": (String) Id of event,
+  "name": (String) Name of event,
+  "location": {
+    "type": (String) Type of location data. Either "address" or "coord",
+    "address": (String) Address of locaton, if type is "address",
+    "lat": (Number) Latitide of location, if type is "coord",
+    "long": (Number) Longitude of location, if type is "coord",
+    "radius": (Number, optional) Radius of requested places in miles. Defaults to todo
+  },
+  "users": (Array) ids (String) of users invited to event. The id of the event creator should come first in the array,
+  "search" (String, optional) Additional search terms e.g. sushi, brunch,
+  "price": (Number, optional) One of [0, 1, 2, 3] where 2 corresponds to $$$ or cheaper. Note the difference between price representation on Event Objects and Place Objects. Defaults to 3,
+  "isOpen": (Boolean, optional) "Open Now" status. Defaults to false,
+  "isOver": (Boolean, optional) Whether the event has happened. Defaults to false,
+  "limit": (Number, optional) Number of places considered for the solution to this event. Defaults to 5
+}
+```
 
-| Name | Description                  | Type         |
-|------|------------------------------|--------------|
-|      | **Array** of user's invitations | `Event` |
+###### Endpoints
+```js
+GET /users/:userId/invitations
+
+response: (Array) Event Objects
+```
+
+```js
+POST /events
+
+request: Event Object
+
+response: Event Object
+```
+
+###### See
+[`Event`]()
 ___
 
-`POST` `/events`
+### Places
 
-* `params`:
+Places blah. places belong to an event. place is restaurant
 
-| Name        | Description                                                                                    | Type      |
-|-------------|------------------------------------------------------------------------------------------------|-----------|
-| `title`     | Title of event                                                                                 | `String`  |
-| `location`  | Desired location                                                                               | `Object`  |
-| __`type`    | Type of location data. Either `"address"` or `"coord"`.                                        | `String`  |
-| __`address` | Address of location, if  `type` is `"address"`                                                 | `String`  |
-| __`lat`     | Latitude of location, if `type` is `"coord"`                                                   | `Number`  |
-| __`long`    | Longitude of location, if `type` is `"coord"`                                                  | `Number`  |
-| __`radius`  | *optional* Radius of requested places in miles. Defaults to todo.                              | `Number`  |
-| `friends`   | **Array** of friends to invite                                                                     | todo      |
-| `creator`   | `id` of creator                                                                                | `String`  |
-| `search`    | *optional* Additional search terms e.g. sushi, brunch                                          | `String`  |
-| `price`     | *optional* One of `[0, 1, 2, 3]` where `2` corresponds to `"$$$"` or cheaper. Defaults to `3`. | `Number`  |
-| `open`      | *optional* Whether the solution needs to be open now. Defaults to `false`.                     | `Boolean` |
-| `limit`     | *optional* Number of places to consider for the solution to this event. Defaults to `5`.       | `Number`  |
+###### Representation
+```js
+{
+  "id": (String) Id of place,
+  "yelpId": (String) Yelp id of place,
+  "event": (String) Id of event that generated this place,
+  "name": (String) Name of place,
+  "rating": (Number) Yelp rating. One of [1, 1.5, ... 5],
+  "price": (Number) One od [0, 1, 2, 3] where 2 corresponds to exactly $$$,
+  "links": {
+    "reservation": (String) Reservation URL (SeatMe),
+    "delivery": (String) Delivery URL (Eat24),
+    "web": (String) Yelp web URL,
+    "mobile": (String) Yelp mobile URL,
+  },
+  "images": (Array) Image links (String) todo
+}
+```
 
-* `response`:
+###### Endpoints
+```js
+GET /events/:eventId/places
 
-| Name | Description         | Type    |
-|------|---------------------|---------|
-|      | Newly created event | `Event` |
+response: (Array) Place Objects
+```
+
+```js
+GET /events/:eventId/solution
+
+response: Place Object
+```
+
+###### See
+[`Place`]()
 ___
 
-`GET` `/events/:eventId/places`
+```js
+POST /events/:eventId/actions
 
-* `response`:
+request:
+[Action Object, ...]
 
-| Name | Description         | Type    |
-|------|---------------------|---------|
-|      | **Array** of places for event | `Place` todo |
+response:
+[Action Object, ...]
+```
+See: [`Action`]()
 ___
 
-`POST` `/events/:eventId/actions`
-
-* `params`:
-
-| Name | Description         | Type    |
-|------|---------------------|---------|
-|      | **Array** of user actions | `Action` todo |
-
-* `response`:
-
-| Name | Description         | Type    |
-|------|---------------------|---------|
-|      | **Array** of user actions | `Action` todo |
-___
-
-`GET` `/events/:eventId/solution`
-
-* `response`:
-
-| Name | Description         | Type    |
-|------|---------------------|---------|
-|      | Solution for event based on actions | `Place` todo |
-___
-
-`Event`
-
-| Name        | Description                                                                                    | Type      |
-|-------------|------------------------------------------------------------------------------------------------|-----------|
-| `id`        | `id` of event                                                                                  | `String`  |
-| `title`     | Title of event                                                                                 | `String`  |
-| `location`  | Location input for event creation                                                              | `Object`  |
-| __`type`    | Type of location data. Either `"address"` or `"coord"`.                                        | `String`  |
-| __`address` | Address of location, if  `type` is `"address"`                                                 | `String`  |
-| __`lat`     | Latitude of location, if `type` is `"coord"`                                                   | `Number`  |
-| __`long`    | Longitude of location, if `type` is `"coord"`                                                  | `Number`  |
-| __`radius`  | *optional* Radius of requested places in miles. Defaults to todo.                              | `Number`  |
-| `friends`   | **Array** of invited friends                                                                       | `Person`  |
-| `creatorId`   | `id` of creator                                                                                | `String`  |
-| `search`    | *optional* Additional search terms e.g. sushi, brunch                                          | `String`  |
-| `price`     | *optional* One of `[0, 1, 2, 3]` where `2` corresponds to `"$$$"` *or cheaper* (note the difference in the price value between an `Event` and a `Place`. Defaults to `3`. | `Number`  |
-| `isOpen`      | *optional* "Open now" status. Defaults to `false`.                                             | `Boolean` |
-| `isOver`      | *optional* Whether the event has happened. Defaults to `false`.                                             | `Boolean` |
-| `limit`     | *optional* Number of places considered for the solution to this event. Defaults to `5`.        | `Number`  |
-___
-
-Note that you can omit `id` for request params when creating a resource. I.e omit in param but not in url
-optional refers to value when inputing param. WIll always be returned from API. If an optional value does not have a default, it will be `null`
-explain underscores
-
-`Person`
-todo may be able to sub just id
-
-`Place`
-todo
-
-| Name            | Description                                                      | Type     |
-|-----------------|------------------------------------------------------------------|----------|
-| `id`            | `id` of place                                                    | `String` |
-| `yelpId`        | Yelp `id` of place                                               | `String` |
-| `eventId`       | `id` of event that generated this place, if such an event exists | `String` |
-| `name`          | Name                                                             | `String` |
-| `rating`        | One of `[1, 1.5, ... 5]`                                         | `Number` |
-| `price`         | One of `[0, 1, 2, 3]` where `2` corresponds to `"$$$"`           | `Number` |
-| `links`         | todo (either web URL, mobile URL, deeplink, or all of the above) | `Object` |
-| __`reservation` | Reservation URL to SeatMe                                        | `String` |
-| __`delivery`    | Delivery URL to Eat24                                            | `String` |
-| __`web`         | Web URL                                                          | `String` |
-| __`mobile`      | Mobile URL                                                       | `String` |
-| `images`        | **Array** of image links (probably, todo, todo amount)               | `String` |
-
-
-`Action`
-
-An action is for a specific user across the whole event
-
-| Name           | Description                                                                                   | Type     |
-|----------------|-----------------------------------------------------------------------------------------------|----------|
-| `userId`       | `id` of user performing action                                                                | `String` |
-| `selections`   | **Array** of selection information. Should include an item for every image shown to the user. | `Object` |
-| __`image`      | Image URL                                                                                     | `String` |
-| __`yelpId`     | Yelp `id` of place that image belongs to                                                      | `String` |
-| __`isSelected` |                                                                                               |          |
-|                |                                                                                               |          |
-|                |                                                                                               |          |
-|                |                                                                                               |          |
-|                |                                                                                               |          |

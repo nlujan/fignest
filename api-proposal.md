@@ -19,7 +19,7 @@ An event is a fig. It is created by a single user who is able to invite others. 
   },
   "users": (Array) ids (String) of users invited to event. The id of the event creator should come first in the array,
   "search" (String, optional) Additional search terms e.g. sushi, brunch,
-  "price": (Number, optional) One of [0, 1, 2, 3] where 2 corresponds to $$$ or cheaper. Note the difference between price representation on Event Objects and Place Objects. Defaults to 3,
+  "price": (Number, optional) One of [0, 1, 2, 3] where 2 corresponds to $$$ or cheaper. Note the difference between price representation on <Event Object>s and <Place Object>s. Defaults to 3,
   "isOpen": (Boolean, optional) "Open Now" status. Defaults to false,
   "isOver": (Boolean, optional) Whether the event has happened. Defaults to false,
   "limit": (Number, optional) Number of places considered for the solution to this event. Defaults to 5
@@ -30,21 +30,21 @@ An event is a fig. It is created by a single user who is able to invite others. 
 ```js
 GET /users/:userId/invitations
 
-response: (Array) Event Objects
+response: (Array) <Event Object>s
 ```
 
 ```js
 GET /events/:eventId
 
-response: Event Oject
+response: <Event Object>
 ```
 
 ```js
 POST /events
 
-request: Event Object
+request: <Event Object>
 
-response: Event Object
+response: <Event Object>
 ```
 ___
 
@@ -60,7 +60,7 @@ A place is a restaurant. Several (default 5) places belong to a single event.
   "event": (String) Id of event that generated this place,
   "name": (String) Name of place,
   "rating": (Number) Yelp rating. One of [1, 1.5, ... 5],
-  "price": (Number) One od [0, 1, 2, 3] where 2 corresponds to exactly $$$,
+  "price": (Number) One of [0, 1, 2, 3] where 2 corresponds to exactly $$$,
   "links": {
     "reservation": (String) Reservation URL (SeatMe),
     "delivery": (String) Delivery URL (Eat24),
@@ -75,13 +75,13 @@ A place is a restaurant. Several (default 5) places belong to a single event.
 ```js
 GET /events/:eventId/places
 
-response: (Array) Place Objects
+response: (Array) <Place Object>s
 ```
 
 ```js
 GET /events/:eventId/solution
 
-response: Place Object
+response: <Place Object>
 ```
 ___
 
@@ -111,14 +111,14 @@ imageItem: {
 ```js
 POST /events/:eventId/actions
 
-request: (Array) Action Objects
+request: (Array) <Action Object>s
 
-response: (Array) Action Objects
+response: (Array) <Action Object>s
 ```
 ___
 
 ### Notes
-* For simplcity, one representaion is used for both `GET` and `POST` requests. However, you can omit `id` when creating a new resource (since it won't exist yet). The response to the creation will be the same resource, with the newly created `id` included.
+* For simplcity, one representation is used for both `GET` and `POST` requests. However, you can omit `id` when creating a new resource (since it won't exist yet). The response to the creation will be the same resource, with the newly created `id` included.
 * Likewise, an optional parameter may be omitted when creating resources. They will always be returned when reading a resource, with a value of `null` if it doesn't exist (and has no default value).
 * Actions should be submitted only once for an event. Once submitted, the event will be marked as completed.
 * If a user quits an event midway (or never starts), an action should not be submitted for the user. I.e. they should not affect the solution to the event.

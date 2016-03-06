@@ -19,7 +19,6 @@ An event is a fig. It is created by a single user who is able to invite others. 
   },
   "users": (Array) ids (String) of users invited to event. The id of the event creator should come first in the array,
   "search" (String, optional) Additional search terms e.g. sushi, brunch,
-  "price": (Number, optional) One of [0, 1, 2, 3] where 2 corresponds to $$$ or cheaper. Note the difference between price representation on <Event Object>s and <Place Object>s. Defaults to 3,
   "isOpen": (Boolean, optional) "Open Now" status. Defaults to false,
   "isOver": (Boolean, optional) Whether the event has happened. Defaults to false,
   "limit": (Number, optional) Number of places considered for the solution to this event. Defaults to 5
@@ -60,14 +59,13 @@ A place is a restaurant. Several (default 5) places belong to a single event.
   "event": (String) Id of event that generated this place,
   "name": (String) Name of place,
   "rating": (Number) Yelp rating. One of [1, 1.5, ... 5],
-  "price": (Number) One of [0, 1, 2, 3] where 2 corresponds to exactly $$$,
   "links": {
     "reservation": (String) Reservation URL (SeatMe),
     "delivery": (String) Delivery URL (Eat24),
     "web": (String) Yelp web URL,
     "mobile": (String) Yelp mobile URL,
   },
-  "images": (Array) Image links (String)     
+  "images": (Array) 30 Image links (String)
 }
 ```
 

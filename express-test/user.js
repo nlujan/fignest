@@ -6,6 +6,6 @@ function subtract(a, b) {
 	return a - b;
 }
 
-console.log('in user');
+// console.log('in user');
 
 // export { add, subtract }

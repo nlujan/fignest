@@ -6,6 +6,8 @@ var express = require('express');
 var app = express();
 var user = require('./user');
 var request = require('request');
+var cheerio = require('cheerio');
+var _ = require('underscore');
 
 // mongo
 var MongoClient = require('mongodb').MongoClient;
@@ -89,7 +91,9 @@ app.get('/place/:place', (req, res) =>{
 });
 
 app.get('/photos/:id', (req, res) => {
-  YelpAPI.getImages('black-iron-burger-new-york', res);
+  YelpAPI.getImages('black-iron-burger-new-york').then((val) => {
+    res.send(val);
+  });
 });
 
 
@@ -196,16 +200,39 @@ class Action {
 }
 
 // figure out how to put this in the class/module
-const imageUrlPrefix = 'http://www.yelp.com/biz_photos/'
+const imageUrlPrefix = 'http://www.yelp.com/biz_photos/';
+const foodTab = 'http://www.yelp.com/biz_photos/';
+const start = 'http://www.yelp.com/biz_photos/';
+const imgSelector = '[data-photo-id] .photo-box-img';
 
 // module?
 class YelpAPI {
-  
 
   static getImages(id, callback) {
-    var bodyOut;
-    request(`${imageUrlPrefix}/${id}`, (err, res, body) => {
-      callback.send(body);
+    return new Promise((resolve, reject) => {
+      request(`${imageUrlPrefix}/${id}`, (err, res, body) => {
+        // err ? reject(err) : resolve(body);
+        if (err) {
+          reject(err);
+        }
+        resolve(HtmlParser.stringFromHtml(body, imgSelector));
+
+      });
     });
   }
 }
+
+
+
+class HtmlParser {
+  static stringFromHtml(html, selector) {
+    let $ = cheerio.load(html);
+    // return $(selector).attr('src');
+    return $(selector);
+  }
+}
+
+YelpAPI.getImages('black-iron-burger-new-york').then((val) => {
+  console.log(typeof val);
+  console.log(_.map(val, (element) => element.attr('src')));
+});

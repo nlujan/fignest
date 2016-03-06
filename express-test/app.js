@@ -7,7 +7,7 @@ var app = express();
 var user = require('./user');
 var request = require('request');
 var cheerio = require('cheerio');
-var _ = require('underscore');
+// var _ = require('underscore');
 
 // mongo
 var MongoClient = require('mongodb').MongoClient;
@@ -48,9 +48,11 @@ var insertDocument = function(db, callback) {
    }, function(err, result) {
     assert.equal(err, null);
     console.log("Inserted a document into the restaurants collection.");
-    callback();
+    callback && callback();
   });
 };
+
+insertDocument(db);
 
 var findRestaurants = function(db, callback, borough) {
    var cursor = db.collection('restaurants').find( { "borough": "Manhattan" } );
@@ -160,8 +162,18 @@ class Event {
 
   }
 
-  static fromJson() {
+  static createFromJson(data) {
+    let name = data.name;
+    let location = data.location;
+    let users = data.users;
+    let search = data.search;
+    let isOpen = data.isOpen == null ? false : data.isOpen;
+    let isOver = data.isOver == null ? false : data.isOver;
+    let limit = data.limit || 5;
+    let event = new this(name, location, users, search, isOpen, isOver, limit);
+    event.save().then((val) => {
 
+    })
   }
 
   static fromId() {
@@ -200,39 +212,53 @@ class Action {
 }
 
 // figure out how to put this in the class/module
-const imageUrlPrefix = 'http://www.yelp.com/biz_photos/';
-const foodTab = 'http://www.yelp.com/biz_photos/';
-const start = 'http://www.yelp.com/biz_photos/';
+const yelpUrl = {
+  base: 'https://www.yelp.com',
+  photos: 'biz_photos',
+  food: '?tab=food'
+}
+const start = '';
 const imgSelector = '[data-photo-id] .photo-box-img';
+const attribute = 'src';
 
 // module?
-class YelpAPI {
-
-  static getImages(id, callback) {
+class YelpApi {
+  static getImages(id) {
     return new Promise((resolve, reject) => {
-      request(`${imageUrlPrefix}/${id}`, (err, res, body) => {
-        // err ? reject(err) : resolve(body);
+      let requestUrl = `${yelpUrl.base}/${yelpUrl.photos}/${id}${yelpUrl.food}`
+      request(requestUrl, (err, httpMsg, body) => {
         if (err) {
           reject(err);
         }
-        resolve(HtmlParser.stringFromHtml(body, imgSelector));
-
+        let imageUrls = HtmlParser.attrFromSelector(body, imgSelector, attribute);
+        imageUrls = imageUrls.map((url) => HtmlParser.addProtocol(url));
+        resolve(imageUrls);
       });
     });
   }
 }
 
 
+const defaultProtocol = 'https';
 
 class HtmlParser {
-  static stringFromHtml(html, selector) {
+  static attrFromSelector(html, selector, attribute) {
     let $ = cheerio.load(html);
-    // return $(selector).attr('src');
-    return $(selector);
+    let res = [];
+    $(selector).each((i, el) => {
+      res.push($(el).attr(attribute));
+    });
+    return res;
+  }
+
+  static addProtocol(str, protocol) {
+    protocol = protocol || defaultProtocol;
+    return `${protocol}:${str}`;
   }
 }
 
-YelpAPI.getImages('black-iron-burger-new-york').then((val) => {
-  console.log(typeof val);
-  console.log(_.map(val, (element) => element.attr('src')));
-});
+YelpApi.getImages('black-iron-burger-new-york-3').then((val) => {
+  console.log(val);
+}).catch((err) => {
+  console.log(err);
+})

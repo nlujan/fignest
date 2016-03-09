@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "AB3A22E48FF357EBFDABA8690D010D8ECFA4ECFD",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "AB3A22E48FF357EBFDABA8690D010D8ECFA4ECFD" : 0,
+    "49C3CF51B9A133623DC3CD4603C9751B0363578A" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "DF70A5B9-BDF5-4FA9-B24E-D66289FB7F7C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "AB3A22E48FF357EBFDABA8690D010D8ECFA4ECFD" : "fignest\/",
+    "49C3CF51B9A133623DC3CD4603C9751B0363578A" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "fignest",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "iOS\/fignest.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/nlujan\/HElib-Python-Wrapper.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "49C3CF51B9A133623DC3CD4603C9751B0363578A"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/nlujan\/fignest.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AB3A22E48FF357EBFDABA8690D010D8ECFA4ECFD"
+    }
+  ]
+}

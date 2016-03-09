@@ -1,0 +1,574 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2B5CAFED1C8D2DCB00FE7B6D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B5CAFEC1C8D2DCB00FE7B6D /* CoreLocation.framework */; };
+		2BAAE81C1C8A9CAE0004D067 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE81B1C8A9CAE0004D067 /* AppDelegate.swift */; };
+		2BAAE8211C8A9CAE0004D067 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BAAE81F1C8A9CAE0004D067 /* Main.storyboard */; };
+		2BAAE8241C8A9CAE0004D067 /* fignest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8221C8A9CAE0004D067 /* fignest.xcdatamodeld */; };
+		2BAAE8261C8A9CAE0004D067 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BAAE8251C8A9CAE0004D067 /* Assets.xcassets */; };
+		2BAAE8291C8A9CAE0004D067 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BAAE8271C8A9CAE0004D067 /* LaunchScreen.storyboard */; };
+		2BAAE8341C8A9CAE0004D067 /* fignestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8331C8A9CAE0004D067 /* fignestTests.swift */; };
+		2BAAE83F1C8A9CAE0004D067 /* fignestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE83E1C8A9CAE0004D067 /* fignestUITests.swift */; };
+		2BAAE84D1C8A9D8A0004D067 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE84C1C8A9D8A0004D067 /* LoginViewController.swift */; };
+		2BAAE84E1C8A9D8A0004D067 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE84C1C8A9D8A0004D067 /* LoginViewController.swift */; };
+		2BAAE84F1C8A9D8A0004D067 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE84C1C8A9D8A0004D067 /* LoginViewController.swift */; };
+		2BAAE8511C8AA5810004D067 /* FigsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8501C8AA5810004D067 /* FigsTableViewController.swift */; };
+		2BAAE8521C8AA5810004D067 /* FigsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8501C8AA5810004D067 /* FigsTableViewController.swift */; };
+		2BAAE8531C8AA5810004D067 /* FigsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8501C8AA5810004D067 /* FigsTableViewController.swift */; };
+		2BAAE8551C8AA7100004D067 /* FigsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */; };
+		2BAAE8561C8AA7100004D067 /* FigsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */; };
+		2BAAE8571C8AA7100004D067 /* FigsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */; };
+		2BAAE8591C8B9FE50004D067 /* newFigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */; };
+		2BAAE85A1C8B9FE50004D067 /* newFigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */; };
+		2BAAE85B1C8B9FE50004D067 /* newFigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */; };
+		2BAAE8651C8BBB0F0004D067 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BAAE8621C8BBB0F0004D067 /* FBSDKCoreKit.framework */; };
+		2BAAE8661C8BBB0F0004D067 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BAAE8631C8BBB0F0004D067 /* FBSDKLoginKit.framework */; };
+		2BAAE8671C8BBB0F0004D067 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BAAE8641C8BBB0F0004D067 /* FBSDKShareKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2BAAE8301C8A9CAE0004D067 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BAAE8101C8A9CAE0004D067 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BAAE8171C8A9CAE0004D067;
+			remoteInfo = fignest;
+		};
+		2BAAE83B1C8A9CAE0004D067 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BAAE8101C8A9CAE0004D067 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BAAE8171C8A9CAE0004D067;
+			remoteInfo = fignest;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2B5CAFEC1C8D2DCB00FE7B6D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		2BAAE8181C8A9CAE0004D067 /* fignest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fignest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BAAE81B1C8A9CAE0004D067 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2BAAE8201C8A9CAE0004D067 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2BAAE8231C8A9CAE0004D067 /* fignest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = fignest.xcdatamodel; sourceTree = "<group>"; };
+		2BAAE8251C8A9CAE0004D067 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2BAAE8281C8A9CAE0004D067 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2BAAE82A1C8A9CAE0004D067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BAAE82F1C8A9CAE0004D067 /* fignestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fignestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BAAE8331C8A9CAE0004D067 /* fignestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fignestTests.swift; sourceTree = "<group>"; };
+		2BAAE8351C8A9CAE0004D067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BAAE83A1C8A9CAE0004D067 /* fignestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fignestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BAAE83E1C8A9CAE0004D067 /* fignestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fignestUITests.swift; sourceTree = "<group>"; };
+		2BAAE8401C8A9CAE0004D067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BAAE84C1C8A9D8A0004D067 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		2BAAE8501C8AA5810004D067 /* FigsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FigsTableViewController.swift; sourceTree = "<group>"; };
+		2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FigsTableViewCell.swift; path = ../FigsTableViewCell.swift; sourceTree = "<group>"; };
+		2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = newFigViewController.swift; sourceTree = "<group>"; };
+		2BAAE8621C8BBB0F0004D067 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../FacebookSDKs-iOS-20160210/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
+		2BAAE8631C8BBB0F0004D067 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../FacebookSDKs-iOS-20160210/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
+		2BAAE8641C8BBB0F0004D067 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "../FacebookSDKs-iOS-20160210/FBSDKShareKit.framework"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2BAAE8151C8A9CAE0004D067 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B5CAFED1C8D2DCB00FE7B6D /* CoreLocation.framework in Frameworks */,
+				2BAAE8661C8BBB0F0004D067 /* FBSDKLoginKit.framework in Frameworks */,
+				2BAAE8651C8BBB0F0004D067 /* FBSDKCoreKit.framework in Frameworks */,
+				2BAAE8671C8BBB0F0004D067 /* FBSDKShareKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BAAE82C1C8A9CAE0004D067 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BAAE8371C8A9CAE0004D067 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2BAAE80F1C8A9CAE0004D067 = {
+			isa = PBXGroup;
+			children = (
+				2B5CAFEC1C8D2DCB00FE7B6D /* CoreLocation.framework */,
+				2BAAE8621C8BBB0F0004D067 /* FBSDKCoreKit.framework */,
+				2BAAE8631C8BBB0F0004D067 /* FBSDKLoginKit.framework */,
+				2BAAE8641C8BBB0F0004D067 /* FBSDKShareKit.framework */,
+				2BAAE81A1C8A9CAE0004D067 /* fignest */,
+				2BAAE8321C8A9CAE0004D067 /* fignestTests */,
+				2BAAE83D1C8A9CAE0004D067 /* fignestUITests */,
+				2BAAE8191C8A9CAE0004D067 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2BAAE8191C8A9CAE0004D067 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2BAAE8181C8A9CAE0004D067 /* fignest.app */,
+				2BAAE82F1C8A9CAE0004D067 /* fignestTests.xctest */,
+				2BAAE83A1C8A9CAE0004D067 /* fignestUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2BAAE81A1C8A9CAE0004D067 /* fignest */ = {
+			isa = PBXGroup;
+			children = (
+				2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */,
+				2BAAE81B1C8A9CAE0004D067 /* AppDelegate.swift */,
+				2BAAE84C1C8A9D8A0004D067 /* LoginViewController.swift */,
+				2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */,
+				2BAAE8501C8AA5810004D067 /* FigsTableViewController.swift */,
+				2BAAE81F1C8A9CAE0004D067 /* Main.storyboard */,
+				2BAAE8251C8A9CAE0004D067 /* Assets.xcassets */,
+				2BAAE8271C8A9CAE0004D067 /* LaunchScreen.storyboard */,
+				2BAAE82A1C8A9CAE0004D067 /* Info.plist */,
+				2BAAE8221C8A9CAE0004D067 /* fignest.xcdatamodeld */,
+			);
+			path = fignest;
+			sourceTree = "<group>";
+		};
+		2BAAE8321C8A9CAE0004D067 /* fignestTests */ = {
+			isa = PBXGroup;
+			children = (
+				2BAAE8331C8A9CAE0004D067 /* fignestTests.swift */,
+				2BAAE8351C8A9CAE0004D067 /* Info.plist */,
+			);
+			path = fignestTests;
+			sourceTree = "<group>";
+		};
+		2BAAE83D1C8A9CAE0004D067 /* fignestUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2BAAE83E1C8A9CAE0004D067 /* fignestUITests.swift */,
+				2BAAE8401C8A9CAE0004D067 /* Info.plist */,
+			);
+			path = fignestUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2BAAE8171C8A9CAE0004D067 /* fignest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BAAE8431C8A9CAE0004D067 /* Build configuration list for PBXNativeTarget "fignest" */;
+			buildPhases = (
+				2BAAE8141C8A9CAE0004D067 /* Sources */,
+				2BAAE8151C8A9CAE0004D067 /* Frameworks */,
+				2BAAE8161C8A9CAE0004D067 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = fignest;
+			productName = fignest;
+			productReference = 2BAAE8181C8A9CAE0004D067 /* fignest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2BAAE82E1C8A9CAE0004D067 /* fignestTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BAAE8461C8A9CAE0004D067 /* Build configuration list for PBXNativeTarget "fignestTests" */;
+			buildPhases = (
+				2BAAE82B1C8A9CAE0004D067 /* Sources */,
+				2BAAE82C1C8A9CAE0004D067 /* Frameworks */,
+				2BAAE82D1C8A9CAE0004D067 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BAAE8311C8A9CAE0004D067 /* PBXTargetDependency */,
+			);
+			name = fignestTests;
+			productName = fignestTests;
+			productReference = 2BAAE82F1C8A9CAE0004D067 /* fignestTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2BAAE8391C8A9CAE0004D067 /* fignestUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BAAE8491C8A9CAE0004D067 /* Build configuration list for PBXNativeTarget "fignestUITests" */;
+			buildPhases = (
+				2BAAE8361C8A9CAE0004D067 /* Sources */,
+				2BAAE8371C8A9CAE0004D067 /* Frameworks */,
+				2BAAE8381C8A9CAE0004D067 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BAAE83C1C8A9CAE0004D067 /* PBXTargetDependency */,
+			);
+			name = fignestUITests;
+			productName = fignestUITests;
+			productReference = 2BAAE83A1C8A9CAE0004D067 /* fignestUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2BAAE8101C8A9CAE0004D067 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = fignest;
+				TargetAttributes = {
+					2BAAE8171C8A9CAE0004D067 = {
+						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = X82HTQTSX4;
+					};
+					2BAAE82E1C8A9CAE0004D067 = {
+						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = X82HTQTSX4;
+						TestTargetID = 2BAAE8171C8A9CAE0004D067;
+					};
+					2BAAE8391C8A9CAE0004D067 = {
+						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = X82HTQTSX4;
+						TestTargetID = 2BAAE8171C8A9CAE0004D067;
+					};
+				};
+			};
+			buildConfigurationList = 2BAAE8131C8A9CAE0004D067 /* Build configuration list for PBXProject "fignest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2BAAE80F1C8A9CAE0004D067;
+			productRefGroup = 2BAAE8191C8A9CAE0004D067 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2BAAE8171C8A9CAE0004D067 /* fignest */,
+				2BAAE82E1C8A9CAE0004D067 /* fignestTests */,
+				2BAAE8391C8A9CAE0004D067 /* fignestUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2BAAE8161C8A9CAE0004D067 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BAAE8291C8A9CAE0004D067 /* LaunchScreen.storyboard in Resources */,
+				2BAAE8261C8A9CAE0004D067 /* Assets.xcassets in Resources */,
+				2BAAE8211C8A9CAE0004D067 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BAAE82D1C8A9CAE0004D067 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BAAE8381C8A9CAE0004D067 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2BAAE8141C8A9CAE0004D067 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BAAE8511C8AA5810004D067 /* FigsTableViewController.swift in Sources */,
+				2BAAE84D1C8A9D8A0004D067 /* LoginViewController.swift in Sources */,
+				2BAAE8241C8A9CAE0004D067 /* fignest.xcdatamodeld in Sources */,
+				2BAAE81C1C8A9CAE0004D067 /* AppDelegate.swift in Sources */,
+				2BAAE8591C8B9FE50004D067 /* newFigViewController.swift in Sources */,
+				2BAAE8551C8AA7100004D067 /* FigsTableViewCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BAAE82B1C8A9CAE0004D067 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BAAE8521C8AA5810004D067 /* FigsTableViewController.swift in Sources */,
+				2BAAE84E1C8A9D8A0004D067 /* LoginViewController.swift in Sources */,
+				2BAAE85A1C8B9FE50004D067 /* newFigViewController.swift in Sources */,
+				2BAAE8561C8AA7100004D067 /* FigsTableViewCell.swift in Sources */,
+				2BAAE8341C8A9CAE0004D067 /* fignestTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BAAE8361C8A9CAE0004D067 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BAAE8531C8AA5810004D067 /* FigsTableViewController.swift in Sources */,
+				2BAAE84F1C8A9D8A0004D067 /* LoginViewController.swift in Sources */,
+				2BAAE85B1C8B9FE50004D067 /* newFigViewController.swift in Sources */,
+				2BAAE8571C8AA7100004D067 /* FigsTableViewCell.swift in Sources */,
+				2BAAE83F1C8A9CAE0004D067 /* fignestUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2BAAE8311C8A9CAE0004D067 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2BAAE8171C8A9CAE0004D067 /* fignest */;
+			targetProxy = 2BAAE8301C8A9CAE0004D067 /* PBXContainerItemProxy */;
+		};
+		2BAAE83C1C8A9CAE0004D067 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2BAAE8171C8A9CAE0004D067 /* fignest */;
+			targetProxy = 2BAAE83B1C8A9CAE0004D067 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2BAAE81F1C8A9CAE0004D067 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2BAAE8201C8A9CAE0004D067 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		2BAAE8271C8A9CAE0004D067 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2BAAE8281C8A9CAE0004D067 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2BAAE8411C8A9CAE0004D067 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2BAAE8421C8A9CAE0004D067 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2BAAE8441C8A9CAE0004D067 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = "/Users/naim/Documents/FacebookSDKs-iOS-20160210";
+				INFOPLIST_FILE = fignest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fignest.fignest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2BAAE8451C8A9CAE0004D067 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = "/Users/naim/Documents/FacebookSDKs-iOS-20160210";
+				INFOPLIST_FILE = fignest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fignest.fignest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		2BAAE8471C8A9CAE0004D067 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = fignestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fignest.fignestTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fignest.app/fignest";
+			};
+			name = Debug;
+		};
+		2BAAE8481C8A9CAE0004D067 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = fignestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fignest.fignestTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fignest.app/fignest";
+			};
+			name = Release;
+		};
+		2BAAE84A1C8A9CAE0004D067 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = fignestUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fignest.fignestUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = fignest;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		2BAAE84B1C8A9CAE0004D067 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = fignestUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fignest.fignestUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = fignest;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2BAAE8131C8A9CAE0004D067 /* Build configuration list for PBXProject "fignest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BAAE8411C8A9CAE0004D067 /* Debug */,
+				2BAAE8421C8A9CAE0004D067 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BAAE8431C8A9CAE0004D067 /* Build configuration list for PBXNativeTarget "fignest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BAAE8441C8A9CAE0004D067 /* Debug */,
+				2BAAE8451C8A9CAE0004D067 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BAAE8461C8A9CAE0004D067 /* Build configuration list for PBXNativeTarget "fignestTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BAAE8471C8A9CAE0004D067 /* Debug */,
+				2BAAE8481C8A9CAE0004D067 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BAAE8491C8A9CAE0004D067 /* Build configuration list for PBXNativeTarget "fignestUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BAAE84A1C8A9CAE0004D067 /* Debug */,
+				2BAAE84B1C8A9CAE0004D067 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2BAAE8221C8A9CAE0004D067 /* fignest.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2BAAE8231C8A9CAE0004D067 /* fignest.xcdatamodel */,
+			);
+			currentVersion = 2BAAE8231C8A9CAE0004D067 /* fignest.xcdatamodel */;
+			path = fignest.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 2BAAE8101C8A9CAE0004D067 /* Project object */;
+}

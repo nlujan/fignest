@@ -1,11 +1,31 @@
-function add(a, b) {
-	return a + b;
+'use strict';
+
+class User {
+	// tentative schema
+	// name
+	// avatar
+	// email
+	// facebookId
+	// friends
+	constructor() {
+
+	}
+
+	asJson() {
+
+	}
+
+	getInvitations() {
+
+	}
+
+	static fromId() {
+
+	}
+
+	static fromJson() {
+
+	}
 }
 
-function subtract(a, b) {
-	return a - b;
-}
-
-// console.log('in user');
-
-// export { add, subtract }
+module.exports = User;

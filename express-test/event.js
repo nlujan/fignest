@@ -3,6 +3,13 @@
 var Mongo = require('./mongo');
 var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
+const search = {
+  category: 'food',
+  limit: 100,
+  // For sort, 0 = best matched, 1 = distance, 2 = highest rated
+  sort: 2,
+  shouldIncludeActionLinks: true
+};
 
 // var sampleEvent = {
 //   "name": "Sample3",
@@ -11,7 +18,8 @@ var ObjectId = require('mongodb').ObjectID;
 //     "address": "1600 Pennsylvania Ave NW, Washington, DC 20500"
 //   },
 //   "users": [],
-//   "search": "sushi"
+//   "search": "sushi",
+//   "places": []
 // }
 
 class Event {
@@ -24,6 +32,7 @@ class Event {
     this.isOpen = params.isOpen;
     this.isOver = params.isOver;
     this.limit = params.limit;
+    this.places = params.places;
 	}
 
 	save() {
@@ -55,7 +64,28 @@ class Event {
   }
 
   getPlaces() {
-    // yelp search
+    // // yelp search
+    // if (this.places) {
+    //   // return this.places.map((place) => Place)
+    // } else {
+    //   generatePlaces();
+    // }
+  }
+
+  getSearchParams() {
+    var result = {};
+    result.term = this.search;
+    result.limit = search.limit;
+    result.sort = search.sort;
+    result.category = search.category;
+    result.radius = this.location.radius;
+    if (this.location.type === 'address') {
+      result.location = this.location.address;
+    } else if (this.location.type === 'coord') {
+      result.ll = `${this.location.lat},${this.location.long}`;
+    }
+    result.actionlinks = search.shouldIncludeActionLinks;
+    return result;
   }
 
   getSolution() {
@@ -81,7 +111,7 @@ class Event {
     params.location = data.location;
     params.location.radius = data.location.radius || 1;
     params.users = data.users;
-    params.search = data.search;
+    params.search = data.search || '';
     params.isOpen = data.isOpen == null ? false : data.isOpen;
     params.isOver = data.isOver == null ? false : data.isOver;
     params.limit = data.limit || 5;

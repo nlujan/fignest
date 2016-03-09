@@ -3,6 +3,8 @@
 var Mongo = require('./mongo');
 Mongo.connect().then((err) => {
   run();
+}).catch((err) => {
+  console.log(err);
 });
 
 function run() {
@@ -34,16 +36,21 @@ function run() {
   app.get('/events/:eventId', (req, res) => {
     let eventAsync = Event.fromId(req.params.eventId)
     eventAsync.then((val) => {
-      res.status(200).json(val.asJson());
+      // res.status(200).json(val.asJson());
+      res.status(200).json(YelpApi.search(val.getSearchParams()));
     });
   });
+
+
+
+
 
   app.get('/find/:borough', (req, res) => {
     findRestaurants(db, ()=>5, null);
   });
 
   app.listen(3010, function() {
-    console.log('listening...');
+    console.log('App server started...');
   });
 
 
@@ -61,6 +68,6 @@ function run() {
     console.log(val);
   }).catch((err) => {
     console.log(err);
-  })
+  });
 }
 

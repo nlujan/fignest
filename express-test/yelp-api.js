@@ -15,6 +15,7 @@ const attribute = 'src';
 class YelpApi {
   static getImages(id) {
     return new Promise((resolve, reject) => {
+      // clearn requests
       let requestUrl = `${yelpUrl.base}/${yelpUrl.photos}/${id}${yelpUrl.food}`
       request(requestUrl, (err, httpMsg, body) => {
         if (err) {
@@ -25,6 +26,12 @@ class YelpApi {
         imageUrls = imageUrls.map((url) => HtmlParser.addProtocol(url));
         resolve(imageUrls);
       });
+    });
+  }
+
+  static search(params) {
+    request('https://api.yelp.com/v2/search', {qs: params}, (err, httpsMsg, body) => {
+      console.log(body);
     });
   }
 }

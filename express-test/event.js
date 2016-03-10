@@ -5,7 +5,7 @@ var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
 const search = {
   category: 'food',
-  limit: 100,
+  limit: 20,
   // For sort, 0 = best matched, 1 = distance, 2 = highest rated
   sort: 2,
   shouldIncludeActionLinks: true
@@ -19,7 +19,7 @@ const search = {
 //   },
 //   "users": [],
 //   "search": "sushi",
-//   "places": []
+//   "places": [yelpIds]
 // }
 
 class Event {

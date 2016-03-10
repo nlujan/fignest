@@ -1,6 +1,7 @@
 'use strict';
 
 var request = require('request');
+var Yelp = require('yelp');
 var HtmlParser = require('./html-parser');
 
 const yelpUrl = {
@@ -11,6 +12,12 @@ const yelpUrl = {
 const start = '';
 const imgSelector = '[data-photo-id] .photo-box-img';
 const attribute = 'src';
+var yelp = new Yelp({
+  consumer_key: '',
+  consumer_secret: '',
+  token: '',
+  token_secret: ''
+});
 
 class YelpApi {
   static getImages(id) {
@@ -30,8 +37,13 @@ class YelpApi {
   }
 
   static search(params) {
-    request('https://api.yelp.com/v2/search', {qs: params}, (err, httpsMsg, body) => {
-      console.log(body);
+    return new Promise((resolve, reject) => {
+      yelp.search(params).then((results) => {
+        // console.log(results);
+        resolve(results.businesses);
+      }).catch((err) => {
+        reject(err);
+      });
     });
   }
 }

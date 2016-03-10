@@ -30,7 +30,7 @@ class FigsTableViewController: UITableViewController {
 //    }
     @IBAction func showHomeOptions(sender: AnyObject) {
         
-        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .ActionSheet)
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         let logoutAction = UIAlertAction(title: "Logout", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in

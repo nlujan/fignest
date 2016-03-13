@@ -66,6 +66,8 @@
 				<true/>
 				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
 				<false/>
+                <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
 			</dict>
 			<key>fbcdn.net</key>
 			<dict>

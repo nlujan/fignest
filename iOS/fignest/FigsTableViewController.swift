@@ -10,11 +10,14 @@ import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
 
-class FigsTableViewController: UITableViewController {
+class FigsTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    var figNames = ["Last Friday Night", "Recovery Brunch", "Birthday"]
+    
+    var userID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
     
     func takeUserToLoginPage() {
         let loginPageController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
-    
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
@@ -22,12 +25,6 @@ class FigsTableViewController: UITableViewController {
     }
     
     
-//    @IBAction func logoutButtonTapped(sender: AnyObject) {
-//        let loginManager = FBSDKLoginManager()
-//        loginManager.logOut()
-//        takeUserToLoginPage();
-//        
-//    }
     @IBAction func showHomeOptions(sender: AnyObject) {
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
@@ -56,12 +53,7 @@ class FigsTableViewController: UITableViewController {
     @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue){
         
     }
-    
-    var numRows = 4
-//    @IBAction func addFigButton(sender: AnyObject) {
-//        numRows++
-//        self.tableView.reloadData()
-//    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +64,7 @@ class FigsTableViewController: UITableViewController {
         
         navigationController!.navigationBar.titleTextAttributes =
             [NSForegroundColorAttributeName: UIColor.whiteColor()]
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -94,7 +86,7 @@ class FigsTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return numRows
+        return figNames.count
     }
 
     
@@ -103,19 +95,34 @@ class FigsTableViewController: UITableViewController {
 
         // Configure the cell...
         
-        cell.figLabel.text = "hello"
+        cell.figLabel.text = figNames[indexPath.row]
 
         return cell
     }
-
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
     }
-    */
+    
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell: UserImageCell = collectionView.dequeueReusableCellWithReuseIdentifier("UserImageCell", forIndexPath: indexPath) as! UserImageCell
+        
+        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(userID)/picture?type=square&height=60&width=60")
+        
+        if let data = NSData(contentsOfURL: facebookProfileUrl!) {
+            cell.userImage.image = UIImage(data: data)
+        }
+        
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print("cell \(indexPath.row) selected")
+    }
+
+
 
     /*
     // Override to support editing the table view.

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B3EA2D71C94D1C500079C1A /* UserImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */; };
+		2B3EA2D81C94D1C500079C1A /* UserImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */; };
+		2B3EA2D91C94D1C500079C1A /* UserImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */; };
 		2B4512CD1C8FB02200F14099 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512CC1C8FB02200F14099 /* GameViewController.swift */; };
 		2B4512CE1C8FB02200F14099 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512CC1C8FB02200F14099 /* GameViewController.swift */; };
 		2B4512CF1C8FB02200F14099 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512CC1C8FB02200F14099 /* GameViewController.swift */; };
@@ -31,6 +34,9 @@
 		2B4512E91C8FF25D00F14099 /* pic6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B4512D91C8FF25D00F14099 /* pic6.jpg */; };
 		2B4512EA1C8FF25D00F14099 /* pic6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B4512D91C8FF25D00F14099 /* pic6.jpg */; };
 		2B4512EB1C8FF25D00F14099 /* pic6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B4512D91C8FF25D00F14099 /* pic6.jpg */; };
+		2B4512F51C92564700F14099 /* PlayerProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512F41C92564700F14099 /* PlayerProgressCell.swift */; };
+		2B4512F61C92564700F14099 /* PlayerProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512F41C92564700F14099 /* PlayerProgressCell.swift */; };
+		2B4512F71C92564700F14099 /* PlayerProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512F41C92564700F14099 /* PlayerProgressCell.swift */; };
 		2B5CAFED1C8D2DCB00FE7B6D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B5CAFEC1C8D2DCB00FE7B6D /* CoreLocation.framework */; };
 		2BAAE81C1C8A9CAE0004D067 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE81B1C8A9CAE0004D067 /* AppDelegate.swift */; };
 		2BAAE8211C8A9CAE0004D067 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BAAE81F1C8A9CAE0004D067 /* Main.storyboard */; };
@@ -74,6 +80,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserImageCell.swift; sourceTree = "<group>"; };
 		2B4512CC1C8FB02200F14099 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		2B4512D01C8FEF3000F14099 /* foodCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = foodCollectionViewCell.swift; sourceTree = "<group>"; };
 		2B4512D41C8FF25D00F14099 /* pic1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = pic1.jpg; path = ../../../../../Downloads/pic1.jpg; sourceTree = "<group>"; };
@@ -82,6 +89,7 @@
 		2B4512D71C8FF25D00F14099 /* pic4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = pic4.jpg; path = ../../../../../Downloads/pic4.jpg; sourceTree = "<group>"; };
 		2B4512D81C8FF25D00F14099 /* pic5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = pic5.jpg; path = ../../../../../Downloads/pic5.jpg; sourceTree = "<group>"; };
 		2B4512D91C8FF25D00F14099 /* pic6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = pic6.jpg; path = ../../../../../Downloads/pic6.jpg; sourceTree = "<group>"; };
+		2B4512F41C92564700F14099 /* PlayerProgressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerProgressCell.swift; sourceTree = "<group>"; };
 		2B5CAFEC1C8D2DCB00FE7B6D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2BAAE8181C8A9CAE0004D067 /* fignest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fignest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BAAE81B1C8A9CAE0004D067 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +142,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B3EA2D31C94BD9000079C1A /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2BAAE8501C8AA5810004D067 /* FigsTableViewController.swift */,
+				2B4512CC1C8FB02200F14099 /* GameViewController.swift */,
+				2BAAE84C1C8A9D8A0004D067 /* LoginViewController.swift */,
+				2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		2B3EA2D41C94BDD900079C1A /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */,
+				2B4512D01C8FEF3000F14099 /* foodCollectionViewCell.swift */,
+				2B4512F41C92564700F14099 /* PlayerProgressCell.swift */,
+				2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */,
+			);
+			name = "Custom Cells";
+			sourceTree = "<group>";
+		};
+		2B3EA2D51C94BE2000079C1A /* Food Pics */ = {
+			isa = PBXGroup;
+			children = (
+				2B4512D41C8FF25D00F14099 /* pic1.jpg */,
+				2B4512D51C8FF25D00F14099 /* pic2.jpg */,
+				2B4512D61C8FF25D00F14099 /* pic3.jpg */,
+				2B4512D71C8FF25D00F14099 /* pic4.jpg */,
+				2B4512D81C8FF25D00F14099 /* pic5.jpg */,
+				2B4512D91C8FF25D00F14099 /* pic6.jpg */,
+			);
+			name = "Food Pics";
+			sourceTree = "<group>";
+		};
 		2BAAE80F1C8A9CAE0004D067 = {
 			isa = PBXGroup;
 			children = (
@@ -161,24 +204,15 @@
 		2BAAE81A1C8A9CAE0004D067 /* fignest */ = {
 			isa = PBXGroup;
 			children = (
+				2B3EA2D41C94BDD900079C1A /* Custom Cells */,
+				2B3EA2D31C94BD9000079C1A /* View Controllers */,
+				2B3EA2D51C94BE2000079C1A /* Food Pics */,
 				2BAAE81B1C8A9CAE0004D067 /* AppDelegate.swift */,
-				2BAAE8501C8AA5810004D067 /* FigsTableViewController.swift */,
-				2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */,
-				2B4512CC1C8FB02200F14099 /* GameViewController.swift */,
-				2B4512D01C8FEF3000F14099 /* foodCollectionViewCell.swift */,
-				2BAAE84C1C8A9D8A0004D067 /* LoginViewController.swift */,
 				2BAAE81F1C8A9CAE0004D067 /* Main.storyboard */,
-				2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */,
 				2BAAE8251C8A9CAE0004D067 /* Assets.xcassets */,
 				2BAAE8271C8A9CAE0004D067 /* LaunchScreen.storyboard */,
 				2BAAE82A1C8A9CAE0004D067 /* Info.plist */,
 				2BAAE8221C8A9CAE0004D067 /* fignest.xcdatamodeld */,
-				2B4512D41C8FF25D00F14099 /* pic1.jpg */,
-				2B4512D51C8FF25D00F14099 /* pic2.jpg */,
-				2B4512D61C8FF25D00F14099 /* pic3.jpg */,
-				2B4512D71C8FF25D00F14099 /* pic4.jpg */,
-				2B4512D81C8FF25D00F14099 /* pic5.jpg */,
-				2B4512D91C8FF25D00F14099 /* pic6.jpg */,
 			);
 			path = fignest;
 			sourceTree = "<group>";
@@ -353,7 +387,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B4512F51C92564700F14099 /* PlayerProgressCell.swift in Sources */,
 				2B4512CD1C8FB02200F14099 /* GameViewController.swift in Sources */,
+				2B3EA2D71C94D1C500079C1A /* UserImageCell.swift in Sources */,
 				2BAAE8511C8AA5810004D067 /* FigsTableViewController.swift in Sources */,
 				2BAAE84D1C8A9D8A0004D067 /* LoginViewController.swift in Sources */,
 				2BAAE8241C8A9CAE0004D067 /* fignest.xcdatamodeld in Sources */,
@@ -373,6 +409,8 @@
 				2BAAE85A1C8B9FE50004D067 /* newFigViewController.swift in Sources */,
 				2BAAE8561C8AA7100004D067 /* FigsTableViewCell.swift in Sources */,
 				2B4512CE1C8FB02200F14099 /* GameViewController.swift in Sources */,
+				2B4512F61C92564700F14099 /* PlayerProgressCell.swift in Sources */,
+				2B3EA2D81C94D1C500079C1A /* UserImageCell.swift in Sources */,
 				2B4512D21C8FEF3000F14099 /* foodCollectionViewCell.swift in Sources */,
 				2BAAE8341C8A9CAE0004D067 /* fignestTests.swift in Sources */,
 			);
@@ -387,6 +425,8 @@
 				2BAAE85B1C8B9FE50004D067 /* newFigViewController.swift in Sources */,
 				2BAAE8571C8AA7100004D067 /* FigsTableViewCell.swift in Sources */,
 				2B4512CF1C8FB02200F14099 /* GameViewController.swift in Sources */,
+				2B4512F71C92564700F14099 /* PlayerProgressCell.swift in Sources */,
+				2B3EA2D91C94D1C500079C1A /* UserImageCell.swift in Sources */,
 				2B4512D31C8FEF3000F14099 /* foodCollectionViewCell.swift in Sources */,
 				2BAAE83F1C8A9CAE0004D067 /* fignestUITests.swift in Sources */,
 			);

@@ -47,12 +47,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         if(FBSDKAccessToken.currentAccessToken() != nil) {
             print("already logged in")
-            
-            //takeUserToHomePage()
-            
-            //performSegueWithIdentifier("FigsTableViewController", sender: self)
-            
-            //takeUserToHomePage()
         }
         else {
             print("not logged in")
@@ -75,8 +69,21 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             //get user access token
             //let token:FBSDKAccessToken = result.token
             
+            let userID = userToken.userID
+            
             print("token = \(userToken.tokenString)")
-            print("User ID = \(userToken.userID)")
+            print("User ID = \(userID)")
+            
+            let prefs = NSUserDefaults.standardUserDefaults()
+            prefs.setValue(userID, forKey: "userFBID")
+            
+            if let city = prefs.stringForKey("userCity"){
+                print("The user has a city defined: " + city)
+            }else{
+                //Nothing stored in NSUserDefaults yet. Set a value.
+                print("what is going on??")
+                prefs.setValue("Berlin", forKey: "userCity")
+            }
             
             takeUserToHomePage();
             

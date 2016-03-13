@@ -13,6 +13,15 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet var locationLabel: UITextField!
     
+    @IBAction func newFigBtnPressed(sender: AnyObject) {
+
+        let gameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as! GameViewController
+        
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        appDelegate.window!.rootViewController = gameViewController
+    }
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {

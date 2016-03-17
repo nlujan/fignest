@@ -63,6 +63,17 @@ function run() {
     })
   });
 
+  app.get('/events/:eventId/solution', (req, res) => {
+    Event.fromId(req.params.eventId).then((event) => {
+      return event.getSolution();
+    }).then((solution) => {
+      res.status(200).json(solution.asJson());
+    }).catch((err) => {
+      console.log(`Error in GET /events/:eventId/solution`, err);
+      res.status(500).json(err);
+    });
+  });
+
   app.listen(3010, function() {
     console.log('App server started...');
   });

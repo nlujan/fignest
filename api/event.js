@@ -112,7 +112,7 @@ class Event {
         }).catch((err) => {
           reject(err);
         });
-      } else {
+      } else { // Event doesn't already have places
         this.generatePlaces().then((places) => {
           resolve(places);
         }).catch((err) => {
@@ -128,7 +128,7 @@ class Event {
   }
 
   hasPlaces() {
-    return this.places && this.places.length;
+    return this.places && (this.places.length > 0);
   }
 
   getSearchParams() {
@@ -148,11 +148,36 @@ class Event {
   }
 
   getSolution() {
-
+    return new Promise((resolve, reject) => {
+      if (this.hasSolution()) {
+        Place.fromId(this.solution).then((solution) => {
+          resolve(solution);
+        }).catch((err) => {
+          reject(err);
+        });
+      } else { // Event doesn't already have solution
+        this.generateSolution().then((solution) => {
+          resolve(solution);
+        }).catch((err) => {
+          reject(err);
+        });
+      }
+    });
   }
 
-  createSolution() {
+  generateSolution() {
+    // get actions - query actions collection
+    // underscore groupby or smth
+    // underscore max
+    // add solution to event
+    // save event
+    // add isSolution to place maybe
+    // save place maybe
+    // resolve place
+  }
 
+  hasSolution() {
+    return !!this.solution;
   }
 
   saveActions(actions) {

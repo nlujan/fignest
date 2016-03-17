@@ -22,7 +22,7 @@ var yelp = new Yelp({
 class YelpApi {
   static getImages(id) {
     return new Promise((resolve, reject) => {
-      // clearn requests
+      // clean requests
       let requestUrl = `${yelpUrl.base}/${yelpUrl.photos}/${id}${yelpUrl.food}`
       request(requestUrl, (err, httpMsg, body) => {
         if (err) {

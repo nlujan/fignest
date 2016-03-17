@@ -1,9 +1,21 @@
 'use strict';
 
+// var sampleEvent = {
+//   "name": "Sample3",
+//   "location": {
+//     "type": "address",
+//     "address": "1600 Pennsylvania Ave NW, Washington, DC 20500"
+//   },
+//   "users": [],
+//   "search": "sushi",
+//   "places": [yelpIds]
+// };
+
 var Mongo = require('./mongo');
 var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
 var Place = require('./place');
+var Action = require('./action');
 var YelpApi = require('./yelp-api');
 var _ = require('underscore');
 
@@ -16,16 +28,6 @@ const search = {
 };
 const placesPerEvent = 5;
 
-// var sampleEvent = {
-//   "name": "Sample3",
-//   "location": {
-//     "type": "address",
-//     "address": "1600 Pennsylvania Ave NW, Washington, DC 20500"
-//   },
-//   "users": [],
-//   "search": "sushi",
-//   "places": [yelpIds]
-// }
 
 class Event {
 	constructor(params) {
@@ -38,6 +40,7 @@ class Event {
     this.isOver = params.isOver;
     this.limit = params.limit;
     this.places = params.places;
+    this.actions = params.actions;
 	}
 
 	save() {
@@ -100,7 +103,8 @@ class Event {
     return new Promise((resolve, reject) => {
       if (this.hasPlaces()) {
         // Just get current places; no need to generate new places.
-        // Use $in query instead of Promise.all
+        // Use $in query instead of Promise.all, or single query of places using
+        // eventId.
         Promise.all(this.places.map((id) => {
           return Place.fromId(id);
         })).then((places) => {
@@ -151,16 +155,36 @@ class Event {
 
   }
 
-  addActions() {
+  saveActions(actions) {
+    // Might be better way to scope _actions here
+    var _actions;
+    actions = actions.map((action) => Action.fromJson(action) );
+    
+    return new Promise((resolve, reject) => {
+      // Bulk save?
+      // Save actions
+      Promise.all(actions.map((action) => action.save())).then((actions) => {
+        _actions = actions;
 
+        // Add actions to event
+        this.addActions(_actions);
+
+        // Save event
+        return this.save();
+      }).then((event) => {
+        resolve(_actions);
+      }).catch((err) => {
+        reject(err);
+      });
+    });
   }
 
-  getActions() {
-
+  addActions(actions) {
+    this.actions = actions.map((action) => action._id );
   }
 
   static fromJson(data) {
-    let params = {};
+    var params = {};
     params._id = data._id || null;
     params.name = data.name;
     params.location = data.location;

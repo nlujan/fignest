@@ -25,7 +25,7 @@ function run() {
 
   // API
   app.post('/events', (req, res) => {
-    let event = Event.fromJson(req.body);
+    var event = Event.fromJson(req.body);
     event.save().then((val) => {
       res.status(200).json(val.asJson());
     }).catch((err) => {
@@ -50,6 +50,17 @@ function run() {
       console.log(`Error in GET /events/:eventId/places`, err);
       res.status(500).json(err);
     });
+  });
+
+  app.post('/events/:eventId/actions', (req, res) => {
+    Event.fromId(req.params.eventId).then((event) => {
+      return event.saveActions(req.body);
+    }).then((actions) => {
+      res.status(200).json(actions.map((action) => action.asJson() ));
+    }).catch((err) => {
+      console.log(`Error in POST /events/:eventId/actions`, err);
+      res.status(500).json(err);
+    })
   });
 
   app.listen(3010, function() {

@@ -3,6 +3,10 @@
 var Mongo = require('./mongo');
 var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
+var Place = require('./place');
+var YelpApi = require('./yelp-api');
+var _ = require('underscore');
+
 const search = {
   category: 'food',
   limit: 20,
@@ -10,6 +14,7 @@ const search = {
   sort: 2,
   shouldIncludeActionLinks: true
 };
+const placesPerEvent = 5;
 
 // var sampleEvent = {
 //   "name": "Sample3",
@@ -60,17 +65,58 @@ class Event {
 
   }
 
-  createPlaces() {
+  generatePlaces() {
+    // Might be better way to scope _places here
+    var _places;
+    return new Promise((resolve, reject) => {
+      YelpApi.search(this.getSearchParams()).then((yelpBusinesses) => {
+        // pick 5 businesses at random
+        yelpBusinesses = _.sample(yelpBusinesses, placesPerEvent);
 
+        var places = yelpBusinesses.map((biz) => Place.fromYelpJson(biz));
+        return Promise.all(places.map((place) => place.getImages()));
+      }).then((places) => {
+        // Save places
+        // Hanlde in Place.getImages() instead?
+        // Bulk save instead?
+        return Promise.all(places.map((place) => place.save() ));
+      }).then((places) => {
+        _places = places;
+
+        // Add places to event
+        this.addPlaces(_places);
+
+        // Save event
+        return this.save();
+      }).then((event) => {
+        resolve(_places);
+      }).catch((err) => {
+        reject(err);
+      });
+    });
   }
 
   getPlaces() {
-    // // yelp search
-    // if (this.places) {
-    //   // return this.places.map((place) => Place)
-    // } else {
-    //   generatePlaces();
-    // }
+    return new Promise((resolve, reject) => {
+      if (this.hasPlaces()) {
+        // Just get current places; no need to generate new places.
+        // Use $in query instead of Promise.all
+        Promise.all(this.places.map((id) => {
+          return Place.fromId(id);
+        })).then((places) => {
+          resolve(places);
+        }).catch((err) => {
+          reject(err);
+        });
+      } else {
+        this.generatePlaces().then((places) => {
+          resolve(places);
+        }).catch((err) => {
+          reject(err);
+        });
+      }
+    });
+    
   }
 
   addPlaces(places) {

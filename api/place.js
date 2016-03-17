@@ -4,6 +4,7 @@ var YelpApi = require('./yelp-api');
 var Mongo = require('./mongo');
 var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
+var _ = require('underscore');
 
 class Place {
   constructor(params) {
@@ -26,7 +27,7 @@ class Place {
     return this;
   }
 
-  // note resolves with place, not images
+  // Note resolves with place, not images (for now)
   getImages() {
   	return new Promise((resolve, reject) => {
   		YelpApi.getImages(this.yelpId).then((imageUrls) => {
@@ -69,6 +70,14 @@ class Place {
   	params.phone = data.phone;
   	params.location = data.location;
   	return new this(params);
+  }
+
+  static fromYelpJson(data, eventId) {
+    
+    // Add eventId to data
+    data = _.extend(data, { eventId: eventId});
+
+    return this.fromJson(data);
   }
 
   static fromId(_id) {

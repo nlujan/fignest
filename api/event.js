@@ -39,9 +39,10 @@ class Event {
     return new Promise((resolve, reject) => {
       db.collection('events').save(this.asDocument(), null, (err, res) => {
         if (err) {
-          console.log(`Error saving event to db`, err);
+          console.log(`Error saving event to db: ${this}`, err);
           reject(err);
         }
+        // resolve(res)?
         resolve(this);
       });
     });
@@ -70,6 +71,14 @@ class Event {
     // } else {
     //   generatePlaces();
     // }
+  }
+
+  addPlaces(places) {
+    this.places = places.map((place) => place._id);
+  }
+
+  hasPlaces() {
+    return this.places && this.places.length;
   }
 
   getSearchParams() {

@@ -21,14 +21,11 @@ function run() {
   var _ = require('underscore');
 
   const placesPerEvent = 5;
+  const eventHasPlacesMsg = 'Event already has places';
 
-  
+
 
   // api
-  app.get('/', (req, res) => {
-    res.send(`Hello World!`);
-    new Car()
-  });
 
   app.post('/events', (req, res) => {
     let event = Event.fromJson(req.body);
@@ -47,14 +44,24 @@ function run() {
     });
   });
 
+  // move most of this logic into Event
   app.get('/events/:eventId/places', (req, res) => {
     // probably better way to do this
     var _event;
+    var _places;
     Event.fromId(req.params.eventId).then((event) => {
       _event = event;
-      return YelpApi.search(_event.getSearchParams());
+      if (_event.hasPlaces()) {
+
+        // Just query for places. Don't generate new places.
+        // Cleaner implementation without throwing error
+        throw new Error(eventHasPlacesMsg);
+        return;
+      } else {
+        return YelpApi.search(_event.getSearchParams());
+      }
+      
     }).then((businesses) => {
-      // res.status(200).json(_event);
       // pick 5 businesses at random
       businesses = _.sample(businesses, placesPerEvent);
 
@@ -62,56 +69,40 @@ function run() {
       var places = businesses.map((business) => {
         // Add eventId to params for new Place
         _.extend(business, { eventId: _event._id });
-        return Place.fromJson(business).asJson();
+        return Place.fromJson(business);
       });
-      // res.json(places);
-      places[0].getImages().then((images)=> res.json(images));
 
+      return Promise.all(places.map((place) => place.getImages()));
+    }).then((places) => {
 
-      // var promiseImages = new Promise.all(places.map((place) => place.getImages()));
       // save places
+      // bulk save instead?
+      return Promise.all(places.map((place) => place.save()));
+    }).then((places) => {
+      _places = places;
+
       // add places to event
+      _event.addPlaces(places);
+
       // save event
-    }).then((images) => {
-      // want places here
-      // res place.asJson each
+      return _event.save();
+    }).then((event) => {
+      res.status(200).json(_places.map((place) => place.asJson()));
     }).catch((err) => {
-      console.log(`Error in GET /events/:eventId/places`, err);
-      res.status(500).json(err);
+      if (err.message === eventHasPlacesMsg) {
+        // use $in query instead
+        Promise.all(_event.places.map((id) => Place.fromId(id))).then((places) => {
+          res.status(200).json(places);
+        });
+      } else {
+        console.log(`Error in GET /events/:eventId/places`, err);
+        res.status(500).json(err);
+      }
     });
-
-    // YelpApi.search(val.getSearchParams()).then((places) => {
-    //   res.status(200).json(places.businesses.map((biz)=> biz.name));
-    // });
   });
-
-
-
-
-
-  // app.get('/find/:borough', (req, res) => {
-  //   findRestaurants(db, ()=>5, null);
-  // });
 
   app.listen(3010, function() {
     console.log('App server started...');
-  });
-
-
-  // app.get('/place/:place', (req, res) =>{
-  //   res.send(Place.fromYelpId(req.params.place).num);
-  // });
-
-  // app.get('/photos/:id', (req, res) => {
-  //   YelpApi.getImages('black-iron-burger-new-york').then((val) => {
-  //     res.send(val);
-  //   });
-  // });
-
-  YelpApi.getImages('black-iron-burger-new-york-3').then((val) => {
-    console.log(val);
-  }).catch((err) => {
-    console.log(err);
   });
 }
 

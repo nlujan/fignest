@@ -1,6 +1,10 @@
 'use strict';
 
 var YelpApi = require('./yelp-api');
+var Mongo = require('./mongo');
+var db = Mongo.db();
+var ObjectId = require('mongodb').ObjectID;
+var _ = require('underscore');
 
 class Place {
   constructor(params) {
@@ -19,15 +23,34 @@ class Place {
   	return this;
   }
 
+  asDocument() {
+    return this;
+  }
+
+  // Note resolves with place, not images (for now)
   getImages() {
   	return new Promise((resolve, reject) => {
   		YelpApi.getImages(this.yelpId).then((imageUrls) => {
         this.images = imageUrls;
-        resolve(this.images);
+        // resolve(this.images);
+        resolve(this);
       }).catch((err) => {
         reject(err);
       });
   	});
+  }
+
+  save() {
+    return new Promise((resolve, reject) => {
+      db.collection('places').save(this.asDocument(), null, (err, res) => {
+        if (err) {
+          console.log(`Error saving place to db: ${this}`, err);
+          reject(err);
+        }
+        // resolve(res)?
+        resolve(this);
+      });
+    });
   }
 
   static fromJson(data) {
@@ -49,8 +72,26 @@ class Place {
   	return new this(params);
   }
 
-  static saveMany() {
+  static fromYelpJson(data, eventId) {
     
+    // Add eventId to data
+    data = _.extend(data, { eventId: eventId});
+
+    return this.fromJson(data);
+  }
+
+  static fromId(_id) {
+    return new Promise((resolve, reject) => {
+      db.collection('places').findOne({
+        _id: ObjectId(_id)
+      }, (err, res) => {
+        if (err) {
+          console.log(`error finding place with _id:${_id}`);
+          reject(err);
+        }
+        resolve(new this(res));
+      });
+    });
   }
 
   // static fromYelpId(num) {

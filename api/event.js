@@ -1,16 +1,5 @@
 'use strict';
 
-var Mongo = require('./mongo');
-var db = Mongo.db();
-var ObjectId = require('mongodb').ObjectID;
-const search = {
-  category: 'food',
-  limit: 20,
-  // For sort, 0 = best matched, 1 = distance, 2 = highest rated
-  sort: 2,
-  shouldIncludeActionLinks: true
-};
-
 // var sampleEvent = {
 //   "name": "Sample3",
 //   "location": {
@@ -20,7 +9,25 @@ const search = {
 //   "users": [],
 //   "search": "sushi",
 //   "places": [yelpIds]
-// }
+// };
+
+var Mongo = require('./mongo');
+var db = Mongo.db();
+var ObjectId = require('mongodb').ObjectID;
+var Place = require('./place');
+var Action = require('./action');
+var YelpApi = require('./yelp-api');
+var _ = require('underscore');
+
+const search = {
+  category: 'food',
+  limit: 20,
+  // For sort, 0 = best matched, 1 = distance, 2 = highest rated
+  sort: 2,
+  shouldIncludeActionLinks: true
+};
+const placesPerEvent = 5;
+
 
 class Event {
 	constructor(params) {
@@ -33,15 +40,17 @@ class Event {
     this.isOver = params.isOver;
     this.limit = params.limit;
     this.places = params.places;
+    this.actions = params.actions;
 	}
 
 	save() {
     return new Promise((resolve, reject) => {
       db.collection('events').save(this.asDocument(), null, (err, res) => {
         if (err) {
-          console.log(`Error saving event to db`, err);
+          console.log(`Error saving event to db: ${this}`, err);
           reject(err);
         }
+        // resolve(res)?
         resolve(this);
       });
     });
@@ -59,17 +68,67 @@ class Event {
 
   }
 
-  createPlaces() {
+  generatePlaces() {
+    // Might be better way to scope _places here
+    var _places;
+    return new Promise((resolve, reject) => {
+      YelpApi.search(this.getSearchParams()).then((yelpBusinesses) => {
+        // pick 5 businesses at random
+        yelpBusinesses = _.sample(yelpBusinesses, placesPerEvent);
 
+        var places = yelpBusinesses.map((biz) => Place.fromYelpJson(biz));
+        return Promise.all(places.map((place) => place.getImages()));
+      }).then((places) => {
+        // Save places
+        // Hanlde in Place.getImages() instead?
+        // Bulk save instead?
+        return Promise.all(places.map((place) => place.save() ));
+      }).then((places) => {
+        _places = places;
+
+        // Add places to event
+        this.addPlaces(_places);
+
+        // Save event
+        return this.save();
+      }).then((event) => {
+        resolve(_places);
+      }).catch((err) => {
+        reject(err);
+      });
+    });
   }
 
   getPlaces() {
-    // // yelp search
-    // if (this.places) {
-    //   // return this.places.map((place) => Place)
-    // } else {
-    //   generatePlaces();
-    // }
+    return new Promise((resolve, reject) => {
+      if (this.hasPlaces()) {
+        // Just get current places; no need to generate new places.
+        // Use $in query instead of Promise.all, or single query of places using
+        // eventId.
+        Promise.all(this.places.map((id) => {
+          return Place.fromId(id);
+        })).then((places) => {
+          resolve(places);
+        }).catch((err) => {
+          reject(err);
+        });
+      } else { // Event doesn't already have places
+        this.generatePlaces().then((places) => {
+          resolve(places);
+        }).catch((err) => {
+          reject(err);
+        });
+      }
+    });
+    
+  }
+
+  addPlaces(places) {
+    this.places = places.map((place) => place._id);
+  }
+
+  hasPlaces() {
+    return this.places && (this.places.length > 0);
   }
 
   getSearchParams() {
@@ -89,23 +148,68 @@ class Event {
   }
 
   getSolution() {
-
+    return new Promise((resolve, reject) => {
+      if (this.hasSolution()) {
+        Place.fromId(this.solution).then((solution) => {
+          resolve(solution);
+        }).catch((err) => {
+          reject(err);
+        });
+      } else { // Event doesn't already have solution
+        this.generateSolution().then((solution) => {
+          resolve(solution);
+        }).catch((err) => {
+          reject(err);
+        });
+      }
+    });
   }
 
-  createSolution() {
-
+  generateSolution() {
+    // get actions - query actions collection
+    // underscore groupby or smth
+    // underscore max
+    // add solution to event
+    // save event
+    // add isSolution to place maybe
+    // save place maybe
+    // resolve place
   }
 
-  addActions() {
-
+  hasSolution() {
+    return !!this.solution;
   }
 
-  getActions() {
+  saveActions(actions) {
+    // Might be better way to scope _actions here
+    var _actions;
+    actions = actions.map((action) => Action.fromJson(action) );
+    
+    return new Promise((resolve, reject) => {
+      // Bulk save?
+      // Save actions
+      Promise.all(actions.map((action) => action.save())).then((actions) => {
+        _actions = actions;
 
+        // Add actions to event
+        this.addActions(_actions);
+
+        // Save event
+        return this.save();
+      }).then((event) => {
+        resolve(_actions);
+      }).catch((err) => {
+        reject(err);
+      });
+    });
+  }
+
+  addActions(actions) {
+    this.actions = actions.map((action) => action._id );
   }
 
   static fromJson(data) {
-    let params = {};
+    var params = {};
     params._id = data._id || null;
     params.name = data.name;
     params.location = data.location;

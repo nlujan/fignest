@@ -8,7 +8,7 @@ An event is a fig. It is created by a single user who is able to invite others. 
 ###### Representation
 ```js
 {
-  "id": (String) Id of event,
+  "_id": (String) Id of event,
   "name": (String) Name of event,
   "location": {
     "type": (String) Type of location data. Either "address" or "coord",
@@ -53,7 +53,7 @@ A place is a restaurant. Several (default 5) places belong to a single event.
 ###### Representation
 ```js
 {
-  "id": (String) Id of place,
+  "_id": (String) Id of place,
   "yelpId": (String) Yelp id of place,
   "event": (String) Id of event that generated this place,
   "name": (String) Name of place,
@@ -92,7 +92,7 @@ Actions are performed on events. Each user performs a single action on an event,
 
 ```js
 {
-  "id": (String) Id of action,
+  "_id": (String) Id of action,
   "user": (String) Id of user performing action,
   "event": (String) Id of event that action belongs to,        
   "selections": (Array) Selection info. The array should include an image item (see below) for every image shown to the user
@@ -100,7 +100,7 @@ Actions are performed on events. Each user performs a single action on an event,
 
 imageItem: {
   "image": (String) Image URL,
-  "yelpId": (String) Yelp id of place that image belongs to,
+  "place": (String) Id of place that image belongs to,
   "isSelected": (Boolean) Whether user selected image
 }
 ```

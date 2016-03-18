@@ -7,8 +7,7 @@
 //     "address": "1600 Pennsylvania Ave NW, Washington, DC 20500"
 //   },
 //   "users": [],
-//   "search": "sushi",
-//   "places": [yelpIds]
+//   "search": "sushi"
 // };
 
 var Mongo = require('./mongo');
@@ -17,16 +16,18 @@ var ObjectId = require('mongodb').ObjectID;
 var Place = require('./place');
 var Action = require('./action');
 var YelpApi = require('./yelp-api');
+var Util = require('./util');
 var _ = require('underscore');
 
 const search = {
   category: 'food',
+  // Number of results to return from Yelp search, not to be confused with the
+  // number of places to consider as a solution.
   limit: 20,
   // For sort, 0 = best matched, 1 = distance, 2 = highest rated
   sort: 2,
   shouldIncludeActionLinks: true
 };
-const placesPerEvent = 5;
 
 
 class Event {
@@ -36,7 +37,6 @@ class Event {
     this.location = params.location;
     this.users = params.users;
     this.search = params.search;
-    this.isOpen = params.isOpen;
     this.isOver = params.isOver;
     this.limit = params.limit;
     this.places = params.places;
@@ -57,7 +57,8 @@ class Event {
 	}
 
 	asJson() {
-    return this;
+    var eventKeysToOmit = ['isOver', 'places', 'actions'];
+    return _.omit(this, eventKeysToOmit);
 	}
 
   asDocument() {
@@ -74,7 +75,7 @@ class Event {
     return new Promise((resolve, reject) => {
       YelpApi.search(this.getSearchParams()).then((yelpBusinesses) => {
         // pick 5 businesses at random
-        yelpBusinesses = _.sample(yelpBusinesses, placesPerEvent);
+        yelpBusinesses = _.sample(yelpBusinesses, this.limit);
 
         var places = yelpBusinesses.map((biz) => Place.fromYelpJson(biz));
         return Promise.all(places.map((place) => place.getImages()));
@@ -136,8 +137,8 @@ class Event {
     result.term = this.search;
     result.limit = search.limit;
     result.sort = search.sort;
-    result.category = search.category;
-    result.radius = this.location.radius;
+    result.category_filter = search.category;
+    result.radius_filter = Util.milesToMeters(this.location.radius);
     if (this.location.type === 'address') {
       result.location = this.location.address;
     } else if (this.location.type === 'coord') {
@@ -174,6 +175,7 @@ class Event {
     // add isSolution to place maybe
     // save place maybe
     // resolve place
+    // mark isOver as true
   }
 
   hasSolution() {
@@ -216,7 +218,6 @@ class Event {
     params.location.radius = data.location.radius || 1;
     params.users = data.users;
     params.search = data.search || '';
-    params.isOpen = data.isOpen == null ? false : data.isOpen;
     params.isOver = data.isOver == null ? false : data.isOver;
     params.limit = data.limit || 5;
     return new this(params);

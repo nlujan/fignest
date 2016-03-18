@@ -19,7 +19,6 @@ An event is a fig. It is created by a single user who is able to invite others. 
   },
   "users": (Array) ids (String) of users invited to event. The id of the event creator should come first in the array,
   "search" (String, optional) Additional search terms e.g. sushi, brunch,
-  "isOver": (Boolean, optional) Whether the event has happened. Defaults to false,
   "limit": (Number, optional) Number of places considered for the solution to this event. Defaults to 5
 }
 ```

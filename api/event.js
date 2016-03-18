@@ -26,7 +26,6 @@ const search = {
   sort: 2,
   shouldIncludeActionLinks: true
 };
-const placesPerEvent = 5;
 
 
 class Event {
@@ -73,7 +72,7 @@ class Event {
     return new Promise((resolve, reject) => {
       YelpApi.search(this.getSearchParams()).then((yelpBusinesses) => {
         // pick 5 businesses at random
-        yelpBusinesses = _.sample(yelpBusinesses, placesPerEvent);
+        yelpBusinesses = _.sample(yelpBusinesses, this.limit);
 
         var places = yelpBusinesses.map((biz) => Place.fromYelpJson(biz));
         return Promise.all(places.map((place) => place.getImages()));

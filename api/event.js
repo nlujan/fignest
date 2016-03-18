@@ -36,7 +36,6 @@ class Event {
     this.location = params.location;
     this.users = params.users;
     this.search = params.search;
-    this.isOpen = params.isOpen;
     this.isOver = params.isOver;
     this.limit = params.limit;
     this.places = params.places;
@@ -216,7 +215,6 @@ class Event {
     params.location.radius = data.location.radius || 1;
     params.users = data.users;
     params.search = data.search || '';
-    params.isOpen = data.isOpen == null ? false : data.isOpen;
     params.isOver = data.isOver == null ? false : data.isOver;
     params.limit = data.limit || 5;
     return new this(params);

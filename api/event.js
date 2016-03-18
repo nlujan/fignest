@@ -55,7 +55,8 @@ class Event {
 	}
 
 	asJson() {
-    return _.omit(this, 'isOver');
+    var eventKeysToOmit = ['isOver', 'places', 'actions'];
+    return _.omit(this, eventKeysToOmit);
 	}
 
   asDocument() {

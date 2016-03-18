@@ -11,4 +11,7 @@ import UIKit
 class UserImageCell: UICollectionViewCell {
     
     @IBOutlet var userImage: UIImageView!
+    @IBOutlet var imageOverlay: UIView!
+    @IBOutlet var imageLabel: UILabel!
+    
 }

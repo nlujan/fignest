@@ -13,6 +13,7 @@ import FBSDKCoreKit
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 
     @IBOutlet var loginButton: FBSDKLoginButton!
+    let prefs = NSUserDefaults.standardUserDefaults()
     
     func takeUserToHomePage() {
         let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
@@ -31,10 +32,20 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 
         // Do any additional setup after loading the view.
         
+        let accessToken = FBSDKAccessToken.currentAccessToken()
+        
         if(FBSDKAccessToken.currentAccessToken() != nil) {
+            
+            
+            var name: String = prefs.stringForKey("userFBName")!
+            
+            print("token = \(accessToken.tokenString)")
+            print("User ID = \(accessToken.userID)")
+            print("User Name = \(name)")
+            
+            
             takeUserToHomePage()
-            print("token = \(FBSDKAccessToken.currentAccessToken().tokenString)")
-            print("User ID = \(FBSDKAccessToken.currentAccessToken().userID)")
+            
         }
         
         loginButton.delegate = self
@@ -74,16 +85,26 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             print("token = \(userToken.tokenString)")
             print("User ID = \(userID)")
             
-            let prefs = NSUserDefaults.standardUserDefaults()
-            prefs.setValue(userID, forKey: "userFBID")
+            var username: String = "none"
             
-            if let city = prefs.stringForKey("userCity"){
-                print("The user has a city defined: " + city)
-            }else{
-                //Nothing stored in NSUserDefaults yet. Set a value.
-                print("what is going on??")
-                prefs.setValue("Berlin", forKey: "userCity")
-            }
+            let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,first_name"], tokenString: userToken.tokenString, version: nil, HTTPMethod: "GET")
+            req.startWithCompletionHandler({ (connection, result, error : NSError!) -> Void in
+                if(error == nil) {
+                    //print("result \(result["name"]!)")
+                    username = result["first_name"] as! String
+                    self.prefs.setValue(username, forKey: "userFBName")
+                    //print("result \(result["first_name"])")
+                    //print(username)
+                }
+                else {
+                    print("error \(error)")
+                }
+            })
+            
+            prefs.setValue(userID, forKey: "userFBID")
+            //print(username)
+           
+            
             
             takeUserToHomePage();
             

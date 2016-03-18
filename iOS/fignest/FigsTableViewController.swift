@@ -10,11 +10,9 @@ import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
 
-class FigsTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class FigsTableViewController: UITableViewController {
     
     var figNames = ["Last Friday Night", "Recovery Brunch", "Birthday"]
-    
-    var userID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
     
     func takeUserToLoginPage() {
         let loginPageController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
@@ -96,34 +94,31 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         // Configure the cell...
         
         cell.figLabel.text = figNames[indexPath.row]
+        cell.contentView.tag = indexPath.row
 
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        print("\(figNames[indexPath.row]) Selected!");
+        
+        let preWaitingPage = self.storyboard?.instantiateViewControllerWithIdentifier("PreWaitingViewController") as! PreWaitingViewController
+        
+        let preWaitingPageNav = UINavigationController(rootViewController: preWaitingPage)
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        appDelegate.window!.rootViewController = preWaitingPageNav
     }
     
+//    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+//            var svc = segue!.destinationViewController as PreWaitingNavController;
+//            svc.title = "naim is bets!"
+//            
+//        }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
-        let cell: UserImageCell = collectionView.dequeueReusableCellWithReuseIdentifier("UserImageCell", forIndexPath: indexPath) as! UserImageCell
-        
-        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(userID)/picture?type=square&height=60&width=60")
-        
-        if let data = NSData(contentsOfURL: facebookProfileUrl!) {
-            cell.userImage.image = UIImage(data: data)
-        }
-        
-        return cell
-    }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("cell \(indexPath.row) selected")
-    }
-
-
-
+    
     /*
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {

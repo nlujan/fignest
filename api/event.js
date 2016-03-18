@@ -7,8 +7,7 @@
 //     "address": "1600 Pennsylvania Ave NW, Washington, DC 20500"
 //   },
 //   "users": [],
-//   "search": "sushi",
-//   "places": [yelpIds]
+//   "search": "sushi"
 // };
 
 var Mongo = require('./mongo');
@@ -17,10 +16,13 @@ var ObjectId = require('mongodb').ObjectID;
 var Place = require('./place');
 var Action = require('./action');
 var YelpApi = require('./yelp-api');
+var Util = require('./util');
 var _ = require('underscore');
 
 const search = {
   category: 'food',
+  // Number of results to return from Yelp search, not to be confused with the
+  // number of places to consider as a solution.
   limit: 20,
   // For sort, 0 = best matched, 1 = distance, 2 = highest rated
   sort: 2,
@@ -135,8 +137,8 @@ class Event {
     result.term = this.search;
     result.limit = search.limit;
     result.sort = search.sort;
-    result.category = search.category;
-    result.radius = this.location.radius;
+    result.category_filter = search.category;
+    result.radius_filter = Util.milesToMeters(this.location.radius);
     if (this.location.type === 'address') {
       result.location = this.location.address;
     } else if (this.location.type === 'coord') {

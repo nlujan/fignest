@@ -74,7 +74,7 @@ class Event {
     var _places;
     return new Promise((resolve, reject) => {
       YelpApi.search(this.getSearchParams()).then((yelpBusinesses) => {
-        // pick 5 businesses at random
+        // pick this.limit businesses at random
         yelpBusinesses = _.sample(yelpBusinesses, this.limit);
 
         var places = yelpBusinesses.map((biz) => Place.fromYelpJson(biz));

@@ -71,6 +71,21 @@ class Action {
     params.selections = data.selections;
     return new this(params);
 	}
+
+  static actionsFromEventId(eventId) {
+    var result = [];
+    return new Promise((resolve, reject) => {
+      var cursor = db.collection('actions').find({ event: ObjectId(eventId) });
+      cursor.each((err, doc) => {
+        if (err) {
+          console.log(`Error getting actions from event ID: ${eventId}`, err);
+          reject(err);
+        }
+        result.push(doc);
+      });
+      resolve(result.map((action) => this.fromJson(action) ));
+    });
+  }
 }
 
 module.exports = Action;

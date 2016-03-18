@@ -56,7 +56,7 @@ class Event {
 	}
 
 	asJson() {
-    return this;
+    return _.omit(this, 'isOver');
 	}
 
   asDocument() {
@@ -173,6 +173,7 @@ class Event {
     // add isSolution to place maybe
     // save place maybe
     // resolve place
+    // mark isOver as true
   }
 
   hasSolution() {

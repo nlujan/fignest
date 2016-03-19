@@ -11,18 +11,19 @@ import CoreLocation
 
 class newFigViewController: UIViewController, CLLocationManagerDelegate {
     
-    @IBOutlet var locationLabel: UITextField!
+    @IBOutlet var locationTextField: UITextField!
+    @IBOutlet var titleTextField: UITextField!
+    @IBOutlet var foodTypeTextField: UITextField!
     
-    @IBAction func newFigBtnPressed(sender: AnyObject) {
-
-        let gameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as! GameViewController
-        
-        
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        appDelegate.window!.rootViewController = gameViewController
-    }
     let locationManager = CLLocationManager()
+    
+
+    @IBAction func createFig(sender: AnyObject) {
+        print("\(locationTextField.text!)")
+        print("\(titleTextField.text!)")
+        print("\(foodTypeTextField.text!)")
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +94,7 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate {
             print(address)
             
             
-            locationLabel.text = address
+            locationTextField.text = address
         }
 
     }

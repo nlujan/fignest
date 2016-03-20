@@ -41,6 +41,7 @@ class Event {
     this.limit = params.limit;
     this.places = params.places;
     this.actions = params.actions;
+    this.solution = params.solution;
 	}
 
 	save() {
@@ -51,13 +52,14 @@ class Event {
           reject(err);
         }
         // resolve(res)?
+        // resolve(new this)?
         resolve(this);
       });
     });
 	}
 
 	asJson() {
-    var eventKeysToOmit = ['isOver', 'places', 'actions'];
+    var eventKeysToOmit = ['isOver', 'places', 'actions', 'solution'];
     return _.omit(this, eventKeysToOmit);
 	}
 
@@ -167,34 +169,43 @@ class Event {
   }
 
   generateSolution() {
-    // get actions - query actions collection
-    // underscore groupby or smth
-    // underscore max
-    // add solution to event
-    // save event
-    // add isSolution to place maybe
-    // save place maybe
-    // resolve place
-    // mark isOver as true
+    var _solutionId;
     return new Promise((resolve, reject) => {
       Action.actionsFromEventId(this._id).then((actions) => {
-        var solution = this.constructor.solutionFromActions(actions);
-
-        
+        _solutionId = this.constructor.solutionIdFromActions(actions);
+        this.addSolution(_solutionId);
+        this.addIsOver();
+        return this.save();
+      }).then((event) => {
+        return Place.fromId(_solutionId);
+      }).then((solution) => {
         resolve(solution);
+      }).catch((err) => {
+        reject(err);
       });
     });
-    
   }
 
-  static solutionFromActions(actions) {
+  addSolution(solutionId) {
+    this.solution = ObjectId(solutionId);
+  }
+
+  addIsOver() {
+    this.isOver = true;
+  }
+
+  static solutionIdFromActions(actions) {
+    if (actions == null || actions.length === 0) {
+      console.log(`Error in solutionIdFromActions: no actions provided`);
+      return;
+    }
     var selections = _.reduce(actions, (memo, action) => {
       return memo.concat(action.selections);
     }, []);
     var posSelections = _.filter(selections, (sel) => sel.isSelected );
     var posSelectionsCountByPlace = _.countBy(posSelections, (sel) => sel.place );
-    var solution = _.max(_.keys(posSelectionsCountByPlace), (place) => posSelectionsCountByPlace[place] );
-    return solution;
+    var solutionId = _.max(_.keys(posSelectionsCountByPlace), (place) => posSelectionsCountByPlace[place] );
+    return solutionId;
   }
 
   hasSolution() {
@@ -209,7 +220,7 @@ class Event {
     return new Promise((resolve, reject) => {
       // Bulk save?
       // Save actions
-      Promise.all(actions.map((action) => action.save())).then((actions) => {
+      Promise.all(actions.map((action) => action.save() )).then((actions) => {
         _actions = actions;
 
         // Add actions to event

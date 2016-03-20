@@ -67,8 +67,7 @@ function run() {
     Event.fromId(req.params.eventId).then((event) => {
       return event.getSolution();
     }).then((solution) => {
-      // res.status(200).json(solution.asJson());
-      res.status(200).json(solution);
+      res.status(200).json(solution.asJson());
     }).catch((err) => {
       console.log(`Error in GET /events/:eventId/solution`, err);
       res.status(500).json(err);

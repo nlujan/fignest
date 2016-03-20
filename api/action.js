@@ -1,59 +1,59 @@
 'use strict';
 
 // var sampleActions = [{
-//   "user": "56edd165283347942ac394dd",
-//   "event": "56edd165283347942ac394dd",
+//   "user": "56eefe0835c5fe7e04913260",
+//   "event": "56eefe0835c5fe7e04913260",
 //   "selections": [{
 //     "image": "image0",
-//     "place": "56edd165283347942ac394dd",
+//     "place": "56eefe1035c5fe7e04913261",
 //     "isSelected": false
 //   }, {
 //     "image": "image1",
-//     "place": "56edd165283347942ac394dd",
+//     "place": "56eefe1035c5fe7e04913262",
 //     "isSelected": true
 //   }, {
 //     "image": "image2",
-//     "place": "56edd165283347942ac394dd",
+//     "place": "56eefe1035c5fe7e04913263",
 //     "isSelected": false
 //   }, {
 //     "image": "image3",
-//     "place": "56edd165283347942ac394dd",
+//     "place": "56eefe1035c5fe7e04913261",
 //     "isSelected": false
 //   }, {
 //     "image": "image4",
-//     "place": "56edd165283347942ac394dd",
+//     "place": "56eefe1035c5fe7e04913262",
 //     "isSelected": false
 //   }, {
 //     "image": "image5",
-//     "place": "56edd165283347942ac394dd",
+//     "place": "56eefe1035c5fe7e04913263",
 //     "isSelected": false
 //   }]
 // }, {
-//   "user": "56edd165283347942ac394dd",
-//   "event": "56edd165283347942ac394dd",
+//   "user": "56eefe0835c5fe7e04913260",
+//   "event": "56eefe0835c5fe7e04913260",
 //   "selections": [{
 //     "image": "image0",
-//     "place": "56edd165283347942ac394dd",
+//     "place": "56eefe1035c5fe7e04913261",
 //     "isSelected": false
 //   }, {
 //     "image": "image1",
-//     "place": "56edd165283347942ac394dd",
+//     "place": "56eefe1035c5fe7e04913262",
 //     "isSelected": true
 //   }, {
 //     "image": "image2",
-//     "place": "56edd165283347942ac394dd",
+//     "place": "56eefe1035c5fe7e04913263",
 //     "isSelected": false
 //   }, {
 //     "image": "image3",
-//     "place": "56edd165283347942ac394dd",
+//     "place": "56eefe1035c5fe7e04913261",
 //     "isSelected": false
 //   }, {
 //     "image": "image4",
-//     "place": "56edd165283347942ac394dd",
+//     "place": "56eefe1035c5fe7e04913262",
 //     "isSelected": false
 //   }, {
 //     "image": "image5",
-//     "place": "56edd165283347942ac394dd",
+//     "place": "56eefe1035c5fe7e04913263",
 //     "isSelected": false
 //   }]
 // }];

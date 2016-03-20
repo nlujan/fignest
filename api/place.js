@@ -73,7 +73,6 @@ class Place {
   }
 
   static fromYelpJson(data, eventId) {
-    
     // Add eventId to data
     data = _.extend(data, { eventId: eventId});
 
@@ -94,10 +93,6 @@ class Place {
     });
   }
 
-  // static fromYelpId(num) {
-  //   // yelp
-  //   return new this(num);
-  // }
 }
 
 module.exports = Place;

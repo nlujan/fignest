@@ -1,38 +1,67 @@
 'use strict';
 
-var sampleActions = [{
-  "user": "someMongoId",
-  "event": "someMongoId",
-  "selections": [{
-    "image": "image0",
-    "place": "someMongoId0",
-    "isSelected": false
-  }, {
-    "image": "image1",
-    "place": "someMongoId1",
-    "isSelected": true
-  }, {
-    "image": "image2",
-    "place": "someMongoId2",
-    "isSelected": false
-  }, {
-    "image": "image3",
-    "place": "someMongoId3",
-    "isSelected": false
-  }, {
-    "image": "image4",
-    "place": "someMongoId4",
-    "isSelected": false
-  }, {
-    "image": "image5",
-    "place": "someMongoId5",
-    "isSelected": false
-  }]
-}];
+// var sampleActions = [{
+//   "user": "56eefe0835c5fe7e04913260",
+//   "event": "56eefe0835c5fe7e04913260",
+//   "selections": [{
+//     "image": "image0",
+//     "place": "56eefe1035c5fe7e04913261",
+//     "isSelected": false
+//   }, {
+//     "image": "image1",
+//     "place": "56eefe1035c5fe7e04913262",
+//     "isSelected": true
+//   }, {
+//     "image": "image2",
+//     "place": "56eefe1035c5fe7e04913263",
+//     "isSelected": false
+//   }, {
+//     "image": "image3",
+//     "place": "56eefe1035c5fe7e04913261",
+//     "isSelected": false
+//   }, {
+//     "image": "image4",
+//     "place": "56eefe1035c5fe7e04913262",
+//     "isSelected": false
+//   }, {
+//     "image": "image5",
+//     "place": "56eefe1035c5fe7e04913263",
+//     "isSelected": false
+//   }]
+// }, {
+//   "user": "56eefe0835c5fe7e04913260",
+//   "event": "56eefe0835c5fe7e04913260",
+//   "selections": [{
+//     "image": "image0",
+//     "place": "56eefe1035c5fe7e04913261",
+//     "isSelected": false
+//   }, {
+//     "image": "image1",
+//     "place": "56eefe1035c5fe7e04913262",
+//     "isSelected": true
+//   }, {
+//     "image": "image2",
+//     "place": "56eefe1035c5fe7e04913263",
+//     "isSelected": false
+//   }, {
+//     "image": "image3",
+//     "place": "56eefe1035c5fe7e04913261",
+//     "isSelected": false
+//   }, {
+//     "image": "image4",
+//     "place": "56eefe1035c5fe7e04913262",
+//     "isSelected": false
+//   }, {
+//     "image": "image5",
+//     "place": "56eefe1035c5fe7e04913263",
+//     "isSelected": false
+//   }]
+// }];
 
 var Mongo = require('./mongo');
 var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
+var _ = require('underscore');
 
 class Action {
 	constructor(params) {
@@ -66,11 +95,27 @@ class Action {
 	static fromJson(data) {
     var params = {};
     params._id = data._id || null;
-    params.user = data.user;
-    params.event = data.event;
-    params.selections = data.selections;
+    params.user = ObjectId(data.user);
+    params.event = ObjectId(data.event);
+    // Convert selection.place to ObjectId(selection.place);
+    params.selections = data.selections.map((selection) => {
+      return _.extend(selection, { place: ObjectId(selection.place) });
+    });
     return new this(params);
 	}
+
+  static actionsFromEventId(eventId) {
+    return new Promise((resolve, reject) => {
+      var cursor = db.collection('actions').find({ event: eventId });
+      cursor.toArray((err, actions) => {
+        if (err) {
+          console.log(`Error getting actions from event ID: ${eventId}`, err);
+          reject(err);
+        }
+        resolve(actions.map((action) => this.fromJson(action) ));
+      });
+    });
+  }
 }
 
 module.exports = Action;

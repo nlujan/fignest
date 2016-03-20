@@ -87,11 +87,8 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PreWaitingCell", forIndexPath: indexPath) as! PreWaitingCell
-        
-        // Configure the cell...
-        
+                
         cell.nameLabel.text = users[indexPath.row]
-        cell.contentView.tag = indexPath.row
         
         return cell
     }

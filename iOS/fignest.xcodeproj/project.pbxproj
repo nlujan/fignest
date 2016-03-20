@@ -82,6 +82,15 @@
 		2B3EA3451C95F07400079C1A /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA3441C95F07400079C1A /* SocketIOManager.swift */; };
 		2B3EA3461C95F07400079C1A /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA3441C95F07400079C1A /* SocketIOManager.swift */; };
 		2B3EA3471C95F07400079C1A /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA3441C95F07400079C1A /* SocketIOManager.swift */; };
+		2B3EA3491C9DE09900079C1A /* APIRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA3481C9DE09900079C1A /* APIRequestHandler.swift */; };
+		2B3EA34A1C9DE09900079C1A /* APIRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA3481C9DE09900079C1A /* APIRequestHandler.swift */; };
+		2B3EA34B1C9DE09900079C1A /* APIRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA3481C9DE09900079C1A /* APIRequestHandler.swift */; };
+		2B3EA3511C9DF7C000079C1A /* PostWaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA3501C9DF7C000079C1A /* PostWaitingViewController.swift */; };
+		2B3EA3521C9DF7C000079C1A /* PostWaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA3501C9DF7C000079C1A /* PostWaitingViewController.swift */; };
+		2B3EA3531C9DF7C000079C1A /* PostWaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA3501C9DF7C000079C1A /* PostWaitingViewController.swift */; };
+		2B3EA3551C9DF91700079C1A /* PostWaitingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA3541C9DF91700079C1A /* PostWaitingCell.swift */; };
+		2B3EA3561C9DF91700079C1A /* PostWaitingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA3541C9DF91700079C1A /* PostWaitingCell.swift */; };
+		2B3EA3571C9DF91700079C1A /* PostWaitingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA3541C9DF91700079C1A /* PostWaitingCell.swift */; };
 		2B4512CD1C8FB02200F14099 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512CC1C8FB02200F14099 /* GameViewController.swift */; };
 		2B4512CE1C8FB02200F14099 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512CC1C8FB02200F14099 /* GameViewController.swift */; };
 		2B4512CF1C8FB02200F14099 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512CC1C8FB02200F14099 /* GameViewController.swift */; };
@@ -177,6 +186,9 @@
 		2B3EA3021C95F02400079C1A /* SwiftRegex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRegex.swift; sourceTree = "<group>"; };
 		2B3EA3031C95F02400079C1A /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
 		2B3EA3441C95F07400079C1A /* SocketIOManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
+		2B3EA3481C9DE09900079C1A /* APIRequestHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestHandler.swift; sourceTree = "<group>"; };
+		2B3EA3501C9DF7C000079C1A /* PostWaitingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostWaitingViewController.swift; sourceTree = "<group>"; };
+		2B3EA3541C9DF91700079C1A /* PostWaitingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostWaitingCell.swift; sourceTree = "<group>"; };
 		2B4512CC1C8FB02200F14099 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		2B4512D01C8FEF3000F14099 /* foodCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = foodCollectionViewCell.swift; sourceTree = "<group>"; };
 		2B4512D41C8FF25D00F14099 /* pic1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = pic1.jpg; path = ../../../../../Downloads/pic1.jpg; sourceTree = "<group>"; };
@@ -242,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				2B3EA2E61C95DBD400079C1A /* PreWaitingViewController.swift */,
+				2B3EA3501C9DF7C000079C1A /* PostWaitingViewController.swift */,
 				2BAAE8501C8AA5810004D067 /* FigsTableViewController.swift */,
 				2B4512CC1C8FB02200F14099 /* GameViewController.swift */,
 				2BAAE84C1C8A9D8A0004D067 /* LoginViewController.swift */,
@@ -258,6 +271,7 @@
 				2B4512F41C92564700F14099 /* PlayerProgressCell.swift */,
 				2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */,
 				2B3EA2EA1C95DD2800079C1A /* PreWaitingCell.swift */,
+				2B3EA3541C9DF91700079C1A /* PostWaitingCell.swift */,
 			);
 			name = "Custom Cells";
 			sourceTree = "<group>";
@@ -344,6 +358,7 @@
 				2B3EA2D31C94BD9000079C1A /* View Controllers */,
 				2B3EA2D51C94BE2000079C1A /* Food Pics */,
 				2B3EA3441C95F07400079C1A /* SocketIOManager.swift */,
+				2B3EA3481C9DE09900079C1A /* APIRequestHandler.swift */,
 				2BAAE81B1C8A9CAE0004D067 /* AppDelegate.swift */,
 				2BAAE81F1C8A9CAE0004D067 /* Main.storyboard */,
 				2BAAE8251C8A9CAE0004D067 /* Assets.xcassets */,
@@ -526,7 +541,9 @@
 			files = (
 				2B3EA3041C95F02400079C1A /* SocketAckEmitter.swift in Sources */,
 				2B4512F51C92564700F14099 /* PlayerProgressCell.swift in Sources */,
+				2B3EA3511C9DF7C000079C1A /* PostWaitingViewController.swift in Sources */,
 				2B4512CD1C8FB02200F14099 /* GameViewController.swift in Sources */,
+				2B3EA3551C9DF91700079C1A /* PostWaitingCell.swift in Sources */,
 				2B3EA2E71C95DBD400079C1A /* PreWaitingViewController.swift in Sources */,
 				2B3EA3341C95F02400079C1A /* SocketParsable.swift in Sources */,
 				2B3EA30D1C95F02400079C1A /* SocketClientSpec.swift in Sources */,
@@ -543,6 +560,7 @@
 				2B3EA3071C95F02400079C1A /* SocketAckManager.swift in Sources */,
 				2B3EA3221C95F02400079C1A /* SocketEventHandler.swift in Sources */,
 				2B3EA32E1C95F02400079C1A /* SocketLogger.swift in Sources */,
+				2B3EA3491C9DE09900079C1A /* APIRequestHandler.swift in Sources */,
 				2B3EA2EB1C95DD2800079C1A /* PreWaitingCell.swift in Sources */,
 				2B3EA33D1C95F02400079C1A /* SwiftRegex.swift in Sources */,
 				2B3EA3251C95F02400079C1A /* SocketIOClient.swift in Sources */,
@@ -586,8 +604,10 @@
 				2B3EA3411C95F02400079C1A /* WebSocket.swift in Sources */,
 				2B4512F61C92564700F14099 /* PlayerProgressCell.swift in Sources */,
 				2B3EA30E1C95F02400079C1A /* SocketClientSpec.swift in Sources */,
+				2B3EA34A1C9DE09900079C1A /* APIRequestHandler.swift in Sources */,
 				2B3EA3141C95F02400079C1A /* SocketEngineClient.swift in Sources */,
 				2B3EA31A1C95F02400079C1A /* SocketEnginePollable.swift in Sources */,
+				2B3EA3521C9DF7C000079C1A /* PostWaitingViewController.swift in Sources */,
 				2B3EA2D81C94D1C500079C1A /* UserImageCell.swift in Sources */,
 				2B3EA33B1C95F02400079C1A /* SocketTypes.swift in Sources */,
 				2B3EA30B1C95F02400079C1A /* SocketAnyEvent.swift in Sources */,
@@ -596,6 +616,7 @@
 				2B4512D21C8FEF3000F14099 /* foodCollectionViewCell.swift in Sources */,
 				2BAAE8341C8A9CAE0004D067 /* fignestTests.swift in Sources */,
 				2B3EA3171C95F02400079C1A /* SocketEnginePacketType.swift in Sources */,
+				2B3EA3561C9DF91700079C1A /* PostWaitingCell.swift in Sources */,
 				2B3EA33E1C95F02400079C1A /* SwiftRegex.swift in Sources */,
 				2B3EA2EC1C95DD2800079C1A /* PreWaitingCell.swift in Sources */,
 			);
@@ -626,8 +647,10 @@
 				2B3EA3421C95F02400079C1A /* WebSocket.swift in Sources */,
 				2B4512F71C92564700F14099 /* PlayerProgressCell.swift in Sources */,
 				2B3EA30F1C95F02400079C1A /* SocketClientSpec.swift in Sources */,
+				2B3EA34B1C9DE09900079C1A /* APIRequestHandler.swift in Sources */,
 				2B3EA3151C95F02400079C1A /* SocketEngineClient.swift in Sources */,
 				2B3EA31B1C95F02400079C1A /* SocketEnginePollable.swift in Sources */,
+				2B3EA3531C9DF7C000079C1A /* PostWaitingViewController.swift in Sources */,
 				2B3EA2D91C94D1C500079C1A /* UserImageCell.swift in Sources */,
 				2B3EA33C1C95F02400079C1A /* SocketTypes.swift in Sources */,
 				2B3EA30C1C95F02400079C1A /* SocketAnyEvent.swift in Sources */,
@@ -636,6 +659,7 @@
 				2B4512D31C8FEF3000F14099 /* foodCollectionViewCell.swift in Sources */,
 				2BAAE83F1C8A9CAE0004D067 /* fignestUITests.swift in Sources */,
 				2B3EA3181C95F02400079C1A /* SocketEnginePacketType.swift in Sources */,
+				2B3EA3571C9DF91700079C1A /* PostWaitingCell.swift in Sources */,
 				2B3EA33F1C95F02400079C1A /* SwiftRegex.swift in Sources */,
 				2B3EA2ED1C95DD2800079C1A /* PreWaitingCell.swift in Sources */,
 			);

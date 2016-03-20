@@ -97,7 +97,7 @@ class APIRequestHandler: NSObject {
                     print(jsonDictionary)
                     //let origin = jsonDictionary["origin"] as! String
                     
-                    // Update the label
+                    // Perform function that is desired
                     //self.performSelectorOnMainThread("updateIPLabel:", withObject: origin, waitUntilDone: false)
                 }
             } catch {
@@ -135,13 +135,15 @@ class APIRequestHandler: NSObject {
             if let postString = NSString(data:data!, encoding: NSUTF8StringEncoding) as? String {
                 // Print what we got from the call
                 //print("POST: " + postString)
-                self.performSelectorOnMainThread("updatePostLabel:", withObject: postString, waitUntilDone: false)
+                
+                // Perform function that is desired
+                self.performSelectorOnMainThread("printPostResult:", withObject: postString, waitUntilDone: false)
             }
             
         }).resume()
     }
     
-    func testPost() {
+    func createNewFig() {
         
         let jsonObject: [String: AnyObject] = [
             "name": "Naim",
@@ -152,13 +154,13 @@ class APIRequestHandler: NSObject {
             "search":"sushi"
         ]
         
-        //post(jsonObject, postEndpoint: "https://4c76e7eb.ngrok.io/events/")
+        post(jsonObject, postEndpoint: "https://4c76e7eb.ngrok.io/events/")
         
-        get("https://4c76e7eb.ngrok.io/events/56ef1ceb6f0c73691ccdf190/places")
+        //get("https://4c76e7eb.ngrok.io/events/56ef1ceb6f0c73691ccdf190/places")
         
     }
     
-    func updatePostLabel(text: String) {
+    func printPostResult(text: String) {
         //self.postResultLabel.text = "POST : " + text
         print("POST : \(text)")
     }

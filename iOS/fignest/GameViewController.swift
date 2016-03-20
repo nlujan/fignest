@@ -29,7 +29,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         tableImages = APIRequestHandler.sharedInstance.getImages()
         
-        APIRequestHandler.sharedInstance.testPost();
+        APIRequestHandler.sharedInstance.createNewFig();
 
         // Do any additional setup after loading the view.
     }

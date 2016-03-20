@@ -28,6 +28,8 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         playerProgressTable.backgroundColor = UIColor.clearColor()
         
         tableImages = APIRequestHandler.sharedInstance.getImages()
+        
+        APIRequestHandler.sharedInstance.testPost();
 
         // Do any additional setup after loading the view.
     }
@@ -43,8 +45,6 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         
         //cell.foodImageView.image = UIImage(named: tableImages[indexPath.row])
-        
-        print("imageIndex: \(imageIndex)")
         
         cell.foodImageView.image = tableImages[(imageIndex * 6) + indexPath.row]
         

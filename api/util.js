@@ -5,4 +5,5 @@ class Util {
 		return miles * 1609.344;
 	}
 }
+
 module.exports = Util;

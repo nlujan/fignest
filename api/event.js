@@ -71,6 +71,45 @@ class Event {
 
   }
 
+  getSearchParams() {
+    var result = {};
+    result.term = this.search;
+    result.limit = search.limit;
+    result.sort = search.sort;
+    result.category_filter = search.category;
+    result.radius_filter = Util.milesToMeters(this.location.radius);
+    if (this.location.type === 'address') {
+      result.location = this.location.address;
+    } else if (this.location.type === 'coord') {
+      result.ll = `${this.location.lat},${this.location.long}`;
+    }
+    result.actionlinks = search.shouldIncludeActionLinks;
+    return result;
+  }
+
+  getPlaces() {
+    return new Promise((resolve, reject) => {
+      if (this.hasPlaces()) {
+        // Just get current places; no need to generate new places.
+        // Use $in query instead of Promise.all, or single query of places using
+        // eventId.
+        Promise.all(this.places.map((id) => {
+          return Place.fromId(id);
+        })).then((places) => {
+          resolve(places);
+        }).catch((err) => {
+          reject(err);
+        });
+      } else { // Event doesn't already have places
+        this.generatePlaces().then((places) => {
+          resolve(places);
+        }).catch((err) => {
+          reject(err);
+        });
+      }
+    });
+  }
+
   generatePlaces() {
     // Might be better way to scope _places here
     var _places;
@@ -102,52 +141,12 @@ class Event {
     });
   }
 
-  getPlaces() {
-    return new Promise((resolve, reject) => {
-      if (this.hasPlaces()) {
-        // Just get current places; no need to generate new places.
-        // Use $in query instead of Promise.all, or single query of places using
-        // eventId.
-        Promise.all(this.places.map((id) => {
-          return Place.fromId(id);
-        })).then((places) => {
-          resolve(places);
-        }).catch((err) => {
-          reject(err);
-        });
-      } else { // Event doesn't already have places
-        this.generatePlaces().then((places) => {
-          resolve(places);
-        }).catch((err) => {
-          reject(err);
-        });
-      }
-    });
-    
-  }
-
   addPlaces(places) {
     this.places = places.map((place) => place._id);
   }
 
   hasPlaces() {
     return this.places && (this.places.length > 0);
-  }
-
-  getSearchParams() {
-    var result = {};
-    result.term = this.search;
-    result.limit = search.limit;
-    result.sort = search.sort;
-    result.category_filter = search.category;
-    result.radius_filter = Util.milesToMeters(this.location.radius);
-    if (this.location.type === 'address') {
-      result.location = this.location.address;
-    } else if (this.location.type === 'coord') {
-      result.ll = `${this.location.lat},${this.location.long}`;
-    }
-    result.actionlinks = search.shouldIncludeActionLinks;
-    return result;
   }
 
   getSolution() {
@@ -190,26 +189,12 @@ class Event {
     this.solution = ObjectId(solutionId);
   }
 
-  addIsOver() {
-    this.isOver = true;
-  }
-
-  static solutionIdFromActions(actions) {
-    if (actions == null || actions.length === 0) {
-      console.log(`Error in solutionIdFromActions: no actions provided`);
-      return;
-    }
-    var selections = _.reduce(actions, (memo, action) => {
-      return memo.concat(action.selections);
-    }, []);
-    var posSelections = _.filter(selections, (sel) => sel.isSelected );
-    var posSelectionsCountByPlace = _.countBy(posSelections, (sel) => sel.place );
-    var solutionId = _.max(_.keys(posSelectionsCountByPlace), (place) => posSelectionsCountByPlace[place] );
-    return solutionId;
-  }
-
   hasSolution() {
     return !!this.solution;
+  }
+
+  addIsOver() {
+    this.isOver = true;
   }
 
   saveActions(actions) {
@@ -238,6 +223,20 @@ class Event {
 
   addActions(actions) {
     this.actions = actions.map((action) => action._id );
+  }
+
+  static solutionIdFromActions(actions) {
+    if (actions == null || actions.length === 0) {
+      console.log(`Error in solutionIdFromActions: no actions provided`);
+      return;
+    }
+    var selections = _.reduce(actions, (memo, action) => {
+      return memo.concat(action.selections);
+    }, []);
+    var posSelections = _.filter(selections, (sel) => sel.isSelected );
+    var posSelectionsCountByPlace = _.countBy(posSelections, (sel) => sel.place );
+    var solutionId = _.max(_.keys(posSelectionsCountByPlace), (place) => posSelectionsCountByPlace[place] );
+    return solutionId;
   }
 
   static fromJson(data) {

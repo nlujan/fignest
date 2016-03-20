@@ -176,6 +176,25 @@ class Event {
     // save place maybe
     // resolve place
     // mark isOver as true
+    return new Promise((resolve, reject) => {
+      Action.actionsFromEventId(this._id).then((actions) => {
+        var solution = this.constructor.solutionFromActions(actions);
+
+        
+        resolve(solution);
+      });
+    });
+    
+  }
+
+  static solutionFromActions(actions) {
+    var selections = _.reduce(actions, (memo, action) => {
+      return memo.concat(action.selections);
+    }, []);
+    var posSelections = _.filter(selections, (sel) => sel.isSelected );
+    var posSelectionsCountByPlace = _.countBy(posSelections, (sel) => sel.place );
+    var solution = _.max(_.keys(posSelectionsCountByPlace), (place) => posSelectionsCountByPlace[place] );
+    return solution;
   }
 
   hasSolution() {

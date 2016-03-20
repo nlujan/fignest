@@ -1,9 +1,38 @@
 ### Users/Auth
-todo
+
+Users (currently only supporting facebook auth).
+
+###### Representation
+```js
+{
+  "_id": (String) Id of user,
+  "displayName": (String, optional) Display name,
+  "facebook": {
+    "name": (String) Name from facebook,
+    "id": (String) Id from facebook
+  }
+}
+```
+
+###### Endpoints
+```js
+GET /users
+
+response: (Array) <User Object>s
+```
+
+```js
+POST /users
+
+request: <User Object>
+
+response: <User Object>
+```
+___
 
 ### Events
 
-An event is a fig. It is created by a single user who is able to invite others. Events generate places that users decide between. Users perform actions on an event, resulting in a solution.
+An event is a fig, created by a single user who is able to invite others. Events generate places that users decide between. Users perform actions on an event, resulting in a solution.
 
 ###### Representation
 ```js

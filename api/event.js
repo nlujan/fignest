@@ -1,15 +1,5 @@
 'use strict';
 
-// var sampleEvent = {
-//   "name": "Sample3",
-//   "location": {
-//     "type": "address",
-//     "address": "1600 Pennsylvania Ave NW, Washington, DC 20500"
-//   },
-//   "users": [],
-//   "search": "sushi"
-// };
-
 var Mongo = require('./mongo');
 var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
@@ -28,7 +18,6 @@ const search = {
   sort: 2,
   shouldIncludeActionLinks: true
 };
-
 
 class Event {
 	constructor(params) {
@@ -65,10 +54,6 @@ class Event {
 
   asDocument() {
     return this;
-  }
-
-  sendInvitations() {
-
   }
 
   getSearchParams() {
@@ -268,3 +253,13 @@ class Event {
 }
 
 module.exports = Event;
+
+// var sampleEvent = {
+//   "name": "Sample3",
+//   "location": {
+//     "type": "address",
+//     "address": "1600 Pennsylvania Ave NW, Washington, DC 20500"
+//   },
+//   "users": [],
+//   "search": "sushi"
+// };

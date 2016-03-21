@@ -3,6 +3,7 @@
 var Mongo = require('./mongo');
 var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
+var Event = require('./event');
 
 class User {
 	constructor(params) {
@@ -31,6 +32,23 @@ class User {
     });
   }
 
+  getInvitations() {
+    return new Promise((resolve, reject) => {
+      // Improve query
+      var cursor = db.collection('events').find({
+        users: this._id,
+        isOver: false
+      });
+      cursor.toArray((err, invitations) => {
+        if (err) {
+          console.log(`Error getting invitations for user: ${this}`, err);
+          reject(err);
+        }
+        resolve(invitations.map((inv) => Event.fromJson(inv) ));
+      });
+    });
+  }
+
   static allUsers() {
     return new Promise((resolve, reject) => {
       var cursor = db.collection('users').find();
@@ -40,6 +58,18 @@ class User {
           reject(err);
         }
         resolve(users.map((user) => this.fromJson(user) ));
+      });
+    });
+  }
+
+  static fromId(_id) {
+    return new Promise((resolve, reject) => {
+      db.collection('users').findOne({ _id: ObjectId(_id) }, (err, res) => {
+        if (err) {
+          console.log(`Error finding user with _id: ${_id}`, err);
+          reject(err);
+        }
+        resolve(this.fromJson(res));
       });
     });
   }

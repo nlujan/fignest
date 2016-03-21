@@ -85,7 +85,7 @@ class Place {
         _id: ObjectId(_id)
       }, (err, res) => {
         if (err) {
-          console.log(`error finding place with _id:${_id}`);
+          console.log(`Error finding place with _id:${_id}`, err);
           reject(err);
         }
         resolve(new this(res));

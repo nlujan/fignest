@@ -245,7 +245,7 @@ class Event {
     params.name = data.name;
     params.location = data.location;
     params.location.radius = data.location.radius || 1;
-    params.users = data.users;
+    params.users = data.users.map((user) => ObjectId(user));
     params.search = data.search || '';
     params.isOver = data.isOver == null ? false : data.isOver;
     params.limit = data.limit || 5;

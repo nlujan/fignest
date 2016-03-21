@@ -42,6 +42,16 @@ function run() {
     });
   });
 
+  app.get('/users/:userId/invitations', (req, res) => {
+    User.fromId(req.params.userId).then((user) => {
+      return user.getInvitations();
+    }).then((invitations) => {
+      res.status(200).json(invitations.map((inv) => inv.asJson() ));
+    }).catch((err) => {
+      res.status(500).json(err);
+    });
+  });
+
   app.get('/events/:eventId', (req, res) => {
     Event.fromId(req.params.eventId).then((event) => {
       res.status(200).json(event.asJson());

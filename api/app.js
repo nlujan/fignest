@@ -18,17 +18,12 @@ function run() {
   var User = require('./user');
   var db = Mongo.db();
 
-  // var Place = require('./place');
-  // var YelpApi = require('./yelp-api');
-  // var _ = require('underscore');
-
-
-
   // API
   app.get('/users', (req, res) => {
     User.allUsers().then((users) => {
       res.status(200).json(users.map((user) => user.asJson() ));
     }).catch((err) => {
+      console.log(`Error in GET /users`, err);
       res.status(500).json(err);
     });
   });
@@ -38,6 +33,7 @@ function run() {
     user.save().then((user) => {
       res.status(200).json(user.asJson());
     }).catch((err) => {
+      console.log(`Error in POST /users`, err);
       res.status(500).json(err);
     });
   });
@@ -48,6 +44,7 @@ function run() {
     }).then((invitations) => {
       res.status(200).json(invitations.map((inv) => inv.asJson() ));
     }).catch((err) => {
+      console.log(`Error in GET /users/:userId/invitations`, err);
       res.status(500).json(err);
     });
   });
@@ -56,6 +53,7 @@ function run() {
     Event.fromId(req.params.eventId).then((event) => {
       res.status(200).json(event.asJson());
     }).catch((err) => {
+      console.log(`Error in GET /events/:eventId`, err);
       res.status(500).json(err);
     });
   });
@@ -65,6 +63,7 @@ function run() {
     event.save().then((val) => {
       res.status(200).json(val.asJson());
     }).catch((err) => {
+      console.log(`Error in POST /events`, err);
       res.status(500).json(err);
     });
   });

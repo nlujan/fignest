@@ -42,9 +42,7 @@ class Event {
           console.log(`Error saving event to db: ${this}`, err);
           reject(err);
         }
-        // resolve(res)?
-        // resolve(new this)?
-        resolve(this);
+        resolve(this.constructor.fromJson(this));
       });
     });
 	}

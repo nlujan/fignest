@@ -24,8 +24,7 @@ class Action {
           console.log(`Error saving action to db: ${this}`, err);
           reject(err);
         }
-        // resolve(res)?
-        resolve(this);
+        resolve(this.constructor.fromJson(this));
       });
     });
   }

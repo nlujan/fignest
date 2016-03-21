@@ -7,8 +7,7 @@
 //     "address": "1600 Pennsylvania Ave NW, Washington, DC 20500"
 //   },
 //   "users": [],
-//   "search": "sushi",
-//   "places": [yelpIds]
+//   "search": "sushi"
 // };
 
 var Mongo = require('./mongo');
@@ -17,16 +16,18 @@ var ObjectId = require('mongodb').ObjectID;
 var Place = require('./place');
 var Action = require('./action');
 var YelpApi = require('./yelp-api');
+var Util = require('./util');
 var _ = require('underscore');
 
 const search = {
   category: 'food',
+  // Number of results to return from Yelp search, not to be confused with the
+  // number of places to consider as a solution.
   limit: 20,
   // For sort, 0 = best matched, 1 = distance, 2 = highest rated
   sort: 2,
   shouldIncludeActionLinks: true
 };
-const placesPerEvent = 5;
 
 
 class Event {
@@ -36,11 +37,11 @@ class Event {
     this.location = params.location;
     this.users = params.users;
     this.search = params.search;
-    this.isOpen = params.isOpen;
     this.isOver = params.isOver;
     this.limit = params.limit;
     this.places = params.places;
     this.actions = params.actions;
+    this.solution = params.solution;
 	}
 
 	save() {
@@ -51,13 +52,15 @@ class Event {
           reject(err);
         }
         // resolve(res)?
+        // resolve(new this)?
         resolve(this);
       });
     });
 	}
 
 	asJson() {
-    return this;
+    var eventKeysToOmit = ['isOver', 'places', 'actions', 'solution'];
+    return _.omit(this, eventKeysToOmit);
 	}
 
   asDocument() {
@@ -68,13 +71,52 @@ class Event {
 
   }
 
+  getSearchParams() {
+    var result = {};
+    result.term = this.search;
+    result.limit = search.limit;
+    result.sort = search.sort;
+    result.category_filter = search.category;
+    result.radius_filter = Util.milesToMeters(this.location.radius);
+    if (this.location.type === 'address') {
+      result.location = this.location.address;
+    } else if (this.location.type === 'coord') {
+      result.ll = `${this.location.lat},${this.location.long}`;
+    }
+    result.actionlinks = search.shouldIncludeActionLinks;
+    return result;
+  }
+
+  getPlaces() {
+    return new Promise((resolve, reject) => {
+      if (this.hasPlaces()) {
+        // Just get current places; no need to generate new places.
+        // Use $in query instead of Promise.all, or single query of places using
+        // eventId.
+        Promise.all(this.places.map((id) => {
+          return Place.fromId(id);
+        })).then((places) => {
+          resolve(places);
+        }).catch((err) => {
+          reject(err);
+        });
+      } else { // Event doesn't already have places
+        this.generatePlaces().then((places) => {
+          resolve(places);
+        }).catch((err) => {
+          reject(err);
+        });
+      }
+    });
+  }
+
   generatePlaces() {
     // Might be better way to scope _places here
     var _places;
     return new Promise((resolve, reject) => {
       YelpApi.search(this.getSearchParams()).then((yelpBusinesses) => {
-        // pick 5 businesses at random
-        yelpBusinesses = _.sample(yelpBusinesses, placesPerEvent);
+        // pick this.limit businesses at random
+        yelpBusinesses = _.sample(yelpBusinesses, this.limit);
 
         var places = yelpBusinesses.map((biz) => Place.fromYelpJson(biz));
         return Promise.all(places.map((place) => place.getImages()));
@@ -99,52 +141,12 @@ class Event {
     });
   }
 
-  getPlaces() {
-    return new Promise((resolve, reject) => {
-      if (this.hasPlaces()) {
-        // Just get current places; no need to generate new places.
-        // Use $in query instead of Promise.all, or single query of places using
-        // eventId.
-        Promise.all(this.places.map((id) => {
-          return Place.fromId(id);
-        })).then((places) => {
-          resolve(places);
-        }).catch((err) => {
-          reject(err);
-        });
-      } else { // Event doesn't already have places
-        this.generatePlaces().then((places) => {
-          resolve(places);
-        }).catch((err) => {
-          reject(err);
-        });
-      }
-    });
-    
-  }
-
   addPlaces(places) {
     this.places = places.map((place) => place._id);
   }
 
   hasPlaces() {
     return this.places && (this.places.length > 0);
-  }
-
-  getSearchParams() {
-    var result = {};
-    result.term = this.search;
-    result.limit = search.limit;
-    result.sort = search.sort;
-    result.category = search.category;
-    result.radius = this.location.radius;
-    if (this.location.type === 'address') {
-      result.location = this.location.address;
-    } else if (this.location.type === 'coord') {
-      result.ll = `${this.location.lat},${this.location.long}`;
-    }
-    result.actionlinks = search.shouldIncludeActionLinks;
-    return result;
   }
 
   getSolution() {
@@ -166,18 +168,33 @@ class Event {
   }
 
   generateSolution() {
-    // get actions - query actions collection
-    // underscore groupby or smth
-    // underscore max
-    // add solution to event
-    // save event
-    // add isSolution to place maybe
-    // save place maybe
-    // resolve place
+    var _solutionId;
+    return new Promise((resolve, reject) => {
+      Action.actionsFromEventId(this._id).then((actions) => {
+        _solutionId = this.constructor.solutionIdFromActions(actions);
+        this.addSolution(_solutionId);
+        this.addIsOver();
+        return this.save();
+      }).then((event) => {
+        return Place.fromId(_solutionId);
+      }).then((solution) => {
+        resolve(solution);
+      }).catch((err) => {
+        reject(err);
+      });
+    });
+  }
+
+  addSolution(solutionId) {
+    this.solution = ObjectId(solutionId);
   }
 
   hasSolution() {
     return !!this.solution;
+  }
+
+  addIsOver() {
+    this.isOver = true;
   }
 
   saveActions(actions) {
@@ -188,7 +205,7 @@ class Event {
     return new Promise((resolve, reject) => {
       // Bulk save?
       // Save actions
-      Promise.all(actions.map((action) => action.save())).then((actions) => {
+      Promise.all(actions.map((action) => action.save() )).then((actions) => {
         _actions = actions;
 
         // Add actions to event
@@ -208,15 +225,28 @@ class Event {
     this.actions = actions.map((action) => action._id );
   }
 
+  static solutionIdFromActions(actions) {
+    if (actions == null || actions.length === 0) {
+      console.log(`Error in solutionIdFromActions: no actions provided`);
+      return;
+    }
+    var selections = _.reduce(actions, (memo, action) => {
+      return memo.concat(action.selections);
+    }, []);
+    var posSelections = _.filter(selections, (sel) => sel.isSelected );
+    var posSelectionsCountByPlace = _.countBy(posSelections, (sel) => sel.place );
+    var solutionId = _.max(_.keys(posSelectionsCountByPlace), (place) => posSelectionsCountByPlace[place] );
+    return solutionId;
+  }
+
   static fromJson(data) {
     var params = {};
     params._id = data._id || null;
     params.name = data.name;
     params.location = data.location;
     params.location.radius = data.location.radius || 1;
-    params.users = data.users;
+    params.users = data.users.map((user) => ObjectId(user));
     params.search = data.search || '';
-    params.isOpen = data.isOpen == null ? false : data.isOpen;
     params.isOver = data.isOver == null ? false : data.isOver;
     params.limit = data.limit || 5;
     return new this(params);

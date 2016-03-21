@@ -1,9 +1,38 @@
 ### Users/Auth
-todo
+
+Users (currently only supporting facebook auth).
+
+###### Representation
+```js
+{
+  "_id": (String) Id of user,
+  "displayName": (String, optional) Display name,
+  "facebook": {
+    "name": (String) Name from facebook,
+    "id": (String) Id from facebook
+  }
+}
+```
+
+###### Endpoints
+```js
+GET /users
+
+response: (Array) <User Object>s
+```
+
+```js
+POST /users
+
+request: <User Object>
+
+response: <User Object>
+```
+___
 
 ### Events
 
-An event is a fig. It is created by a single user who is able to invite others. Events generate places that users decide between. Users perform actions on an event, resulting in a solution.
+An event is a fig, created by a single user who is able to invite others. Events generate places that users decide between. Users perform actions on an event, resulting in a solution.
 
 ###### Representation
 ```js
@@ -19,7 +48,6 @@ An event is a fig. It is created by a single user who is able to invite others. 
   },
   "users": (Array) ids (String) of users invited to event. The id of the event creator should come first in the array,
   "search" (String, optional) Additional search terms e.g. sushi, brunch,
-  "isOver": (Boolean, optional) Whether the event has happened. Defaults to false,
   "limit": (Number, optional) Number of places considered for the solution to this event. Defaults to 5
 }
 ```
@@ -117,8 +145,8 @@ response: (Array) <Action Object>s
 ___
 
 ### Notes
-* For simplcity, one representation is used for both `GET` and `POST` requests. However, you can omit `id` when creating a new resource (since it won't exist yet). The response to the creation will be the same resource, with the newly created `id` included.
+* For simplcity, one representation is used for both `GET` and `POST` requests. However, you can omit `_id` when creating a new resource (since it won't exist yet). The response to the creation will be the same resource, with the newly created `id` included.
 * Likewise, an optional parameter may be omitted when creating resources. They will always be returned when reading a resource, with a value of `null` if it doesn't exist (and has no default value).
-* Actions should be submitted only once for an event. Once submitted, the event will be marked as completed.
+* Actions should be submitted only once for an event.
 * If a user quits an event midway (or never starts), an action should not be submitted for the user. I.e. they should not affect the solution to the event.
 

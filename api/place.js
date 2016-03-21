@@ -73,7 +73,6 @@ class Place {
   }
 
   static fromYelpJson(data, eventId) {
-    
     // Add eventId to data
     data = _.extend(data, { eventId: eventId});
 
@@ -86,7 +85,7 @@ class Place {
         _id: ObjectId(_id)
       }, (err, res) => {
         if (err) {
-          console.log(`error finding place with _id:${_id}`);
+          console.log(`Error finding place with _id:${_id}`, err);
           reject(err);
         }
         resolve(new this(res));
@@ -94,10 +93,6 @@ class Place {
     });
   }
 
-  // static fromYelpId(num) {
-  //   // yelp
-  //   return new this(num);
-  // }
 }
 
 module.exports = Place;

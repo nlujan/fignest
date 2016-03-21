@@ -7,9 +7,11 @@ Users (currently only supporting facebook auth).
 {
   "_id": (String) Id of user,
   "displayName": (String, optional) Display name,
+  "email": (String, optional) Email,
   "facebook": {
     "name": (String) Name from facebook,
-    "id": (String) Id from facebook
+    "id": (String) Id from facebook,
+    "email": (String) Email from facebook
   }
 }
 ```

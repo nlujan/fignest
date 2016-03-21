@@ -30,7 +30,7 @@ function run() {
 
   app.post('/users', (req, res) => {
     var user = User.fromJson(req.body);
-    user.save().then((user) => {
+    user.createOrUpdate().then((user) => {
       res.status(200).json(user.asJson());
     }).catch((err) => {
       console.log(`Error in POST /users`, err);

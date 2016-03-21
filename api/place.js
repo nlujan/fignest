@@ -6,6 +6,8 @@ var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
 var _ = require('underscore');
 
+const numImagesPerPlace = 6;
+
 class Place {
   constructor(params) {
     this._id = params._id;
@@ -31,13 +33,17 @@ class Place {
   getImages() {
   	return new Promise((resolve, reject) => {
   		YelpApi.getImages(this.yelpId).then((imageUrls) => {
-        this.images = imageUrls;
+        this.addImages(imageUrls);
         // resolve(this.images);
         resolve(this);
       }).catch((err) => {
         reject(err);
       });
   	});
+  }
+
+  addImages(urls) {
+    this.images = _.sample(urls, numImagesPerPlace);
   }
 
   save() {

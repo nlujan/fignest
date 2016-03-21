@@ -62,7 +62,7 @@ class Place {
   	let params = {};
   	params._id = data._id || null;
   	params.yelpId = data.id;
-  	params.event = data.eventId;
+  	params.event = ObjectId(data.eventId);
   	params.name = data.name;
   	params.rating = data.rating;
   	params.urls = {

@@ -7,6 +7,8 @@ Mongo.connect().then((err) => {
   console.log(err);
 });
 
+const port = process.env.PORT || 3010;
+
 function run() {
 
   var express = require('express');
@@ -102,7 +104,7 @@ function run() {
   });
 
   // Start server
-  app.listen(3010, function() {
+  app.listen(port, function() {
     console.log('App server started...');
   });
 }

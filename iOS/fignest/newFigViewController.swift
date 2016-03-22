@@ -16,6 +16,8 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
     var selectedNames:[String] = []
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tokenInputView: CLTokenInputView!
+    @IBOutlet var locationBtn: UIButton!
+    @IBOutlet var locationActivityIndicator: UIActivityIndicatorView!
     
     @IBOutlet var locationTextField: UITextField!
     @IBOutlet var titleTextField: UITextField!
@@ -25,10 +27,53 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
     
 
     @IBAction func createFig(sender: AnyObject) {
-        print("\(locationTextField.text!)")
-        print("\(titleTextField.text!)")
-        print("\(foodTypeTextField.text!)")
-        print(selectedNames)
+        
+        var nilInputs: [String] = []
+        
+        if (titleTextField.text! == "") {
+            nilInputs.append("title")
+        }
+        
+        if (locationTextField.text! == "") {
+            nilInputs.append("location")
+        }
+        
+        if (selectedNames == []) {
+            nilInputs.append("friends")
+        }
+        
+        if (nilInputs.count > 0) {
+            
+            let invalidInputString = "Please enter: " + nilInputs.joinWithSeparator(", ")
+            
+            let attributedString = NSAttributedString(string: "Invalid input!", attributes: [
+                NSFontAttributeName : UIFont.systemFontOfSize(15), //your font here,
+                NSForegroundColorAttributeName : UIColor.redColor()
+                ])
+            
+            let alert = UIAlertController(title: "Invalid input!", message: invalidInputString, preferredStyle: .Alert)
+            
+            alert.setValue(attributedString, forKey: "attributedTitle")
+            alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
+            self.presentViewController(alert, animated: true){}
+        } else {
+            
+            APIRequestHandler.sharedInstance.createNewFig(titleTextField.text!, address: locationTextField.text!, users: selectedNames, search: foodTypeTextField.text!)
+            
+            //APIRequestHandler.sharedInstance.getAllUsers()
+        }
+        
+//        print("\(locationTextField.text!)")
+//        print(locationTextField.text == nil)
+//        print("\(titleTextField.text!)")
+//        print("\(foodTypeTextField.text!)")
+//        print(selectedNames)
+//        
+
+        
+        
+        
+
     }
     
     
@@ -43,6 +88,9 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
             [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         
+        locationActivityIndicator.hidden = true
+        
+        
 //        self.tokenInputView.layer.borderWidth = 0.5
 //        self.tokenInputView.layer.borderColor = UIColor.grayColor().CGColor
 //        
@@ -53,6 +101,10 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
 //        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
 //        view.addGestureRecognizer(tap)
         
+        let origImage = UIImage(named: "CurrentLocation");
+        let tintedImage = origImage?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        locationBtn.setImage(tintedImage, forState: .Normal)
+        locationBtn.tintColor = UIColor.blueColor()
         
         
         //test autocomplete code
@@ -66,11 +118,13 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
             "Nikko Jo James"])
         
         self.tokenInputView.placeholderText = "Enter a name ";
-        self.tokenInputView.accessoryView = self.contactAddButton();
+        //self.tokenInputView.accessoryView = self.contactAddButton();
         self.tokenInputView.drawBottomBorder = true;
         self.tokenInputView.delegate = self
         
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
+        self.tableView.hidden = true;
         
     }
     
@@ -87,6 +141,11 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
     }
     
     @IBAction func getUserLocation(sender: AnyObject) {
+        locationBtn.hidden = true
+        locationActivityIndicator.hidden = false
+        locationActivityIndicator.startAnimating()
+        
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
@@ -103,7 +162,6 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
                 print(error)
             }
             else {
-//                print(placemarks)
                 let pm = CLPlacemark(placemark: placemarks?[0] as CLPlacemark!)
                 self.displayLocationInfo(pm)
             }
@@ -117,7 +175,7 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
     
     func displayLocationInfo(placemark: CLPlacemark) {
         //stop updating location to save battery life
-        locationManager.stopUpdatingLocation()
+        
         
         if (placemark.subThoroughfare != nil) {
             let address = "\(placemark.subThoroughfare!) \(placemark.thoroughfare!), \(placemark.locality!), \(placemark.administrativeArea!)"
@@ -127,6 +185,14 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
             
             
             locationTextField.text = address
+            
+            locationBtn.hidden = false
+            locationActivityIndicator.hidden = true
+            locationActivityIndicator.stopAnimating()
+            
+            
+            //moved to bottom
+            locationManager.stopUpdatingLocation()
         }
 
     }
@@ -190,7 +256,7 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
     }
     
     func tokenInputViewDidBeginEditing(aView: CLTokenInputView) {
-        aView.accessoryView = self.contactAddButton()
+        //aView.accessoryView = self.contactAddButton()
         self.view.layoutIfNeeded()
     }
     

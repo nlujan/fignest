@@ -20,7 +20,9 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     //var tableImages: [String] = ["pic1.jpg", "pic2.jpg", "pic3.jpg", "pic4.jpg", "pic5.jpg", "pic6.jpg"]
     var tableImages: [UIImage] = []
     
-    var progressVals: [Float] = [0.2, 0.4]
+    var userImages: [UIImage] = []
+    
+    var progressVals: [Float] = [0, 0]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +31,16 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         tableImages = APIRequestHandler.sharedInstance.getImages()
         
-        APIRequestHandler.sharedInstance.createNewFig();
+        
+        var userImg: UIImage!
+        var userID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
+        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(userID)/picture?type=square&height=60&width=60")
+        if let data = NSData(contentsOfURL: facebookProfileUrl!) {
+            userImg = UIImage(data: data)!
+        }
+        
+        userImages.append(userImg)
+        userImages.append(userImg)
 
         // Do any additional setup after loading the view.
     }
@@ -58,10 +69,20 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         print("cell \(indexPath.row) selected")
         animateCellAtIndexPath(collectionView, indexPath: indexPath)
         
+        imageIndex += 1;
+        
         selections.append( (6 * imageIndex) + indexPath.row)
         
-        if (imageIndex < 4) {
-            imageIndex += 1;
+        SocketIOManager.sharedInstance.sendProgressUpdate(Float(imageIndex), completionHandler: { (progress) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                self.progressVals[1] = progress/5.0
+                self.playerProgressTable.reloadData()
+                
+            })
+        })
+        
+        if (imageIndex < 5) {
             //collectionView.reloadData()
             
             collectionView.performBatchUpdates(
@@ -69,6 +90,10 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
                     collectionView.reloadSections(NSIndexSet(index: 0))
                 }, completion: { (finished:Bool) -> Void in
             })
+            
+            
+            progressVals[0] = Float(imageIndex)/5.0
+            playerProgressTable.reloadData()
             
         } else {
             print(selections)
@@ -122,7 +147,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         // Configure the cell...
         
         //cell.playerImage.image = UIImage(named: tableImages[indexPath.row])
-        cell.playerImage.image = tableImages[indexPath.row]
+        cell.playerImage.image = userImages[indexPath.row]
         
         cell.playerProgressBar.progress = progressVals[indexPath.row]
         

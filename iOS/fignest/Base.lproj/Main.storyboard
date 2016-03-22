@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="s3e-Qf-39x">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -197,23 +197,16 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="e.g. brunch, sushi" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="5AB-cB-FSW">
-                                <rect key="frame" x="26" y="479" width="328" height="30"/>
+                                <rect key="frame" x="26" y="449" width="328" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="center of search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uPx-KG-Q6r">
-                                <rect key="frame" x="27" y="202" width="286" height="30"/>
+                                <rect key="frame" x="27" y="202" width="298" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vjA-AF-L1r">
-                                <rect key="frame" x="321" y="202" width="46" height="30"/>
-                                <state key="normal" title="Loc"/>
-                                <connections>
-                                    <action selector="getUserLocation:" destination="FXQ-NU-kiX" eventType="touchUpInside" id="IXh-E4-Z9C"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VYx-0F-NgL">
                                 <rect key="frame" x="27" y="256" width="83" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
@@ -232,11 +225,11 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e6W-e7-Em5" customClass="CLTokenInputView" customModule="fignest" customModuleProvider="target">
-                                <rect key="frame" x="26" y="280" width="328" height="40"/>
+                                <rect key="frame" x="26" y="280" width="328" height="70"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="36" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vaR-ZL-AM4">
-                                <rect key="frame" x="26" y="323" width="326" height="81"/>
+                                <rect key="frame" x="20" y="358" width="326" height="86"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="36" id="uld-OA-G0w">
@@ -254,13 +247,13 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WDI-Sw-QbX">
-                                <rect key="frame" x="26" y="445" width="66" height="27"/>
+                                <rect key="frame" x="26" y="417" width="66" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" red="0.53333333329999999" green="0.17254901959999999" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.64999997615814209" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fwf-F9-hPh">
-                                <rect key="frame" x="101" y="448" width="71" height="21"/>
+                                <rect key="frame" x="100" y="420" width="71" height="21"/>
                                 <attributedString key="attributedText">
                                     <fragment content="optional">
                                         <attributes>
@@ -272,6 +265,19 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="TcL-H1-TVd">
+                                <rect key="frame" x="333" y="207" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vjA-AF-L1r">
+                                <rect key="frame" x="325" y="202" width="30" height="35"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <state key="normal" image="CurrentLocation">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="getUserLocation:" destination="FXQ-NU-kiX" eventType="touchUpInside" id="IXh-E4-Z9C"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -285,6 +291,8 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="foodTypeTextField" destination="5AB-cB-FSW" id="7Ul-yZ-bk6"/>
+                        <outlet property="locationActivityIndicator" destination="TcL-H1-TVd" id="XMp-7A-aGM"/>
+                        <outlet property="locationBtn" destination="vjA-AF-L1r" id="ZpL-qo-ioY"/>
                         <outlet property="locationTextField" destination="uPx-KG-Q6r" id="zTa-hX-CT9"/>
                         <outlet property="tableView" destination="vaR-ZL-AM4" id="0ui-3H-16L"/>
                         <outlet property="titleTextField" destination="QXn-aw-e3T" id="mg7-ap-m7S"/>
@@ -346,6 +354,10 @@
                                     <outlet property="delegate" destination="eux-Cr-Jmm" id="cHF-Vi-QHy"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ucv-7y-fs0">
+                                <rect key="frame" x="168" y="526" width="39" height="30"/>
+                                <state key="normal" title="Begin"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -363,7 +375,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SvT-Fz-U28" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3608.5" y="1149.5"/>
+            <point key="canvasLocation" x="3223.5" y="1160.5"/>
         </scene>
         <!--Post Waiting-->
         <scene sceneID="3TU-mT-pJs">
@@ -414,7 +426,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ZL-AJ-Dxi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4866.5" y="1110.5"/>
+            <point key="canvasLocation" x="4632.5" y="1118.5"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="lCF-a2-uMW">
@@ -505,7 +517,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pZd-8k-iyd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3150.5" y="385.5"/>
+            <point key="canvasLocation" x="3641.5" y="1160.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4da-O8-1Jl">
@@ -562,7 +574,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h4m-ay-9ng" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2796" y="1149"/>
+            <point key="canvasLocation" x="2818" y="1111"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PxZ-3R-qqy">
@@ -581,10 +593,11 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="duh-JL-zF7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4054" y="1110"/>
+            <point key="canvasLocation" x="4055.5" y="1160.5"/>
         </scene>
     </scenes>
     <resources>
+        <image name="CurrentLocation" width="15" height="15"/>
         <image name="food-salad-restaurant-person" width="1280" height="887"/>
     </resources>
 </document>

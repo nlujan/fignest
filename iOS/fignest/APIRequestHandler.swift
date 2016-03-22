@@ -12,6 +12,8 @@ class APIRequestHandler: NSObject {
     
     static let sharedInstance = APIRequestHandler()
     
+    let apiURL: String = "https://55cf99df.ngrok.io"
+    
     var imagesURLs = [
         "https://s3-media4.fl.yelpcdn.com/bphoto/0OIgMcReW_hlcOQYNrKWjA/258s.jpg",
         "https://s3-media1.fl.yelpcdn.com/bphoto/nkau8U5Z48-dl4ICQZBDRw/258s.jpg",
@@ -71,7 +73,7 @@ class APIRequestHandler: NSObject {
          return getImagesFromUrlStringArray(imagesURLs)
     }
     
-    func get(postEndpoint : String) {
+    private func get(postEndpoint : String) {
         
         // Setup the session to make REST GET call.  Notice the URL is https NOT http!!
         let session = NSURLSession.sharedSession()
@@ -106,7 +108,7 @@ class APIRequestHandler: NSObject {
         }).resume()
     }
     
-    func post(postParams : [String: AnyObject], postEndpoint : String) {
+    private func post(postParams : [String: AnyObject], postEndpoint : String) {
         let url = NSURL(string: postEndpoint)!
         let session = NSURLSession.sharedSession()
         
@@ -132,43 +134,80 @@ class APIRequestHandler: NSObject {
             }
             
             // Read the JSON
-            if let postString = NSString(data:data!, encoding: NSUTF8StringEncoding) as? String {
-                // Print what we got from the call
-                //print("POST: " + postString)
-                
-                // Perform function that is desired
-                self.performSelectorOnMainThread("printPostResult:", withObject: postString, waitUntilDone: false)
+            
+            do {
+                if let postString = NSString(data:data!, encoding: NSUTF8StringEncoding) as? String {
+                    // Print what we got from the call
+                    print("POST: " + postString)
+                    
+                    // Perform function that is desired
+                    
+                    
+                    let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                    
+                    //print("fucking ID!: \(jsonDictionary["_id"] as! String)")
+                    
+                    //self.performSelectorOnMainThread("printPostResult:", withObject: data, waitUntilDone: false)
+                }
+            } catch {
+                print("bad things happened")
             }
             
         }).resume()
     }
     
-    func createNewFig() {
+    func createNewFig(name: String, address: String, users: [String], search: String) {
         
         let jsonObject: [String: AnyObject] = [
-            "name": "Naim",
+            "name": name,
             "location": [
                 "type": "address",
-                "address": "1600 Pennsylvania Ave NW, Washington, DC 20500"
+                "address": address
             ],
-            "search":"sushi"
+            "users": [],
+            "search": search
         ]
         
-        post(jsonObject, postEndpoint: "https://4c76e7eb.ngrok.io/events/")
+        post(jsonObject, postEndpoint: "\(apiURL)/events/")
         
-        //get("https://4c76e7eb.ngrok.io/events/56ef1ceb6f0c73691ccdf190/places")
+        //get("https://01d7a946.ngrok.io/events/56ef1ceb6f0c73691ccdf190/places")
         
     }
     
-    func printPostResult(text: String) {
+    func printPostResult(text: String) ->  String {
         //self.postResultLabel.text = "POST : " + text
-        print("POST : \(text)")
+        print("POST : \(text["_id"])")
+        return text
     }
     
     func updateIPLabel(text: String) {
         print("GET : \(text)")
         //self.ipLabel.text = "Your IP is " + text
     }
+    
+    func addUserToDatabase(name: String, fbID: String, email: String) {
+        
+        let jsonObject: [String: AnyObject] = [
+            "facebook": [
+                "name": name,
+                "id": fbID,
+                "email": email
+            ]
+        ]
+        
+        post(jsonObject, postEndpoint: "\(apiURL)/users")
+    }
+    
+    func getAllUsers() {
+        
+        get("\(apiURL)/users")
+    }
+    
+    func dataToArray(data: NSData!) {
+        
+        
+    }
+
     
 
 }

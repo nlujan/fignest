@@ -36,12 +36,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         if(FBSDKAccessToken.currentAccessToken() != nil) {
             
+            //var name: String = prefs.stringForKey("userFBName")!
             
-            var name: String = prefs.stringForKey("userFBName")!
-            
-            print("token = \(accessToken.tokenString)")
-            print("User ID = \(accessToken.userID)")
-            print("User Name = \(name)")
+//            print("token = \(accessToken.tokenString)")
+//            print("User ID = \(accessToken.userID)")
+//            print("User Name = \(name)")
             
             
             takeUserToHomePage()
@@ -55,13 +54,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if(FBSDKAccessToken.currentAccessToken() != nil) {
-            print("already logged in")
-        }
-        else {
-            print("not logged in")
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -87,14 +79,21 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             
             var username: String = "none"
             
-            let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,first_name"], tokenString: userToken.tokenString, version: nil, HTTPMethod: "GET")
+            let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,first_name,last_name"], tokenString: userToken.tokenString, version: nil, HTTPMethod: "GET")
             req.startWithCompletionHandler({ (connection, result, error : NSError!) -> Void in
                 if(error == nil) {
-                    //print("result \(result["name"]!)")
+                    //print("result \(result["first_name"]!) \(result["last_name"]!)")
                     username = result["first_name"] as! String
                     self.prefs.setValue(username, forKey: "userFBName")
                     //print("result \(result["first_name"])")
                     //print(username)
+                    
+                    let name = "\(result["first_name"] as! String) \(result["last_name"] as! String)"
+                    let email = result["email"] as! String
+                    
+                    //post user to database
+                    APIRequestHandler.sharedInstance.addUserToDatabase(name, fbID: userID, email: email)
+        
                 }
                 else {
                     print("error \(error)")
@@ -103,7 +102,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             
             prefs.setValue(userID, forKey: "userFBID")
             //print(username)
-           
             
             
             takeUserToHomePage();

@@ -12,9 +12,8 @@ class SocketIOManager: NSObject {
     
     static let sharedInstance = SocketIOManager()
     
-    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://192.168.1.35:8080")!)
+    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://10.95.1.219:8080")!)
 
-    
     override init() {
         super.init()
     }
@@ -34,6 +33,15 @@ class SocketIOManager: NSObject {
         
         socket.on("userStatus") { ( dataArray, ack) -> Void in
             completionHandler(userList: dataArray[0] as! [[String: AnyObject]])
+        }
+    }
+    
+    
+    func sendProgressUpdate(progress: Float, completionHandler: (progress: Float) -> Void) {
+        socket.emit("progressMade", progress)
+        
+        socket.on("updateProgress") { ( dataArray, ack) -> Void in
+            completionHandler(progress: dataArray[0] as! Float)
         }
     }
 }

@@ -13,7 +13,7 @@ class FigsTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollecti
     @IBOutlet var figLabel: UILabel!
     @IBOutlet var userImageCollectionView: UICollectionView!
     
-    var numPics = [2, 4, 8]
+    var numPics = [18, 4, 8]
     
     var userID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
 

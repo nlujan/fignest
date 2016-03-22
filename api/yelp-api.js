@@ -13,10 +13,10 @@ const start = '';
 const imgSelector = '[data-photo-id] .photo-box-img';
 const attribute = 'src';
 var yelp = new Yelp({
-  consumer_key: '',
-  consumer_secret: '',
-  token: '',
-  token_secret: ''
+  consumer_key: 'K_C4kW5f7TDvoq7bB_4Z0w',
+  consumer_secret: 'Wiijly9VWQAkWFWAY-Q4cn4T150',
+  token: 'TsLL78ojlMFKoaD_haODwDrIwb9AUDl5',
+  token_secret: '9JM22dL0dlRCX_VyhItQscTU870'
 });
 
 class YelpApi {

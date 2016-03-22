@@ -12,7 +12,7 @@ class APIRequestHandler: NSObject {
     
     static let sharedInstance = APIRequestHandler()
     
-    let apiURL: String = "https://55cf99df.ngrok.io"
+    let apiURL: String = "https://9d460dd2.ngrok.io"
     
     var imagesURLs = [
         "https://s3-media4.fl.yelpcdn.com/bphoto/0OIgMcReW_hlcOQYNrKWjA/258s.jpg",

@@ -49,6 +49,26 @@ class User {
     });
   }
 
+  // Tries to find user. Creates new user on DB if one isn't found. Updates 
+  // user if found.
+  createOrUpdate() {
+    return new Promise((resolve, reject) => {
+      this.constructor.fromFacebookId(this.facebook.id).then((user) => {
+        if (!user) { // user doesn't exist via facebook
+          return this.save();
+        } else { // user exists via facebook
+          // Set new _id from existing user, then save.
+          this._id = user._id;
+          return this.save();
+        }
+      }).then((user) => {
+        resolve(this.constructor.fromJson(user));
+      }).catch((err) => {
+        reject(err);
+      });
+    });
+  }
+
   static allUsers() {
     return new Promise((resolve, reject) => {
       var cursor = db.collection('users').find();
@@ -70,6 +90,24 @@ class User {
           reject(err);
         }
         resolve(this.fromJson(res));
+      });
+    });
+  }
+
+  static fromFacebookId(id) {
+    return new Promise((resolve, reject) => {
+      db.collection('users').findOne({
+        "facebook.id": id
+      }, (err, res) => {
+        if (err) {
+          console.log(`Error finding user from facebook id: ${id}`, err);
+          reject(err);
+        }
+        if (!res) {
+          resolve();
+        } else {
+          resolve(this.fromJson(res));
+        }
       });
     });
   }

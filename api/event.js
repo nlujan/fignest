@@ -1,15 +1,5 @@
 'use strict';
 
-// var sampleEvent = {
-//   "name": "Sample3",
-//   "location": {
-//     "type": "address",
-//     "address": "1600 Pennsylvania Ave NW, Washington, DC 20500"
-//   },
-//   "users": [],
-//   "search": "sushi"
-// };
-
 var Mongo = require('./mongo');
 var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
@@ -28,7 +18,8 @@ const search = {
   sort: 2,
   shouldIncludeActionLinks: true
 };
-
+const eventRadiusDefault = 1;
+const eventLimitDefault = 6;
 
 class Event {
 	constructor(params) {
@@ -51,9 +42,7 @@ class Event {
           console.log(`Error saving event to db: ${this}`, err);
           reject(err);
         }
-        // resolve(res)?
-        // resolve(new this)?
-        resolve(this);
+        resolve(this.constructor.fromJson(this));
       });
     });
 	}
@@ -65,10 +54,6 @@ class Event {
 
   asDocument() {
     return this;
-  }
-
-  sendInvitations() {
-
   }
 
   getSearchParams() {
@@ -244,11 +229,11 @@ class Event {
     params._id = data._id || null;
     params.name = data.name;
     params.location = data.location;
-    params.location.radius = data.location.radius || 1;
+    params.location.radius = data.location.radius || eventRadiusDefault;
     params.users = data.users.map((user) => ObjectId(user));
     params.search = data.search || '';
     params.isOver = data.isOver == null ? false : data.isOver;
-    params.limit = data.limit || 5;
+    params.limit = data.limit || eventLimitDefault;
     return new this(params);
   }
 
@@ -268,3 +253,13 @@ class Event {
 }
 
 module.exports = Event;
+
+// var sampleEvent = {
+//   "name": "Sample3",
+//   "location": {
+//     "type": "address",
+//     "address": "1600 Pennsylvania Ave NW, Washington, DC 20500"
+//   },
+//   "users": [],
+//   "search": "sushi"
+// };

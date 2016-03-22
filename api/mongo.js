@@ -2,7 +2,8 @@
 
 var MongoClient = require('mongodb').MongoClient;
 // var ObjectId = require('mongodb').ObjectID;
-var url = 'mongodb://localhost:27017/test';
+// var url = 'mongodb://localhost:27017/test';
+var url = process.env.MONGOLAB_URI;
 var _db;
 
 class Mongo {

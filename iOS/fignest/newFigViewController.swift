@@ -87,6 +87,8 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
         navigationController!.navigationBar.titleTextAttributes =
             [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
+        APIRequestHandler.sharedInstance.getAllUsers()
+        
         
         locationActivityIndicator.hidden = true
         

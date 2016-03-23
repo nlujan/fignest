@@ -14,6 +14,8 @@ class FigsTableViewController: UITableViewController {
     
     var figNames = ["Last Friday Night", "Recovery Brunch", "Birthday"]
     
+    let prefs = NSUserDefaults.standardUserDefaults()
+    
     func takeUserToLoginPage() {
         let loginPageController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
         
@@ -69,6 +71,10 @@ class FigsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        var userID: String = prefs.stringForKey("ID")!
+        
+        APIRequestHandler.sharedInstance.getUserInvitations(userID)
         
     }
 

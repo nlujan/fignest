@@ -236,8 +236,43 @@ class APIRequestHandler: NSObject {
     
     func getAllUsers() {
         
-        //get("\(apiURL)/users")
+        get("\(apiURL)/users", successHandler: {
+            (response) in
+            
+            do {
+                let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+                print("Getting Users Success!")
+                
+                print(jsonArray)
+                
+                
+            } catch {
+                print("bad happened!")
+            }
+            
+        });
     }
+    
+    func getUserInvitations(userID: String) {
+        
+        get("\(apiURL)/users/\(userID)/invitations", successHandler: {
+        (response) in
+        
+        do {
+            let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+            print("Getting Invitations Success!")
+            
+            print(jsonArray)
+        
+        
+        } catch {
+            print("bad happened!")
+        }
+        
+        });
+        
+    }
+    
     
     func dataToArray(data: NSData!) {
         

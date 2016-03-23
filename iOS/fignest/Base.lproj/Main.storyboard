@@ -128,8 +128,8 @@
                                                 </collectionViewCell>
                                             </cells>
                                             <connections>
-                                                <outlet property="dataSource" destination="wsI-xC-2Ci" id="s9n-qr-ma5"/>
-                                                <outlet property="delegate" destination="wsI-xC-2Ci" id="goO-46-BF1"/>
+                                                <outlet property="dataSource" destination="WjF-GL-vO0" id="wHn-cc-Wk7"/>
+                                                <outlet property="delegate" destination="WjF-GL-vO0" id="vq6-PH-hpL"/>
                                             </connections>
                                         </collectionView>
                                     </subviews>

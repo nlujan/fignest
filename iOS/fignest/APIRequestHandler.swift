@@ -262,8 +262,14 @@ class APIRequestHandler: NSObject {
             let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
             print("Getting Invitations Success!")
             
+            
+//            var eventList: [FigEvent] = []
+//            for event in jsonArray {
+//                eventList.append(FigEvent(data: event as! NSDictionary))
+//                
+//            }
+            
             print(jsonArray)
-        
         
         } catch {
             print("bad happened!")

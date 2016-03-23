@@ -90,11 +90,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 }
             })
             
-            
-            
-            
-            
-            
         }
         
     }

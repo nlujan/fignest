@@ -71,6 +71,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.80454727564102568" green="0.80454727564102568" blue="0.80454727564102568" alpha="1" colorSpace="calibratedRGB"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="DDp-kC-RyQ">
+                            <rect key="frame" x="0.0" y="192" width="375" height="476"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Mjw-xR-3zH">
+                                    <rect key="frame" x="169" y="219" width="37" height="37"/>
+                                    <color key="color" red="0.67926682692307694" green="0.14737377291699122" blue="0.15708725359464262" alpha="1" colorSpace="calibratedRGB"/>
+                                </activityIndicatorView>
+                            </subviews>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="100" id="wsI-xC-2Ci" customClass="FigsTableViewCell" customModule="fignest" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="375" height="100"/>
@@ -138,6 +148,7 @@
                                 <connections>
                                     <outlet property="figLabel" destination="bUZ-bc-Dw1" id="Gt6-Qc-4Jo"/>
                                     <outlet property="userImageCollectionView" destination="O0s-fI-D8p" id="Fl1-IY-6j3"/>
+                                    <segue destination="gUA-mk-oRj" kind="show" identifier="enterEventSegue" id="guL-Xe-DxU"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -161,6 +172,8 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="Mjw-xR-3zH" id="Ti6-SA-dtP"/>
+                        <outlet property="activityView" destination="DDp-kC-RyQ" id="MlU-5j-JLf"/>
                         <outlet property="figTableView" destination="Qc0-5X-JHN" id="V5P-fU-jPB"/>
                     </connections>
                 </tableViewController>
@@ -577,7 +590,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h4m-ay-9ng" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2818" y="1111"/>
+            <point key="canvasLocation" x="1980" y="789"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PxZ-3R-qqy">

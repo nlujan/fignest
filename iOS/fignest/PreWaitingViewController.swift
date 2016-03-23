@@ -12,6 +12,8 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     
     @IBOutlet var waitingTable: UITableView!
     
+    var eventData: FigEvent?
+    
     var users = ["naim", "toks"]
 
     override func viewDidLoad() {

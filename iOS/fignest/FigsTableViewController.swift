@@ -17,6 +17,8 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     
     var figNames = ["Last Friday Night", "Recovery Brunch", "Birthday"]
     
+    @IBOutlet var activityView: UIView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     var numPics = [18, 4, 8]
     
     var fbUserID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
@@ -76,6 +78,7 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
+        activityIndicator.startAnimating()
 
         let userID: String = prefs.stringForKey("ID")!
         
@@ -91,12 +94,13 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
                 
                 self.figEvents = eventList
                 
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.hidden = true
+                self.activityView.hidden = true
+                
                 self.figTableView.reloadData()
                 
             })
-            
-            
-            //print("this is the real count!: \(self.figEvents.count)")
             
         })
 
@@ -137,12 +141,6 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
         print("\(figNames[indexPath.row]) Selected!");
         
-        let preWaitingPage = self.storyboard?.instantiateViewControllerWithIdentifier("PreWaitingViewController") as! PreWaitingViewController
-        
-        let preWaitingPageNav = UINavigationController(rootViewController: preWaitingPage)
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        appDelegate.window!.rootViewController = preWaitingPageNav
     }
     
 //    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
@@ -185,6 +183,18 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         print("cell \(indexPath.row) selected")
     }
     
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "enterEventSegue" {
+            if let destination = segue.destinationViewController as? PreWaitingViewController {
+                if let eventIndex = tableView.indexPathForSelectedRow?.row {
+                    print("cheayyy \(figEvents[eventIndex])")
+                    destination.eventData = figEvents[eventIndex]
+                }
+            }
+
+        }
+    }
     
     
     /*

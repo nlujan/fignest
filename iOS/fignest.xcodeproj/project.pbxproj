@@ -271,12 +271,12 @@
 		2B3EA2D31C94BD9000079C1A /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2BAAE84C1C8A9D8A0004D067 /* LoginViewController.swift */,
+				2BAAE8501C8AA5810004D067 /* FigsTableViewController.swift */,
+				2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */,
 				2B3EA2E61C95DBD400079C1A /* PreWaitingViewController.swift */,
 				2B3EA3501C9DF7C000079C1A /* PostWaitingViewController.swift */,
-				2BAAE8501C8AA5810004D067 /* FigsTableViewController.swift */,
 				2B4512CC1C8FB02200F14099 /* GameViewController.swift */,
-				2BAAE84C1C8A9D8A0004D067 /* LoginViewController.swift */,
-				2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -389,13 +389,13 @@
 				2B3EA2D51C94BE2000079C1A /* Food Pics */,
 				2B3EA3441C95F07400079C1A /* SocketIOManager.swift */,
 				2B3EA3481C9DE09900079C1A /* APIRequestHandler.swift */,
+				2B8BA95A1CA2495A003C1250 /* FigEvent.swift */,
 				2BAAE81B1C8A9CAE0004D067 /* AppDelegate.swift */,
 				2BAAE81F1C8A9CAE0004D067 /* Main.storyboard */,
 				2BAAE8251C8A9CAE0004D067 /* Assets.xcassets */,
 				2BAAE8271C8A9CAE0004D067 /* LaunchScreen.storyboard */,
 				2BAAE82A1C8A9CAE0004D067 /* Info.plist */,
 				2BAAE8221C8A9CAE0004D067 /* fignest.xcdatamodeld */,
-				2B8BA95A1CA2495A003C1250 /* FigEvent.swift */,
 			);
 			path = fignest;
 			sourceTree = "<group>";

@@ -13,7 +13,7 @@ class APIRequestHandler: NSObject {
     static let sharedInstance = APIRequestHandler()
     let prefs = NSUserDefaults.standardUserDefaults()
     
-    let apiURL: String = "https://18df99b1.ngrok.io"
+    let apiURL: String = "https://1ab93d05.ngrok.io"
     
     var imagesURLs = [
         "https://s3-media4.fl.yelpcdn.com/bphoto/0OIgMcReW_hlcOQYNrKWjA/258s.jpg",
@@ -204,7 +204,7 @@ class APIRequestHandler: NSObject {
     
     
     //adds New User To Database and saves the new user ID created
-    func addUserToDatabase(name: String, fbID: String, email: String) {
+    func addUserToDatabase(name: String, fbID: String, email: String,  callback: () -> Void) {
         
         let jsonObject: [String: AnyObject] = [
             "facebook": [
@@ -226,6 +226,8 @@ class APIRequestHandler: NSObject {
                 
                 //save value of ID
                 self.prefs.setValue(userID, forKey: "ID")
+                
+                callback()
                 
             } catch {
                 print("bad happened!")
@@ -253,7 +255,7 @@ class APIRequestHandler: NSObject {
         });
     }
     
-    func getUserInvitations(userID: String) {
+    func getUserInvitations(userID: String,  callback: () -> Void) {
         
         get("\(apiURL)/users/\(userID)/invitations", successHandler: {
         (response) in
@@ -263,13 +265,22 @@ class APIRequestHandler: NSObject {
             print("Getting Invitations Success!")
             
             
+            self.prefs.setObject(jsonArray, forKey: "figInvitations")
+            
+            
 //            var eventList: [FigEvent] = []
 //            for event in jsonArray {
 //                eventList.append(FigEvent(data: event as! NSDictionary))
 //                
 //            }
             
+           // print(eventList)
+            
             print(jsonArray)
+            
+//            return eventList
+            
+            callback()
         
         } catch {
             print("bad happened!")

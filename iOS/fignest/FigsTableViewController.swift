@@ -12,6 +12,9 @@ import FBSDKCoreKit
 
 class FigsTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    var figEvents: [FigEvent] = []
+    @IBOutlet var figTableView: UITableView!
+    
     var figNames = ["Last Friday Night", "Recovery Brunch", "Birthday"]
     
     var numPics = [18, 4, 8]
@@ -72,14 +75,31 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
+        
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        let userID: String = prefs.stringForKey("ID")!
         
-        var userID: String = prefs.stringForKey("ID")!
-        
-        APIRequestHandler.sharedInstance.getUserInvitations(userID)
-        
+        APIRequestHandler.sharedInstance.getUserInvitations(userID, callback: {
+           
+            dispatch_async(dispatch_get_main_queue(), {
+                var dataArray = self.prefs.objectForKey("figInvitations") as! NSArray
+                
+                var eventList: [FigEvent] = []
+                for event in dataArray {
+                    eventList.append(FigEvent(data: event as! NSDictionary))
+                }
+                
+                self.figEvents = eventList
+                
+                self.figTableView.reloadData()
+                
+            })
+            
+            
+            //print("this is the real count!: \(self.figEvents.count)")
+            
+        })
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,7 +116,9 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return figNames.count
+        
+        print("count: \(figEvents.count)")
+        return figEvents.count
     }
 
     
@@ -105,7 +127,7 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
 
         // Configure the cell...
         
-        cell.figLabel.text = figNames[indexPath.row]
+        cell.figLabel.text = figEvents[indexPath.row].name
         cell.contentView.tag = indexPath.row
 
         return cell
@@ -130,7 +152,7 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
 //        }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return min(numPics[collectionView.superview!.tag], 4)
+        return min(figEvents[collectionView.superview!.tag].users.count, 4)
     }
     
     

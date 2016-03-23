@@ -17,32 +17,22 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     func takeUserToHomePage() {
         let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
-        
         let homePageNav = UINavigationController(rootViewController: homePage)
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
         appDelegate.window!.rootViewController = homePageNav
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var titleText = NSAttributedString(string: "Continue with Facebook")
+        let titleText = NSAttributedString(string: "Continue with Facebook")
         loginButton.setAttributedTitle(titleText, forState: UIControlState.Normal)
 
         // Do any additional setup after loading the view.
         
         let accessToken = FBSDKAccessToken.currentAccessToken()
         
-        if(FBSDKAccessToken.currentAccessToken() != nil) {
-            
-            //var name: String = prefs.stringForKey("userFBName")!
-            
-//            print("token = \(accessToken.tokenString)")
-//            print("User ID = \(accessToken.userID)")
-//            print("User Name = \(name)")
-            
-            
+        if(accessToken != nil) {
             takeUserToHomePage()
             
         }
@@ -72,27 +62,27 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             //get user access token
             //let token:FBSDKAccessToken = result.token
             
-            let userID = userToken.userID
+            let userID = userToken.userID as String
             
             print("token = \(userToken.tokenString)")
             print("User ID = \(userID)")
             
-            var username: String = "none"
             
-            let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,first_name,last_name"], tokenString: userToken.tokenString, version: nil, HTTPMethod: "GET")
+            let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"id,email,first_name,last_name"], tokenString: userToken.tokenString, version: nil, HTTPMethod: "GET")
             req.startWithCompletionHandler({ (connection, result, error : NSError!) -> Void in
                 if(error == nil) {
-                    //print("result \(result["first_name"]!) \(result["last_name"]!)")
-                    username = result["first_name"] as! String
-                    self.prefs.setValue(username, forKey: "userFBName")
-                    //print("result \(result["first_name"])")
-                    //print(username)
-                    
                     let name = "\(result["first_name"] as! String) \(result["last_name"] as! String)"
+                    let fbID = result["id"] as! String
                     let email = result["email"] as! String
                     
+                    self.prefs.setValue(name, forKey: "userFBName")
+                    self.prefs.setValue(fbID, forKey: "userFBID")
+  
+                    
                     //post user to database
-                    APIRequestHandler.sharedInstance.addUserToDatabase(name, fbID: userID, email: email)
+                    APIRequestHandler.sharedInstance.addUserToDatabase(name, fbID: fbID, email: email, callback: {
+                        self.takeUserToHomePage();
+                    })
         
                 }
                 else {
@@ -100,11 +90,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 }
             })
             
-            prefs.setValue(userID, forKey: "userFBID")
-            //print(username)
             
             
-            takeUserToHomePage();
+            
+            
             
         }
         

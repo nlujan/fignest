@@ -12,11 +12,14 @@ const yelpUrl = {
 const start = '';
 const imgSelector = '[data-photo-id] .photo-box-img';
 const attribute = 'src';
+
 var yelp = new Yelp({
-  consumer_key: 'K_C4kW5f7TDvoq7bB_4Z0w',
-  consumer_secret: 'Wiijly9VWQAkWFWAY-Q4cn4T150',
-  token: 'TsLL78ojlMFKoaD_haODwDrIwb9AUDl5',
-  token_secret: '9JM22dL0dlRCX_VyhItQscTU870'
+
+  consumer_key: process.env.YELP_CONSUMER_KEY || 'K_C4kW5f7TDvoq7bB_4Z0w',
+  consumer_secret: process.env.YELP_CONSUMER_SECRET || 'Wiijly9VWQAkWFWAY-Q4cn4T150',
+  token: process.env.YELP_TOKEN || 'TsLL78ojlMFKoaD_haODwDrIwb9AUDl5',
+  token_secret: process.env.YELP_TOKEN_SECRET || '9JM22dL0dlRCX_VyhItQscTU870'
+
 });
 
 class YelpApi {

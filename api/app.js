@@ -7,6 +7,9 @@ Mongo.connect().then((err) => {
   console.log(err);
 });
 
+// Ports are as follows - localhost: 3010, heroku local: 5000, prod: fignest.herokuapp.com
+const port = process.env.PORT || 3010;
+
 function run() {
 
   var express = require('express');
@@ -102,8 +105,8 @@ function run() {
   });
 
   // Start server
-  app.listen(3010, function() {
-    console.log('App server started...');
+  app.listen(port, function() {
+    console.log(`App server started and listening on port: ${port}...`);
   });
 }
 

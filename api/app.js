@@ -106,7 +106,7 @@ function run() {
 
   // Start server
   app.listen(port, function() {
-    console.log('App server started...');
+    console.log(`App server started and listening on port: ${port}...`);
   });
 }
 

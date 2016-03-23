@@ -13,7 +13,7 @@ class APIRequestHandler: NSObject {
     static let sharedInstance = APIRequestHandler()
     let prefs = NSUserDefaults.standardUserDefaults()
     
-    let apiURL: String = "https://9d460dd2.ngrok.io"
+    let apiURL: String = "https://18df99b1.ngrok.io"
     
     var imagesURLs = [
         "https://s3-media4.fl.yelpcdn.com/bphoto/0OIgMcReW_hlcOQYNrKWjA/258s.jpg",

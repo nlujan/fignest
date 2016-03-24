@@ -16,6 +16,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     var imageIndex = 0
     var selections: [Int] = []
+    var placesArray: NSArray = []
     
     var eventData: FigEvent!
     
@@ -31,7 +32,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         playerProgressTable.backgroundColor = UIColor.clearColor()
         
-        tableImages = APIRequestHandler.sharedInstance.getImages()
+        //tableImages = APIRequestHandler.sharedInstance.getImages()
         
         
         var userImg: UIImage!
@@ -64,15 +65,20 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
 //                
 //                self.figTableView.reloadData()
                 
+                self.placesArray = dataArray
                 
-                
-                
+                var images: [String] = []
                 for place in dataArray {
-                    
+                    images.appendContentsOf(place["images"] as! [String])
                 }
                 
                 print(dataArray)
+                print(images)
                 
+                self.tableImages = APIRequestHandler.sharedInstance.getImagesFromUrlStringArray(images)
+                
+                
+                self.picCollectionView.reloadData()
                 
                 
             })
@@ -84,7 +90,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return placesArray.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -94,7 +100,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         //cell.foodImageView.image = UIImage(named: tableImages[indexPath.row])
         
-        cell.foodImageView.image = tableImages[(imageIndex * 6) + indexPath.row]
+        cell.foodImageView.image = tableImages[(imageIndex * (placesArray.count - 1)) + indexPath.row]
         
         cell.layer.borderWidth = 0
         cell.layer.borderColor = UIColor.clearColor().CGColor
@@ -119,7 +125,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
             })
         })
         
-        if (imageIndex < 5) {
+        if (imageIndex < 6) {
             //collectionView.reloadData()
             
             collectionView.performBatchUpdates(

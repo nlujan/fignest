@@ -357,18 +357,18 @@ class APIRequestHandler: NSObject {
     
     
     
-    func postAction(eventID: String, callback: (jsonArray: NSArray) -> Void) {
+    func postAction(eventID: String, callback: (jsonDict: NSDictionary) -> Void) {
         
         get("\(apiURL)/events/\(eventID)/action", successHandler: {
             (response) in
             
             do {
-                let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+                let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
                 print("Posting Action Success!")
                 
-                print(jsonArray)
+                print(jsonDict)
                 
-                callback(jsonArray: jsonArray)
+                callback(jsonDict: jsonDict)
                 
                 
             } catch {

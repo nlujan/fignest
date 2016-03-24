@@ -140,15 +140,15 @@ imageItem: {
 ```js
 POST /events/:eventId/actions
 
-request: (Array) <Action Object>s
+request: <Action Object>
 
-response: (Array) <Action Object>s
+response: <Action Object>
 ```
 ___
 
 ### Notes
 * For simplcity, one representation is used for both `GET` and `POST` requests. However, you can omit `_id` when creating a new resource (since it won't exist yet). The response to the creation will be the same resource, with the newly created `id` included.
 * Likewise, an optional parameter may be omitted when creating resources. They will always be returned when reading a resource, with a value of `null` if it doesn't exist (and has no default value).
-* Actions should be submitted only once for an event.
+* An action should be submitted for each user.
 * If a user quits an event midway (or never starts), an action should not be submitted for the user. I.e. they should not affect the solution to the event.
 

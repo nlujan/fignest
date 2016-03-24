@@ -173,35 +173,25 @@ class APIRequestHandler: NSObject {
         }).resume()
     }
     
-    func createNewFig(name: String, address: String, users: [String], search: String) {
+    func getAllUsers(callback: (dataArray: NSArray) -> Void) {
         
-        let jsonObject: [String: AnyObject] = [
-            "name": name,
-            "location": [
-                "type": "address",
-                "address": address
-            ],
-            "users": [],
-            "search": search
-        ]
-        
-        //post(jsonObject, postEndpoint: "\(apiURL)/events/")
-        
-        //get("https://01d7a946.ngrok.io/events/56ef1ceb6f0c73691ccdf190/places")
-        
+        get("\(apiURL)/users", successHandler: {
+            (response) in
+            
+            do {
+                let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+                print("Getting Users Success!")
+                
+                print(jsonArray)
+                
+                callback(dataArray: jsonArray)
+                
+            } catch {
+                print("bad happened!")
+            }
+            
+        });
     }
-    
-    func printPostResult(text: String) ->  String {
-        //self.postResultLabel.text = "POST : " + text
-        print("POST : \(text["_id"])")
-        return text
-    }
-    
-    func updateIPLabel(text: String) {
-        print("GET : \(text)")
-        //self.ipLabel.text = "Your IP is " + text
-    }
-    
     
     //adds New User To Database and saves the new user ID created
     func addUserToDatabase(name: String, fbID: String, email: String,  callback: () -> Void) {
@@ -236,66 +226,158 @@ class APIRequestHandler: NSObject {
         });
     }
     
-    func getAllUsers() {
+    func getUserInvitations(userID: String,  callback: (dataArray: NSArray) -> Void) {
         
-        get("\(apiURL)/users", successHandler: {
-            (response) in
-            
+        get("\(apiURL)/users/\(userID)/invitations", successHandler: {
+        (response) in
+        
             do {
                 let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
-                print("Getting Users Success!")
+                print("Getting Invitations Success!")
                 
                 print(jsonArray)
                 
+                callback(dataArray: jsonArray)
+            
+            } catch {
+                print("bad happened!")
+            }
+        
+        });
+        
+    }
+    
+    
+    func getEvent(eventID: String, callback: (dataDict: NSDictionary) -> Void) {
+        
+        get("\(apiURL)/events/\(eventID)/", successHandler: {
+            (response) in
+            
+            do {
+                let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                print("Getting Single Event Success!")
+                
+                print(jsonDict)
+                
+                callback(dataDict: jsonDict)
+                
+                
+            } catch {
+                print("bad happened!")
+                
+                
+            }
+        });
+        
+    }
+    
+    
+    func createNewFig(name: String, address: String, users: [String], search: String, callback: (dataDict: NSDictionary) -> Void) {
+        
+        let jsonObject: [String: AnyObject] = [
+            "name": name,
+            "location": [
+                "type": "address",
+                "address": address
+            ],
+            "users": users,
+            "search": search
+        ]
+        
+        post(jsonObject, postEndpoint: "\(apiURL)/events/", successHandler: {
+            (response) in
+            
+            print("Posting Success!")
+            
+            do {
+                let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                // Print what we got from the call
+                print(jsonDict)
+                
+                
+                callback(dataDict: jsonDict)
                 
             } catch {
                 print("bad happened!")
             }
             
-        });
+        })
+        
+        
     }
     
-    func getUserInvitations(userID: String,  callback: () -> Void) {
+    
+    func getFigEventPlaces(eventID: String, callback: (dataArray: NSArray) -> Void) {
         
-        get("\(apiURL)/users/\(userID)/invitations", successHandler: {
+        get("\(apiURL)/events/\(eventID)/places", successHandler: {
         (response) in
-        
-        do {
-            let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
-            print("Getting Invitations Success!")
             
+            do {
+                let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+                print("Getting Places Success!")
+                
+                print(jsonArray)
+                
+                callback(dataArray: jsonArray)
+                
             
-            self.prefs.setObject(jsonArray, forKey: "figInvitations")
+            } catch {
+                print("bad happened!")
+                
+                
+            }
+        });
+    
+    }
+    
+    
+    
+    func getSolution(eventID: String, callback: (dataDict: NSDictionary) -> Void) {
+    
+        get("\(apiURL)/events/\(eventID)/solution", successHandler: {
+        (response) in
             
-            
-//            var eventList: [FigEvent] = []
-//            for event in jsonArray {
-//                eventList.append(FigEvent(data: event as! NSDictionary))
-//                
-//            }
-            
-           // print(eventList)
-            
-            print(jsonArray)
-            
-//            return eventList
-            
-            callback()
-        
-        } catch {
-            print("bad happened!")
-        }
-        
+            do {
+                let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                print("Getting Final Result Success!")
+                
+                print(jsonDict)
+                
+                callback(dataDict: jsonDict)
+                
+                
+            } catch {
+                print("bad happened!")
+                
+                
+            }
         });
         
     }
     
     
-    func dataToArray(data: NSData!) {
+    
+    func postAction(eventID: String, callback: (jsonArray: NSArray) -> Void) {
         
+        get("\(apiURL)/events/\(eventID)/action", successHandler: {
+            (response) in
+            
+            do {
+                let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+                print("Posting Action Success!")
+                
+                print(jsonArray)
+                
+                callback(jsonArray: jsonArray)
+                
+                
+            } catch {
+                print("bad happened!")
+                
+                
+            }
+        });
         
     }
-
-    
 
 }

@@ -17,6 +17,8 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     var imageIndex = 0
     var selections: [Int] = []
     
+    var eventData: FigEvent!
+    
     //var tableImages: [String] = ["pic1.jpg", "pic2.jpg", "pic3.jpg", "pic4.jpg", "pic5.jpg", "pic6.jpg"]
     var tableImages: [UIImage] = []
     
@@ -41,6 +43,41 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         userImages.append(userImg)
         userImages.append(userImg)
+        
+        print(eventData)
+        
+        APIRequestHandler.sharedInstance.getFigEventPlaces(eventData.id, callback: { ( dataArray: NSArray) -> Void in
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                //var dataArray = self.prefs.objectForKey("figInvitations") as! NSArray
+                
+//                var eventList: [FigEvent] = []
+//                for event in dataArray {
+//                    eventList.append(FigEvent(data: event as! NSDictionary))
+//                }
+//                
+//                self.figEvents = eventList
+                
+//                self.activityIndicator.stopAnimating()
+//                self.activityIndicator.hidden = true
+//                self.activityView.hidden = true
+//                
+//                self.figTableView.reloadData()
+                
+                
+                
+                
+                for place in dataArray {
+                    
+                }
+                
+                print(dataArray)
+                
+                
+                
+            })
+            
+        })
 
         // Do any additional setup after loading the view.
     }

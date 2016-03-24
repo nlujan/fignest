@@ -12,7 +12,8 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     
     @IBOutlet var waitingTable: UITableView!
     
-    var eventData: FigEvent?
+    var eventData: FigEvent!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     var users = ["naim", "toks"]
 
@@ -32,16 +33,13 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         let name: String = prefs.stringForKey("userFBName")!
         
         
-//        SocketIOManager.sharedInstance.adduserToFig(name, figName: "bestRoom",completionHandler: { (userStatusList) -> Void in
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                if userStatusList != nil {
-//                    self.usersStatus = userStatusList
-//                    self.waitingTable.reloadData()
-//                }
-//            })
-//        })
         
-//        self.title = "some title"
+        print(eventData);
+        
+        self.title = eventData.name.uppercaseString
+        
+        activityIndicator.startAnimating()
+        
     }
     
     
@@ -76,6 +74,13 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         self.presentViewController(optionMenu, animated: true, completion: nil)
     }
     
+    @IBAction func buttonPressed(sender: AnyObject) {
+         self.performSegueWithIdentifier("showGameView", sender: nil)
+    }
+    
+    
+    
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -101,14 +106,24 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     }
     
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        
+        if (segue.identifier == "showGameView") {
+            let gameController = segue.destinationViewController as! GameViewController
+            
+            gameController.eventData = self.eventData
+            
+        }
+        
+        
     }
-    */
+
 
 }

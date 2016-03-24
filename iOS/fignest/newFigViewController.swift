@@ -11,9 +11,17 @@ import CoreLocation
 
 class newFigViewController: UIViewController, CLLocationManagerDelegate, CLTokenInputViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
+    let userID: String = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
+    //var userEventID: String = ""
+    
     var names:[String] = []
     var filteredNames:[String] = []
     var selectedNames:[String] = []
+    
+    var eventData: FigEvent!
+    
+    var nameDict: [String: String] = [:]
+    
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tokenInputView: CLTokenInputView!
     @IBOutlet var locationBtn: UIButton!
@@ -58,20 +66,36 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
             self.presentViewController(alert, animated: true){}
         } else {
             
-            APIRequestHandler.sharedInstance.createNewFig(titleTextField.text!, address: locationTextField.text!, users: selectedNames, search: foodTypeTextField.text!)
             
-            //APIRequestHandler.sharedInstance.getAllUsers()
+            var userIDList:[String] = []
+            userIDList.append(self.userID)
+            
+            for name in selectedNames {
+                userIDList.append(nameDict[name]!)
+            }
+            
+            print("\(locationTextField.text!)")
+            print(locationTextField.text == nil)
+            print("\(titleTextField.text!)")
+            print("\(foodTypeTextField.text!)")
+            print(userIDList)
+            
+            APIRequestHandler.sharedInstance.createNewFig(titleTextField.text!, address: locationTextField.text!, users: userIDList, search: foodTypeTextField.text!, callback: { ( dataDict: NSDictionary) -> Void in
+                dispatch_async(dispatch_get_main_queue(), {
+                    //var dataArray = self.prefs.objectForKey("figInvitations") as! NSArray
+                 
+                    
+//                self.userEventID = dataDict["_id"] as! String
+//                print(dataDict["_id"] as! String)
+                    
+                self.eventData = FigEvent(data: dataDict)
+                    
+                self.performSegueWithIdentifier("showPreWaiting", sender: nil)
+                    
+                })
+            })
+            
         }
-        
-//        print("\(locationTextField.text!)")
-//        print(locationTextField.text == nil)
-//        print("\(titleTextField.text!)")
-//        print("\(foodTypeTextField.text!)")
-//        print(selectedNames)
-//        
-
-        
-        
         
 
     }
@@ -87,7 +111,34 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
         navigationController!.navigationBar.titleTextAttributes =
             [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
-        APIRequestHandler.sharedInstance.getAllUsers()
+        APIRequestHandler.sharedInstance.getAllUsers({ ( dataArray: NSArray) -> Void in
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                //var dataArray = self.prefs.objectForKey("figInvitations") as! NSArray
+                
+                
+                var nameList: [String] = []
+                var nameDict: [String: String] = [:]
+                for user in dataArray {
+                    var name = user["displayName"] as! String
+                    var id = user["_id"] as! String
+                    
+                    if id != self.userID {
+                        nameList.append(name)
+                        nameDict[name] = id
+                    }
+                    
+                }
+                
+                self.names = nameList;
+                
+                self.nameDict = nameDict;
+                
+                print(nameDict)
+                
+            })
+            
+        })
         
         
         locationActivityIndicator.hidden = true
@@ -202,15 +253,25 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
     
 
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if (segue.identifier == "showPreWaiting") {
+            let navController = segue.destinationViewController as! UINavigationController
+           
+            let viewController = navController.topViewController as! PreWaitingViewController
+           
+            viewController.eventData = self.eventData
+     
+        }
+        
     }
-    */
+ 
     
     
     
@@ -305,40 +366,7 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
         }
     }
     
-    //
-    
-    func onFieldInfoButtonTapped(sender:UIControl) {
-        let alertController = UIAlertController(title: "Field Info Button", message: "This view is optional and can be a UIButton, etc.", preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-            // ...
-        }
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            // ...
-        }
-    }
-    
-    func onAccessoryContactAddButtonTapped(sender:UIControl) {
-        let alertController = UIAlertController(title: "Accessory View Button", message: "This view is optional and can be a UIButton, etc.", preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-            // ...
-        }
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            // ...
-        }
-    }
-    
-    //
-    
-    func contactAddButton() -> UIButton {
-        let contactAddButton:UIButton = UIButton(type: .ContactAdd)
-        contactAddButton.addTarget(self, action: Selector("onAccessoryContactAddButtonTapped:"), forControlEvents: .TouchUpInside)
-        return contactAddButton
-    }
+
+
 
 }

@@ -15,11 +15,10 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     var figEvents: [FigEvent] = []
     @IBOutlet var figTableView: UITableView!
     
-    var figNames = ["Last Friday Night", "Recovery Brunch", "Birthday"]
+    var selectedEventData: FigEvent!
     
     @IBOutlet var activityView: UIView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    var numPics = [18, 4, 8]
     
     var fbUserID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
     
@@ -82,10 +81,10 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
 
         let userID: String = prefs.stringForKey("ID")!
         
-        APIRequestHandler.sharedInstance.getUserInvitations(userID, callback: {
+        APIRequestHandler.sharedInstance.getUserInvitations(userID, callback: { ( dataArray: NSArray) -> Void in
            
             dispatch_async(dispatch_get_main_queue(), {
-                var dataArray = self.prefs.objectForKey("figInvitations") as! NSArray
+                //var dataArray = self.prefs.objectForKey("figInvitations") as! NSArray
                 
                 var eventList: [FigEvent] = []
                 for event in dataArray {
@@ -139,15 +138,14 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        print("\(figNames[indexPath.row]) Selected!");
+        print("\(figEvents[indexPath.row].name) Selected!");
+        
+        self.selectedEventData = figEvents[indexPath.row]
+        
+        self.performSegueWithIdentifier("showPreWaiting", sender: nil)
         
     }
     
-//    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-//            var svc = segue!.destinationViewController as PreWaitingNavController;
-//            svc.title = "naim is bets!"
-//            
-//        }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return min(figEvents[collectionView.superview!.tag].users.count, 4)
@@ -156,7 +154,9 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        var numUsers = numPics[collectionView.superview!.tag]
+        var numUsers = figEvents[collectionView.superview!.tag].users.count
+        
+        print(figEvents[collectionView.superview!.tag].users);
         
         
         let cell: UserImageCell = collectionView.dequeueReusableCellWithReuseIdentifier("UserImageCell", forIndexPath: indexPath) as! UserImageCell
@@ -185,15 +185,26 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "enterEventSegue" {
-            if let destination = segue.destinationViewController as? PreWaitingViewController {
-                if let eventIndex = tableView.indexPathForSelectedRow?.row {
-                    print("cheayyy \(figEvents[eventIndex])")
-                    destination.eventData = figEvents[eventIndex]
-                }
-            }
 
+        
+        if (segue.identifier == "showPreWaiting") {
+            let navController = segue.destinationViewController as! UINavigationController
+//            
+            let viewController = navController.topViewController as! PreWaitingViewController
+//            
+            viewController.eventData = self.selectedEventData
+            
         }
+//        
+//        if segue.identifier == "enterEventSegue" {
+//            if let destination = segue.destinationViewController as? PreWaitingViewController {
+//                if let eventIndex = tableView.indexPathForSelectedRow?.row {
+//                    print("cheayyy \(figEvents[eventIndex])")
+//                    destination.eventData = figEvents[eventIndex]
+//                }
+//            }
+//
+//        }
     }
     
     

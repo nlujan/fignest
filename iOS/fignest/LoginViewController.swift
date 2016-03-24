@@ -81,7 +81,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                     
                     //post user to database
                     APIRequestHandler.sharedInstance.addUserToDatabase(name, fbID: fbID, email: email, callback: {
-                        self.takeUserToHomePage();
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.takeUserToHomePage();
+                        })
                     })
         
                 }

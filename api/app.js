@@ -31,6 +31,15 @@ function run() {
     });
   });
 
+  app.get('/usersMapById', (req, res) => {
+    User.usersMapById().then((users) => {
+      res.status(200).json(users);
+    }).catch((err) => {
+      console.log(`Error in GET /usersMapById`, err);
+      res.status(500).json(err);
+    });
+  });
+
   app.post('/users', (req, res) => {
     var user = User.fromJson(req.body);
     user.createOrUpdate().then((user) => {
@@ -95,13 +104,13 @@ function run() {
 
   app.post('/events/:eventId/actions', (req, res) => {
     Event.fromId(req.params.eventId).then((event) => {
-      return event.saveActions(req.body);
-    }).then((actions) => {
-      res.status(200).json(actions.map((action) => action.asJson() ));
+      return event.saveAction(req.body);
+    }).then((action) => {
+      res.status(200).json(action.asJson());
     }).catch((err) => {
       console.log(`Error in POST /events/:eventId/actions`, err);
       res.status(500).json(err);
-    })
+    });
   });
 
   // Start server

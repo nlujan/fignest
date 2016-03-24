@@ -182,32 +182,34 @@ class Event {
     this.isOver = true;
   }
 
-  saveActions(actions) {
+  saveAction(action) {
     // Might be better way to scope _actions here
-    var _actions;
-    actions = actions.map((action) => Action.fromJson(action) );
+    var _action;
     
     return new Promise((resolve, reject) => {
-      // Bulk save?
-      // Save actions
-      Promise.all(actions.map((action) => action.save() )).then((actions) => {
-        _actions = actions;
+      // Save action
+      Action.fromJson(action).save().then((action) => {
+        _action = action;
 
-        // Add actions to event
-        this.addActions(_actions);
+        // Add action to event
+        this.addAction(_action);
 
         // Save event
         return this.save();
       }).then((event) => {
-        resolve(_actions);
+        resolve(_action);
       }).catch((err) => {
         reject(err);
       });
     });
   }
 
-  addActions(actions) {
-    this.actions = actions.map((action) => action._id );
+  addAction(action) {
+    if (!this.actions) {
+      this.actions = [action._id];
+      return;
+    }
+    this.actions.push(action._id);
   }
 
   static solutionIdFromActions(actions) {

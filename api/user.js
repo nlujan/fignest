@@ -4,6 +4,7 @@ var Mongo = require('./mongo');
 var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
 var Event = require('./event');
+var _ = require('underscore');
 
 class User {
 	constructor(params) {
@@ -78,6 +79,17 @@ class User {
           reject(err);
         }
         resolve(users.map((user) => this.fromJson(user) ));
+      });
+    });
+  }
+
+  static usersMapById() {
+    return new Promise((resolve, reject) => {
+      this.allUsers().then((users) => {
+        var map = _.map(users, (user) => [user._id, user] );
+        resolve(_.object(map));
+      }).catch((err) => {
+        reject(err);
       });
     });
   }

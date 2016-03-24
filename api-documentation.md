@@ -30,6 +30,12 @@ request: <User Object>
 
 response: <User Object>
 ```
+
+```js
+GET /usersMapById
+
+response: Object mapping user IDs to <User Object>s
+```
 ___
 
 ### Events

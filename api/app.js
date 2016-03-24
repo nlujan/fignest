@@ -31,6 +31,15 @@ function run() {
     });
   });
 
+  app.get('/usersMapById', (req, res) => {
+    User.usersMapById().then((users) => {
+      res.status(200).json(users);
+    }).catch((err) => {
+      console.log(`Error in GET /usersMapById`, err);
+      res.status(500).json(err);
+    });
+  });
+
   app.post('/users', (req, res) => {
     var user = User.fromJson(req.body);
     user.createOrUpdate().then((user) => {

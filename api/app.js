@@ -95,13 +95,13 @@ function run() {
 
   app.post('/events/:eventId/actions', (req, res) => {
     Event.fromId(req.params.eventId).then((event) => {
-      return event.saveActions(req.body);
-    }).then((actions) => {
-      res.status(200).json(actions.map((action) => action.asJson() ));
+      return event.saveAction(req.body);
+    }).then((action) => {
+      res.status(200).json(action.asJson());
     }).catch((err) => {
       console.log(`Error in POST /events/:eventId/actions`, err);
       res.status(500).json(err);
-    })
+    });
   });
 
   // Start server

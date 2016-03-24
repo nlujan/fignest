@@ -103,7 +103,7 @@ class Event {
         // pick this.limit businesses at random
         yelpBusinesses = _.sample(yelpBusinesses, this.limit);
 
-        var places = yelpBusinesses.map((biz) => Place.fromYelpJson(biz));
+        var places = yelpBusinesses.map((biz) => Place.fromYelpJson(biz, this._id));
         return Promise.all(places.map((place) => place.getImages()));
       }).then((places) => {
         // Save places

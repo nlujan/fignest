@@ -19,7 +19,7 @@ const search = {
   sort: 2,
   shouldIncludeActionLinks: true
 };
-const eventRadiusDefault = 1;
+const eventRadiusDefault = 3;
 const eventLimitDefault = 6;
 
 class Event {

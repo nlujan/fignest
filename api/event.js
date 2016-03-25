@@ -5,6 +5,7 @@ var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
 var Place = require('./place');
 var Action = require('./action');
+var User = require('./user');
 var YelpApi = require('./yelp-api');
 var Util = require('./util');
 var _ = require('underscore');
@@ -70,6 +71,17 @@ class Event {
     }
     result.actionlinks = search.shouldIncludeActionLinks;
     return result;
+  }
+
+  getUsers() {
+    return new Promise((resolve, reject) => {
+      // $in query instead
+      Promise.all(this.users.map((user) => User.fromId(user))).then((users) => {
+        resolve(users);
+      }).catch((err) => {
+        reject(err);
+      });
+    });
   }
 
   getPlaces() {

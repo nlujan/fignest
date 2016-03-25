@@ -1,0 +1,39 @@
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script>
+  var url = '';
+  var socket = io.connect(url);
+
+  // socket.emit('join', {
+  // 	eventId: "56f4c592b6c7e8e271767040",
+  // 	userId: "56ef2a83c2ff8aab098e2885"
+  // });
+
+  socket.on('status', function(data) {
+  	console.log(data);
+  });
+
+  socket.on('start', function() {
+  	console.log("START");
+  });
+
+  // socket.emit('progress', {
+  // 	eventId: '56f4c592b6c7e8e271767040',
+  // 	userId: '56ef2a83c2ff8aab098e2885',
+  // 	level: 3
+  // });
+
+  socket.on('progress', function(data) {
+  	console.log(data);
+  });
+
+  // socket.emit('done', {
+  // 	userId: '56ef2a83c2ff8aab098e2885',
+  // 	eventId: '56f4c592b6c7e8e271767040'
+  // });
+
+  socket.on('finish', function(data) {
+  	console.log('finish');
+  });
+
+  // socket.disconnect();
+</script>

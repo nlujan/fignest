@@ -24,6 +24,36 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
         
     }
     
+    func takeUserToHomePage() {
+        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
+        
+        let homePageNav = UINavigationController(rootViewController: homePage)
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        appDelegate.window!.rootViewController = homePageNav
+    }
+    
+    @IBAction func showOptions(sender: AnyObject) {
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let logoutAction = UIAlertAction(title: "Exit Fig", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            self.takeUserToHomePage();
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        
+        optionMenu.addAction(logoutAction)
+        optionMenu.addAction(cancelAction)
+        
+        
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1

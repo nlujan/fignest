@@ -133,6 +133,9 @@
 		2B4F02751CA3A93800ACE165 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B4F02741CA3A93800ACE165 /* Main.storyboard */; };
 		2B4F02761CA3A93800ACE165 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B4F02741CA3A93800ACE165 /* Main.storyboard */; };
 		2B4F02771CA3A93800ACE165 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B4F02741CA3A93800ACE165 /* Main.storyboard */; };
+		2B4F02791CA4DD1700ACE165 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4F02781CA4DD1700ACE165 /* ResultsViewController.swift */; };
+		2B4F027A1CA4DD1700ACE165 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4F02781CA4DD1700ACE165 /* ResultsViewController.swift */; };
+		2B4F027B1CA4DD1700ACE165 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4F02781CA4DD1700ACE165 /* ResultsViewController.swift */; };
 		2B5CAFED1C8D2DCB00FE7B6D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B5CAFEC1C8D2DCB00FE7B6D /* CoreLocation.framework */; };
 		2B8BA95B1CA2495A003C1250 /* FigEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8BA95A1CA2495A003C1250 /* FigEvent.swift */; };
 		2BAAE81C1C8A9CAE0004D067 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE81B1C8A9CAE0004D067 /* AppDelegate.swift */; };
@@ -218,6 +221,7 @@
 		2B4512D91C8FF25D00F14099 /* pic6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = pic6.jpg; path = ../../../../../Downloads/pic6.jpg; sourceTree = "<group>"; };
 		2B4512F41C92564700F14099 /* PlayerProgressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerProgressCell.swift; sourceTree = "<group>"; };
 		2B4F02741CA3A93800ACE165 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		2B4F02781CA4DD1700ACE165 /* ResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		2B5CAFEC1C8D2DCB00FE7B6D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2B8BA95A1CA2495A003C1250 /* FigEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FigEvent.swift; sourceTree = "<group>"; };
 		2BAAE8181C8A9CAE0004D067 /* fignest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fignest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -279,6 +283,7 @@
 				2B3EA2E61C95DBD400079C1A /* PreWaitingViewController.swift */,
 				2B3EA3501C9DF7C000079C1A /* PostWaitingViewController.swift */,
 				2B4512CC1C8FB02200F14099 /* GameViewController.swift */,
+				2B4F02781CA4DD1700ACE165 /* ResultsViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -577,6 +582,7 @@
 				2B3EA3041C95F02400079C1A /* SocketAckEmitter.swift in Sources */,
 				2B4512F51C92564700F14099 /* PlayerProgressCell.swift in Sources */,
 				2B3EA3511C9DF7C000079C1A /* PostWaitingViewController.swift in Sources */,
+				2B4F02791CA4DD1700ACE165 /* ResultsViewController.swift in Sources */,
 				2B4512CD1C8FB02200F14099 /* GameViewController.swift in Sources */,
 				2B3EA3551C9DF91700079C1A /* PostWaitingCell.swift in Sources */,
 				2B3EA2E71C95DBD400079C1A /* PreWaitingViewController.swift in Sources */,
@@ -625,6 +631,7 @@
 			files = (
 				2BAAE8521C8AA5810004D067 /* FigsTableViewController.swift in Sources */,
 				2B3EA3081C95F02400079C1A /* SocketAckManager.swift in Sources */,
+				2B4F027A1CA4DD1700ACE165 /* ResultsViewController.swift in Sources */,
 				2BAAE84E1C8A9D8A0004D067 /* LoginViewController.swift in Sources */,
 				2B3EA31D1C95F02400079C1A /* SocketEngineSpec.swift in Sources */,
 				2B3EA2E81C95DBD400079C1A /* PreWaitingViewController.swift in Sources */,
@@ -672,6 +679,7 @@
 			files = (
 				2BAAE8531C8AA5810004D067 /* FigsTableViewController.swift in Sources */,
 				2B3EA3091C95F02400079C1A /* SocketAckManager.swift in Sources */,
+				2B4F027B1CA4DD1700ACE165 /* ResultsViewController.swift in Sources */,
 				2BAAE84F1C8A9D8A0004D067 /* LoginViewController.swift in Sources */,
 				2B3EA31E1C95F02400079C1A /* SocketEngineSpec.swift in Sources */,
 				2B3EA2E91C95DBD400079C1A /* PreWaitingViewController.swift in Sources */,

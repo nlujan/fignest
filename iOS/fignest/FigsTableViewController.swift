@@ -16,11 +16,10 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     @IBOutlet var figTableView: UITableView!
     
     var selectedEventData: FigEvent!
+    var userIDMapping: NSDictionary = [:]
     
     @IBOutlet var activityView: UIView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    
-    var fbUserID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
     
     let prefs = NSUserDefaults.standardUserDefaults()
     
@@ -78,8 +77,12 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         // self.clearsSelectionOnViewWillAppear = false
         
         activityIndicator.startAnimating()
+    
+        var userID = prefs.stringForKey("ID")!
 
-        let userID: String = prefs.stringForKey("ID")!
+        //let userID: String = prefs.stringForKey("ID")!
+        
+        print("userID: \(userID)")
         
         APIRequestHandler.sharedInstance.getUserInvitations(userID, callback: { ( dataArray: NSArray) -> Void in
            
@@ -93,14 +96,24 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
                 
                 self.figEvents = eventList
                 
+            })
+        })
+        
+        APIRequestHandler.sharedInstance.getUsersMapById({ ( dataDict: NSDictionary) -> Void in
+        
+            dispatch_async(dispatch_get_main_queue(), {
+                self.userIDMapping = dataDict
+                
+                
                 self.activityIndicator.stopAnimating()
                 self.activityIndicator.hidden = true
                 self.activityView.hidden = true
                 
                 self.figTableView.reloadData()
-                
             })
-            
+        
+    
+        
         })
 
     }
@@ -121,7 +134,12 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         // #warning Incomplete implementation, return the number of rows
         
         print("count: \(figEvents.count)")
-        return figEvents.count
+        if self.userIDMapping.count == 0 {
+            return 0
+        } else {
+            return figEvents.count
+        }
+        
     }
 
     
@@ -132,6 +150,8 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         
         cell.figLabel.text = figEvents[indexPath.row].name
         cell.contentView.tag = indexPath.row
+        
+        //cell.userImageCollectionView.reloadData()
 
         return cell
     }
@@ -148,18 +168,42 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return min(figEvents[collectionView.superview!.tag].users.count, 4)
+        
+        if self.userIDMapping.count > 0 {
+            return min(figEvents[collectionView.superview!.tag].users.count, 4)
+        }
+        else {
+            return 0
+        }
     }
     
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        var numUsers = figEvents[collectionView.superview!.tag].users.count
+        var collectionIndex = collectionView.superview!.tag
         
-        print(figEvents[collectionView.superview!.tag].users);
+        var numUsers = figEvents[collectionIndex].users.count
+        
+        print(figEvents[collectionIndex].users);
         
         
         let cell: UserImageCell = collectionView.dequeueReusableCellWithReuseIdentifier("UserImageCell", forIndexPath: indexPath) as! UserImageCell
+        
+        let id = figEvents[collectionIndex].users[indexPath.row] as! String
+        
+        print("hellooo")
+
+        let userDict = userIDMapping[id] as! NSDictionary
+        let fbDict = userDict["facebook"] as! NSDictionary
+        let fbId = fbDict["id"] as! String
+        print("yeahhh")
+        print("id: \(id)")
+        var fbUserID = fbId
+
+
+        
+            
+
         
         let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(fbUserID)/picture?type=square&height=60&width=60")
         

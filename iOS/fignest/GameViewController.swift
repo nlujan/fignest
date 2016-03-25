@@ -20,7 +20,6 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     var eventData: FigEvent!
     
-    //var tableImages: [String] = ["pic1.jpg", "pic2.jpg", "pic3.jpg", "pic4.jpg", "pic5.jpg", "pic6.jpg"]
     var tableImages: [UIImage] = []
     
     var userImages: [UIImage] = []
@@ -112,14 +111,16 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         print("cell \(indexPath.row) selected")
         animateCellAtIndexPath(collectionView, indexPath: indexPath)
         
-        imageIndex += 1;
+        
         
         selections.append( (6 * imageIndex) + indexPath.row)
+        
+        imageIndex += 1;
         
         SocketIOManager.sharedInstance.sendProgressUpdate(Float(imageIndex), completionHandler: { (progress) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
-                self.progressVals[1] = progress/5.0
+                self.progressVals[1] = progress/Float(self.placesArray.count)
                 self.playerProgressTable.reloadData()
                 
             })
@@ -135,11 +136,93 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
             })
             
             
-            progressVals[0] = Float(imageIndex)/5.0
+            progressVals[0] = Float(imageIndex)/Float(self.placesArray.count)
             playerProgressTable.reloadData()
             
         } else {
             print(selections)
+            
+            var actionData: [NSDictionary] = []
+            
+            print("placesArray: \(placesArray)")
+            
+            for var i = 0; i < placesArray.count; i++ {
+                print(i)
+                
+                print("place: \(placesArray[i])")
+                var imageCount = placesArray[i]["images"]!!.count
+                
+                 for var j = 0; j < imageCount; j++ {
+                    
+                    
+                    
+                    var actionDict: [String:AnyObject] = [:]
+                    let imageUrl = placesArray[i]["images"]!![j] as! String
+                    print("what is this?:\(imageUrl)")
+
+                    let id = placesArray[i]["_id"] as! String
+                    
+                    actionDict["image"] = imageUrl
+                    actionDict["place"] = id
+                    
+                    if ((i*6) + j) == selections[i] {
+                        actionDict["isSelected"] = true
+                    } else {
+                        actionDict["isSelected"] = false
+                    }
+                    
+                    actionData.append(actionDict)
+                }
+                
+                print(actionData)
+                
+                
+            }
+            
+            
+            APIRequestHandler.sharedInstance.postAction(NSUserDefaults.standardUserDefaults().stringForKey("ID")!, eventID: eventData.id, selections: actionData, callback: { ( dataDict: NSDictionary) -> Void in
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    
+                    print(dataDict)
+                    
+                    print("everything is awesome!")
+                })
+                
+                
+                
+            })
+            
+            func setTimeout(delay:NSTimeInterval, block:()->Void) -> NSTimer {
+                return NSTimer.scheduledTimerWithTimeInterval(delay, target: NSBlockOperation(block: block), selector: "main", userInfo: nil, repeats: false)
+            }
+            
+            func getResult()  {
+                APIRequestHandler.sharedInstance.getSolution(eventData.id, callback: { ( dataDict: NSDictionary) -> Void in
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        
+                        print(dataDict)
+                        
+                        print("We did it!!")
+                        
+                    })
+                    
+                })
+                
+            }
+            
+            setTimeout(10.0, block:getResult)
+            
+            
+            
+
+            
+            
+            
+    
+            
             takeUserToPostWaitingPage();
         }
         
@@ -151,14 +234,14 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
 //    }
     
     func animateCell(cell: UICollectionViewCell) {
-//        let animation = CABasicAnimation(keyPath: "cornerRadius")
-//        animation.fromValue = 200
-//        cell.layer.cornerRadius = 0
-//        animation.toValue = 0
-//        animation.duration = 1
-//        cell.layer.addAnimation(animation, forKey: animation.keyPath)
-        cell.layer.borderWidth = 10.0
-        cell.layer.borderColor = UIColor.greenColor().CGColor
+        let animation = CABasicAnimation(keyPath: "opacity")
+        animation.fromValue = 1
+        animation.toValue = 0
+        animation.duration = 0.5
+        cell.layer.addAnimation(animation, forKey: animation.keyPath)
+        
+        cell.layer.borderWidth = 5.0
+        cell.layer.borderColor = UIColor(red: 0.549, green:0.133, blue:0.165, alpha: 1.0).CGColor
     }
     
     func animateCellAtIndexPath(collectionView: UICollectionView, indexPath: NSIndexPath) {

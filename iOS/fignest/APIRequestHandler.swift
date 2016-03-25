@@ -13,7 +13,7 @@ class APIRequestHandler: NSObject {
     static let sharedInstance = APIRequestHandler()
     let prefs = NSUserDefaults.standardUserDefaults()
     
-    let apiURL: String = "https://1ab93d05.ngrok.io"
+    let apiURL: String = "https://c421350c.ngrok.io"
     
     var imagesURLs = [
         "https://s3-media4.fl.yelpcdn.com/bphoto/0OIgMcReW_hlcOQYNrKWjA/258s.jpg",
@@ -194,7 +194,7 @@ class APIRequestHandler: NSObject {
     }
     
     //adds New User To Database and saves the new user ID created
-    func addUserToDatabase(name: String, fbID: String, email: String,  callback: () -> Void) {
+    func addUserToDatabase(name: String, fbID: String, email: String,  callback: (dataDict: NSDictionary) -> Void) {
         
         let jsonObject: [String: AnyObject] = [
             "facebook": [
@@ -211,13 +211,7 @@ class APIRequestHandler: NSObject {
                 let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
                 print("Success!")
                 
-                let userID = jsonDictionary["_id"] as! String
-                print(userID)
-                
-                //save value of ID
-                self.prefs.setValue(userID, forKey: "ID")
-                
-                callback()
+                callback(dataDict: jsonDictionary)
                 
             } catch {
                 print("bad happened!")
@@ -357,9 +351,15 @@ class APIRequestHandler: NSObject {
     
     
     
-    func postAction(eventID: String, callback: (jsonDict: NSDictionary) -> Void) {
+    func postAction(userID: String, eventID: String, selections: [NSDictionary],  callback: (jsonDict: NSDictionary) -> Void) {
         
-        get("\(apiURL)/events/\(eventID)/action", successHandler: {
+        let jsonObject: [String: AnyObject] = [
+            "user": userID,
+            "event": eventID,
+            "selections": selections
+        ]
+        
+        post(jsonObject, postEndpoint: "\(apiURL)/events/\(eventID)/actions", successHandler: {
             (response) in
             
             do {
@@ -377,6 +377,31 @@ class APIRequestHandler: NSObject {
                 
             }
         });
+        
+    }
+    
+    
+    func getUsersMapById(callback: (jsonDict: NSDictionary) -> Void) {
+        
+        get("\(apiURL)/usersMapById", successHandler: {
+            (response) in
+            
+            do {
+                let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                print("Getting Users Mapping Success!")
+                
+                print(jsonDict)
+                
+                callback(jsonDict: jsonDict)
+                
+                
+            } catch {
+                print("bad happened!")
+                
+                
+            }
+        });
+        
         
     }
 

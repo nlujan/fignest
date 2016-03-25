@@ -34,7 +34,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         if(accessToken != nil) {
             takeUserToHomePage()
-            
         }
         
         loginButton.delegate = self
@@ -80,9 +79,17 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
   
                     
                     //post user to database
-                    APIRequestHandler.sharedInstance.addUserToDatabase(name, fbID: fbID, email: email, callback: {
+                    APIRequestHandler.sharedInstance.addUserToDatabase(name, fbID: fbID, email: email, callback: { ( dataDict: NSDictionary) -> Void in
                         dispatch_async(dispatch_get_main_queue(), {
+                            
+                            let userID = dataDict["_id"] as! String
+                            print(userID)
+                            
+                            //save value of ID
+                            self.prefs.setValue(userID, forKey: "ID")
                             self.takeUserToHomePage();
+                            
+                            //self.performSegueWithIdentifier("showHomePage", sender: nil)
                         })
                     })
         

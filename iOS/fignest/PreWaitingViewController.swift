@@ -15,7 +15,7 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     var eventData: FigEvent!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
-    var users = ["naim", "toks"]
+    var users: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +31,6 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         // Do any additional setup after loading the view.
         let prefs = NSUserDefaults.standardUserDefaults()
         let name: String = prefs.stringForKey("userFBName")!
-        
-        
         
         print(eventData);
         

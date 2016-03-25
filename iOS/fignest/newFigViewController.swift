@@ -66,7 +66,6 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
             self.presentViewController(alert, animated: true){}
         } else {
             
-            
             var userIDList:[String] = []
             userIDList.append(self.userID)
             
@@ -158,17 +157,8 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
         let tintedImage = origImage?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         locationBtn.setImage(tintedImage, forState: .Normal)
         locationBtn.tintColor = UIColor.blueColor()
-        
-        
-        //test autocomplete code
-        
-        names.appendContentsOf([
-            "Naim",
-            "Toks",
-            "Tom",
-            "Zach",
-            "Henry",
-            "Nikko Jo James"])
+
+    
         
         self.tokenInputView.placeholderText = "Enter a name ";
         //self.tokenInputView.accessoryView = self.contactAddButton();
@@ -364,6 +354,13 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
         if self.tokenInputView.isEditing() {
             self.tokenInputView.addToken(token)
         }
+    }
+    
+    
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+        view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
     }
     
 

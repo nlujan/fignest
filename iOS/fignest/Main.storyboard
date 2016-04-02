@@ -94,7 +94,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Fig Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bUZ-bc-Dw1">
-                                            <rect key="frame" x="14" y="4" width="274" height="21"/>
+                                            <rect key="frame" x="14" y="4" width="231" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.46666666666666667" green="0.082352941176470587" blue="0.12156862745098039" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -156,12 +156,27 @@
                                             <rect key="frame" x="330" y="65" width="40" height="40"/>
                                             <color key="tintColor" red="0.67926682689999995" green="0.14737377290000001" blue="0.1570872536" alpha="1" colorSpace="calibratedRGB"/>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5v-mZ-P4U">
+                                            <rect key="frame" x="246" y="4" width="114" height="21"/>
+                                            <attributedString key="attributedText">
+                                                <fragment content="Search Label">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.38823529411764707" green="0.047058823529411764" blue="0.090196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="17" name="HelveticaNeue-Italic"/>
+                                                        <font key="NSOriginalFont" size="17" name="HelveticaNeue-Italic"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="figLabel" destination="bUZ-bc-Dw1" id="Gt6-Qc-4Jo"/>
                                     <outlet property="personIcon" destination="lJB-t6-eRc" id="jNf-QD-cfk"/>
+                                    <outlet property="searchLabel" destination="U5v-mZ-P4U" id="ggW-5h-mwH"/>
                                     <outlet property="userCountLabel" destination="wlK-6M-RzP" id="uxC-qs-C7G"/>
                                     <outlet property="userImageCollectionView" destination="O0s-fI-D8p" id="Fl1-IY-6j3"/>
                                 </connections>
@@ -190,7 +205,7 @@
                         <outlet property="activityIndicator" destination="Mjw-xR-3zH" id="Ti6-SA-dtP"/>
                         <outlet property="activityView" destination="DDp-kC-RyQ" id="MlU-5j-JLf"/>
                         <outlet property="figTableView" destination="Qc0-5X-JHN" id="V5P-fU-jPB"/>
-                        <segue destination="gUA-mk-oRj" kind="show" identifier="showPreWaiting" id="XKK-f7-fDz"/>
+                        <segue destination="gUA-mk-oRj" kind="show" identifier="showPreWaiting" animates="NO" id="XKK-f7-fDz"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aG9-zP-VdY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -329,7 +344,7 @@
                         <outlet property="tableView" destination="vaR-ZL-AM4" id="0ui-3H-16L"/>
                         <outlet property="titleTextField" destination="QXn-aw-e3T" id="mg7-ap-m7S"/>
                         <outlet property="tokenInputView" destination="e6W-e7-Em5" id="CXC-fi-lYj"/>
-                        <segue destination="gUA-mk-oRj" kind="show" identifier="showPreWaiting" id="ngy-Dh-qqI"/>
+                        <segue destination="gUA-mk-oRj" kind="show" identifier="showPreWaiting" animates="NO" id="ngy-Dh-qqI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="765-tQ-Uzy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -470,7 +485,7 @@
                                 <rect key="frame" x="148" y="553" width="79" height="30"/>
                                 <state key="normal" title="Get Results"/>
                                 <connections>
-                                    <segue destination="crf-Oj-WOI" kind="presentation" id="C0b-hK-rAc"/>
+                                    <segue destination="crf-Oj-WOI" kind="presentation" identifier="ShowResults" id="C0b-hK-rAc"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -501,9 +516,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Results!!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dHe-3d-dHy">
-                                <rect key="frame" x="142" y="77" width="91" height="44"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dHe-3d-dHy">
+                                <rect key="frame" x="19" y="40" width="335" height="99"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" red="0.99753605769230769" green="0.99753605769230769" blue="0.99753605769230769" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -513,11 +528,27 @@
                                 <state key="normal" title="Go to Home">
                                     <color key="titleColor" red="0.29803921568627451" green="0.047058823529411764" blue="0.090196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="homeButtonPressed:" destination="crf-Oj-WOI" eventType="touchUpInside" id="1FD-h5-1fN"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWS-NC-d2N">
+                                <rect key="frame" x="97" y="484" width="180" height="40"/>
+                                <color key="backgroundColor" red="0.66666666666666663" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Yelp Page">
+                                    <color key="titleColor" red="0.99753605769999998" green="0.99753605769999998" blue="0.99753605769999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="goToYelpPage:" destination="crf-Oj-WOI" eventType="touchUpInside" id="CVu-7I-E3T"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.37647058823529411" green="0.074509803921568626" blue="0.12156862745098039" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="resultName" destination="dHe-3d-dHy" id="fWG-hR-4R4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LK4-TW-5Tt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

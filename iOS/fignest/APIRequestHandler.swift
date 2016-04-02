@@ -8,7 +8,7 @@
 
 import UIKit
 
-class APIRequestHandler: NSObject {
+class APIRequestHandler {
     
     static let sharedInstance = APIRequestHandler()
     private let apiURL: String = "https://c6943934.ngrok.io"
@@ -46,8 +46,8 @@ class APIRequestHandler: NSObject {
         "https://s3-media4.fl.yelpcdn.com/bphoto/dpDHWDblLoS_YUsb2Mm4Yg/258s.jpg"
     ]
     
-    override private init() {
-        super.init()
+    private init() {
+        //super.init()
        
     }
     

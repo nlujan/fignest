@@ -14,7 +14,7 @@ class SocketIOManager: NSObject {
     
     var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://10.95.1.199:8080")!)
 
-    override init() {
+    override private init() {
         super.init()
     }
     

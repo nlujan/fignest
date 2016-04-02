@@ -9,16 +9,60 @@
 import UIKit
 
 class ResultsViewController: UIViewController {
+    
+    var eventData: FigEvent!
+    
+    var resultData: NSDictionary!
 
+    @IBOutlet var resultName: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        getFinalResult()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func takeUserToHomePage() {
+        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
+        
+        let homePageNav = UINavigationController(rootViewController: homePage)
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        appDelegate.window!.rootViewController = homePageNav
+    }
+    
+    private func getFinalResult()  {
+        APIRequestHandler.sharedInstance.getSolution(eventData.id, callback: { ( dataDict: NSDictionary) -> Void in
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                print(dataDict)
+                
+                self.resultData = dataDict
+                
+                print("We did it!!")
+                
+                self.resultName.text = dataDict["name"] as! String
+                
+            })
+            
+        })
+        
+    }
+    
+    @IBAction func goToYelpPage(sender: AnyObject) {
+        if let url = NSURL(string: resultData["urls"]!["mobile"] as! String){
+            UIApplication.sharedApplication().openURL(url)
+        }
+    }
+    
+    @IBAction func homeButtonPressed(sender: AnyObject) {
+        takeUserToHomePage()
     }
     
     /*

@@ -261,8 +261,8 @@
 				2BAAE8501C8AA5810004D067 /* FigsTableViewController.swift */,
 				2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */,
 				2B3EA2E61C95DBD400079C1A /* PreWaitingViewController.swift */,
-				2B3EA3501C9DF7C000079C1A /* PostWaitingViewController.swift */,
 				2B4512CC1C8FB02200F14099 /* GameViewController.swift */,
+				2B3EA3501C9DF7C000079C1A /* PostWaitingViewController.swift */,
 				2B4F02781CA4DD1700ACE165 /* ResultsViewController.swift */,
 			);
 			name = "View Controllers";

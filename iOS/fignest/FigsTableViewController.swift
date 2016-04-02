@@ -145,7 +145,7 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         // Configure the cell...
         
         cell.figLabel.text = figEvents[indexPath.row].name
-        
+        cell.searchLabel.text = figEvents[indexPath.row].searchText
         cell.userCountLabel.text = "\(figEvents[indexPath.row].users.count)"
 
         //cell.userCountLabel.text = figEvents[indexPath.row].users.count

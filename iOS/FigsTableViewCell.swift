@@ -14,14 +14,14 @@ class FigsTableViewCell: UITableViewCell {
     @IBOutlet var userImageCollectionView: UICollectionView!
     @IBOutlet var personIcon: UIImageView!
     @IBOutlet var userCountLabel: UILabel!
-    
+    @IBOutlet var searchLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
         personIcon.image = personIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        personIcon.tintColor = UIColor.blueColor()
+        personIcon.tintColor = StyleManager.sharedInstance.primaryColor
 
         
     }

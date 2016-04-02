@@ -72,20 +72,6 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         // Do any additional setup after loading the view.
     }
     
-    private func getFinalResult()  {
-        APIRequestHandler.sharedInstance.getSolution(eventData.id, callback: { ( dataDict: NSDictionary) -> Void in
-            
-            dispatch_async(dispatch_get_main_queue(), {
-                
-                print(dataDict)
-                
-                print("We did it!!")
-                
-            })
-            
-        })
-        
-    }
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -188,7 +174,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
                     
                     print("everything is awesome!")
                     
-                    self.getFinalResult()
+                    //self.getFinalResult()
                 })
                 
                 
@@ -280,6 +266,8 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     func takeUserToPostWaitingPage() {
         let postWaitingPage = self.storyboard?.instantiateViewControllerWithIdentifier("PostWaitingViewController") as! PostWaitingViewController
+        
+        postWaitingPage.eventData = eventData
         
         let postWaitingPageNav = UINavigationController(rootViewController: postWaitingPage)
         

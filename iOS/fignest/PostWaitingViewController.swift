@@ -12,6 +12,8 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     
     var users = ["naim", "toks"]
     
+    var eventData: FigEvent!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -71,6 +73,21 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        
+        if (segue.identifier == "ShowResults") {
+            let viewController = segue.destinationViewController as! ResultsViewController
+            
+            viewController.eventData = self.eventData
+            
+        }
+        
     }
 
     

@@ -12,10 +12,17 @@ class FigsTableViewCell: UITableViewCell {
     
     @IBOutlet var figLabel: UILabel!
     @IBOutlet var userImageCollectionView: UICollectionView!
-
+    @IBOutlet var personIcon: UIImageView!
+    @IBOutlet var userCountLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        personIcon.image = personIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        personIcon.tintColor = UIColor.blueColor()
+
         
     }
 

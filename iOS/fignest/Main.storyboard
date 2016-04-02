@@ -23,35 +23,39 @@
                             </imageView>
                             <view clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ATg-8H-rz5">
                                 <rect key="frame" x="-2" y="0.0" width="376" height="667"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="fignest" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pOX-ho-XWu">
+                                        <rect key="frame" x="76" y="81" width="224" height="94"/>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="52"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LIg-Dy-wOl" customClass="FBSDKLoginButton">
+                                        <rect key="frame" x="68" y="533" width="240" height="43"/>
+                                        <color key="backgroundColor" red="0.16862745100000001" green="0.23921568630000001" blue="0.46274509800000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="fignest" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pOX-ho-XWu">
-                                <rect key="frame" x="113" y="100" width="148" height="94"/>
-                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="52"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="fignest helps you decide where to eat with friends!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="74P-mW-ukP">
-                                <rect key="frame" x="20" y="270" width="347" height="128"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LIg-Dy-wOl" customClass="FBSDKLoginButton">
-                                <rect key="frame" x="67" y="530" width="240" height="43"/>
-                                <color key="backgroundColor" red="0.16862745100000001" green="0.23921568630000001" blue="0.46274509800000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="pOX-ho-XWu" firstAttribute="leading" secondItem="ATg-8H-rz5" secondAttribute="leading" constant="76" id="7Eo-cR-qxW"/>
+                                    <constraint firstAttribute="trailing" secondItem="pOX-ho-XWu" secondAttribute="trailing" constant="76" id="Tqj-ar-wWc"/>
+                                    <constraint firstAttribute="bottom" secondItem="LIg-Dy-wOl" secondAttribute="bottom" constant="91" id="c7t-eN-Ht7"/>
+                                    <constraint firstItem="LIg-Dy-wOl" firstAttribute="leading" secondItem="ATg-8H-rz5" secondAttribute="leading" constant="68" id="jfF-N7-fdY"/>
+                                    <constraint firstItem="pOX-ho-XWu" firstAttribute="top" secondItem="ATg-8H-rz5" secondAttribute="top" constant="81" id="tsK-FO-WQS"/>
+                                    <constraint firstAttribute="trailing" secondItem="LIg-Dy-wOl" secondAttribute="trailing" constant="68" id="xU8-Ku-i5O"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ATg-8H-rz5" secondAttribute="bottom" id="C35-QL-ISV"/>
-                            <constraint firstItem="wRp-f9-b2y" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="E8g-fN-lGX"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="wRp-f9-b2y" secondAttribute="bottom" id="Vfk-Ut-5HA"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="wRp-f9-b2y" secondAttribute="trailing" constant="-20" id="f3K-US-2Q4"/>
-                            <constraint firstItem="ATg-8H-rz5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="nw9-IT-zZS"/>
-                            <constraint firstItem="ATg-8H-rz5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="oFu-6y-dUN"/>
-                            <constraint firstItem="wRp-f9-b2y" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="oPg-sU-jJM"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ATg-8H-rz5" secondAttribute="trailing" constant="-20" id="ogP-NQ-qp9"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ATg-8H-rz5" secondAttribute="trailing" constant="-19" id="1SS-FS-8SS"/>
+                            <constraint firstItem="wRp-f9-b2y" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="6Jf-LA-Aki"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="wRp-f9-b2y" secondAttribute="bottom" id="GA6-fh-1Eq"/>
+                            <constraint firstItem="ATg-8H-rz5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="HyB-Sp-3Me"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wRp-f9-b2y" secondAttribute="trailing" constant="-20" id="Ltk-gK-02h"/>
+                            <constraint firstItem="wRp-f9-b2y" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="biO-Y2-VEt"/>
+                            <constraint firstItem="ATg-8H-rz5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-22" id="cvY-bX-xyI"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ATg-8H-rz5" secondAttribute="bottom" id="fg3-Gm-ECA"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -67,7 +71,7 @@
         <scene sceneID="T1l-pm-Jof">
             <objects>
                 <tableViewController storyboardIdentifier="FigsTableViewController" id="WjF-GL-vO0" customClass="FigsTableViewController" customModule="fignest" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="Qc0-5X-JHN">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="Qc0-5X-JHN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.80454727564102568" green="0.80454727564102568" blue="0.80454727564102568" alpha="1" colorSpace="calibratedRGB"/>
@@ -95,8 +99,14 @@
                                             <color key="textColor" red="0.46666666666666667" green="0.082352941176470587" blue="0.12156862745098039" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wlK-6M-RzP">
+                                            <rect key="frame" x="321" y="74" width="22" height="22"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                            <color key="textColor" red="0.29803921570000003" green="0.047058823530000002" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="O0s-fI-D8p">
-                                            <rect key="frame" x="14" y="31" width="343" height="61"/>
+                                            <rect key="frame" x="14" y="31" width="299" height="61"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="5" id="0DC-Gu-Lt3">
                                                 <size key="itemSize" width="60" height="60"/>
@@ -142,11 +152,17 @@
                                                 <outlet property="delegate" destination="WjF-GL-vO0" id="vq6-PH-hpL"/>
                                             </connections>
                                         </collectionView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="person" translatesAutoresizingMaskIntoConstraints="NO" id="lJB-t6-eRc">
+                                            <rect key="frame" x="330" y="65" width="40" height="40"/>
+                                            <color key="tintColor" red="0.67926682689999995" green="0.14737377290000001" blue="0.1570872536" alpha="1" colorSpace="calibratedRGB"/>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="figLabel" destination="bUZ-bc-Dw1" id="Gt6-Qc-4Jo"/>
+                                    <outlet property="personIcon" destination="lJB-t6-eRc" id="jNf-QD-cfk"/>
+                                    <outlet property="userCountLabel" destination="wlK-6M-RzP" id="uxC-qs-C7G"/>
                                     <outlet property="userImageCollectionView" destination="O0s-fI-D8p" id="Fl1-IY-6j3"/>
                                 </connections>
                             </tableViewCell>
@@ -678,8 +694,9 @@
     <resources>
         <image name="CurrentLocation" width="15" height="15"/>
         <image name="food-salad-restaurant-person" width="1280" height="887"/>
+        <image name="person" width="1200" height="1200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ngy-Dh-qqI"/>
+        <segue reference="XKK-f7-fDz"/>
     </inferredMetricsTieBreakers>
 </document>

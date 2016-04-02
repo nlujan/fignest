@@ -60,18 +60,27 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue){
         
     }
+    
+    private func getUserPics() {
+        
+        APIRequestHandler.sharedInstance.getUsersMapById({ ( dataDict: NSDictionary) -> Void in
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.userIDMapping = dataDict
+                
+                
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.hidden = true
+                self.activityView.hidden = true
+                
+                self.figTableView.reloadData()
+            })
+        })
+    }
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController!.navigationBar.barTintColor = UIColor(red: 0.549, green:0.133, blue:0.165, alpha: 1.0)
-        
-        navigationController!.navigationBar.tintColor = UIColor.whiteColor()
-        
-        navigationController!.navigationBar.titleTextAttributes =
-            [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -84,6 +93,7 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         
         print("userID: \(userID)")
         
+        
         APIRequestHandler.sharedInstance.getUserInvitations(userID, callback: { ( dataArray: NSArray) -> Void in
            
             dispatch_async(dispatch_get_main_queue(), {
@@ -95,26 +105,12 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
                 }
                 
                 self.figEvents = eventList
+                self.getUserPics()
                 
             })
         })
         
-        APIRequestHandler.sharedInstance.getUsersMapById({ ( dataDict: NSDictionary) -> Void in
-        
-            dispatch_async(dispatch_get_main_queue(), {
-                self.userIDMapping = dataDict
-                
-                
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.hidden = true
-                self.activityView.hidden = true
-                
-                self.figTableView.reloadData()
-            })
-        
-    
-        
-        })
+
 
     }
 
@@ -149,7 +145,14 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         // Configure the cell...
         
         cell.figLabel.text = figEvents[indexPath.row].name
+        
+        cell.userCountLabel.text = "\(figEvents[indexPath.row].users.count)"
+
+        //cell.userCountLabel.text = figEvents[indexPath.row].users.count
+        
         cell.contentView.tag = indexPath.row
+        
+        
         
         //cell.userImageCollectionView.reloadData()
 

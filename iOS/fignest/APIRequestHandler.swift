@@ -11,9 +11,7 @@ import UIKit
 class APIRequestHandler: NSObject {
     
     static let sharedInstance = APIRequestHandler()
-    let prefs = NSUserDefaults.standardUserDefaults()
-    
-    let apiURL: String = "https://c421350c.ngrok.io"
+    private let apiURL: String = "https://c6943934.ngrok.io"
     
     var imagesURLs = [
         "https://s3-media4.fl.yelpcdn.com/bphoto/0OIgMcReW_hlcOQYNrKWjA/258s.jpg",
@@ -48,7 +46,7 @@ class APIRequestHandler: NSObject {
         "https://s3-media4.fl.yelpcdn.com/bphoto/dpDHWDblLoS_YUsb2Mm4Yg/258s.jpg"
     ]
     
-    override init() {
+    override private init() {
         super.init()
        
     }

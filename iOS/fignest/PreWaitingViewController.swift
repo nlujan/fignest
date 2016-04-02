@@ -19,14 +19,6 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        navigationController!.navigationBar.barTintColor = UIColor(red: 0.549, green:0.133, blue:0.165, alpha: 1.0)
-        
-        navigationController!.navigationBar.tintColor = UIColor.whiteColor()
-        
-        navigationController!.navigationBar.titleTextAttributes =
-            [NSForegroundColorAttributeName: UIColor.whiteColor()]
 
         // Do any additional setup after loading the view.
         let prefs = NSUserDefaults.standardUserDefaults()

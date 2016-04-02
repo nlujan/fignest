@@ -20,7 +20,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     var eventData: FigEvent!
     
-    var tableImages: [UIImage] = []
+    var foodImages: [UIImage] = []
     
     var userImages: [UIImage] = []
     
@@ -31,11 +31,11 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         playerProgressTable.backgroundColor = UIColor.clearColor()
         
-        //tableImages = APIRequestHandler.sharedInstance.getImages()
+        //foodImages = APIRequestHandler.sharedInstance.getImages()
         
         
         var userImg: UIImage!
-        var userID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
+        let userID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
         let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(userID)/picture?type=square&height=60&width=60")
         if let data = NSData(contentsOfURL: facebookProfileUrl!) {
             userImg = UIImage(data: data)!
@@ -49,21 +49,6 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         APIRequestHandler.sharedInstance.getFigEventPlaces(eventData.id, callback: { ( dataArray: NSArray) -> Void in
             
             dispatch_async(dispatch_get_main_queue(), {
-                //var dataArray = self.prefs.objectForKey("figInvitations") as! NSArray
-                
-//                var eventList: [FigEvent] = []
-//                for event in dataArray {
-//                    eventList.append(FigEvent(data: event as! NSDictionary))
-//                }
-//                
-//                self.figEvents = eventList
-                
-//                self.activityIndicator.stopAnimating()
-//                self.activityIndicator.hidden = true
-//                self.activityView.hidden = true
-//                
-//                self.figTableView.reloadData()
-                
                 self.placesArray = dataArray
                 
                 var images: [String] = []
@@ -74,7 +59,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
                 print(dataArray)
                 print(images)
                 
-                self.tableImages = APIRequestHandler.sharedInstance.getImagesFromUrlStringArray(images)
+                self.foodImages = APIRequestHandler.sharedInstance.getImagesFromUrlStringArray(images)
                 
                 
                 self.picCollectionView.reloadData()
@@ -87,6 +72,21 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         // Do any additional setup after loading the view.
     }
     
+    private func getFinalResult()  {
+        APIRequestHandler.sharedInstance.getSolution(eventData.id, callback: { ( dataDict: NSDictionary) -> Void in
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                print(dataDict)
+                
+                print("We did it!!")
+                
+            })
+            
+        })
+        
+    }
+    
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return placesArray.count
@@ -97,9 +97,9 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         let cell: foodCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("foodCell", forIndexPath: indexPath) as! foodCollectionViewCell
         
         
-        //cell.foodImageView.image = UIImage(named: tableImages[indexPath.row])
+        //cell.foodImageView.image = UIImage(named: foodImages[indexPath.row])
         
-        cell.foodImageView.image = tableImages[(imageIndex * (placesArray.count - 1)) + indexPath.row]
+        cell.foodImageView.image = foodImages[(imageIndex * (placesArray.count - 1)) + indexPath.row]
         
         cell.layer.borderWidth = 0
         cell.layer.borderColor = UIColor.clearColor().CGColor
@@ -154,10 +154,9 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
                 
                  for var j = 0; j < imageCount; j++ {
                     
-                    
-                    
+
                     var actionDict: [String:AnyObject] = [:]
-                    let imageUrl = placesArray[i]["images"]!![j] as! String
+                    let imageUrl = (placesArray[i]["images"] as! NSArray)[j] as! String
                     print("what is this?:\(imageUrl)")
 
                     let id = placesArray[i]["_id"] as! String
@@ -188,32 +187,19 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
                     print(dataDict)
                     
                     print("everything is awesome!")
+                    
+                    self.getFinalResult()
                 })
                 
                 
                 
             })
             
-            func setTimeout(delay:NSTimeInterval, block:()->Void) -> NSTimer {
-                return NSTimer.scheduledTimerWithTimeInterval(delay, target: NSBlockOperation(block: block), selector: "main", userInfo: nil, repeats: false)
-            }
-            
-            func getResult()  {
-                APIRequestHandler.sharedInstance.getSolution(eventData.id, callback: { ( dataDict: NSDictionary) -> Void in
-                    
-                    dispatch_async(dispatch_get_main_queue(), {
-                        
-                        print(dataDict)
-                        
-                        print("We did it!!")
-                        
-                    })
-                    
-                })
-                
-            }
-            
-            setTimeout(10.0, block:getResult)
+//            func setTimeout(delay:NSTimeInterval, block:()->Void) -> NSTimer {
+//                return NSTimer.scheduledTimerWithTimeInterval(delay, target: NSBlockOperation(block: block), selector: "main", userInfo: nil, repeats: false)
+//            }
+//            
+//            setTimeout(10.0, block:getFinalResult)
             
             
             
@@ -272,7 +258,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         // Configure the cell...
         
-        //cell.playerImage.image = UIImage(named: tableImages[indexPath.row])
+        //cell.playerImage.image = UIImage(named: foodImages[indexPath.row])
         cell.playerImage.image = userImages[indexPath.row]
         
         cell.playerProgressBar.progress = progressVals[indexPath.row]

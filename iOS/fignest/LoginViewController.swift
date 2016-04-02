@@ -27,8 +27,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         let titleText = NSAttributedString(string: "Continue with Facebook")
         loginButton.setAttributedTitle(titleText, forState: UIControlState.Normal)
-
-        // Do any additional setup after loading the view.
         
         let accessToken = FBSDKAccessToken.currentAccessToken()
         

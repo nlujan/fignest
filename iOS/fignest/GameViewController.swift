@@ -132,13 +132,13 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
             
             print("placesArray: \(placesArray)")
             
-            for var i = 0; i < placesArray.count; i++ {
+            for var i = 0; i < placesArray.count; i += 1 {
                 print(i)
                 
                 print("place: \(placesArray[i])")
-                var imageCount = placesArray[i]["images"]!!.count
+                let imageCount = placesArray[i]["images"]!!.count
                 
-                 for var j = 0; j < imageCount; j++ {
+                 for var j = 0; j < imageCount; j += 1 {
                     
 
                     var actionDict: [String:AnyObject] = [:]

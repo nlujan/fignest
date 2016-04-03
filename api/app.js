@@ -148,7 +148,7 @@ function run() {
   // API
   app.get('/users', (req, res) => {
     User.allUsers().then((users) => {
-      console.log(users.map((user) => user.asJson() ));
+      console.log(`Users are: ${users.map((user) => user.asJson() )}`);
       res.status(200).json(users.map((user) => user.asJson() ));
     }).catch((err) => {
       console.log(`Error in GET /users`, err);

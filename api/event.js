@@ -5,6 +5,7 @@ var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
 var Place = require('./place');
 var Action = require('./action');
+var User = require('./user');
 var YelpApi = require('./yelp-api');
 var Util = require('./util');
 var _ = require('underscore');
@@ -18,7 +19,7 @@ const search = {
   sort: 2,
   shouldIncludeActionLinks: true
 };
-const eventRadiusDefault = 1;
+const eventRadiusDefault = 3;
 const eventLimitDefault = 6;
 
 class Event {
@@ -72,6 +73,17 @@ class Event {
     return result;
   }
 
+  getUsers() {
+    return new Promise((resolve, reject) => {
+      // $in query instead
+      Promise.all(this.users.map((user) => User.fromId(user))).then((users) => {
+        resolve(users);
+      }).catch((err) => {
+        reject(err);
+      });
+    });
+  }
+
   getPlaces() {
     return new Promise((resolve, reject) => {
       if (this.hasPlaces()) {
@@ -103,7 +115,7 @@ class Event {
         // pick this.limit businesses at random
         yelpBusinesses = _.sample(yelpBusinesses, this.limit);
 
-        var places = yelpBusinesses.map((biz) => Place.fromYelpJson(biz));
+        var places = yelpBusinesses.map((biz) => Place.fromYelpJson(biz, this._id));
         return Promise.all(places.map((place) => place.getImages()));
       }).then((places) => {
         // Save places

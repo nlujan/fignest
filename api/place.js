@@ -53,7 +53,8 @@ class Place {
           console.log(`Error saving place to db: ${this}`, err);
           reject(err);
         }
-        resolve(this.constructor.fromJson(this));
+        // resolve(this.constructor.fromJson(this))?
+        resolve(this);
       });
     });
   }

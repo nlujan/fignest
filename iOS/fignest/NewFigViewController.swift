@@ -9,17 +9,18 @@
 import UIKit
 import CoreLocation
 
-class newFigViewController: UIViewController, CLLocationManagerDelegate, CLTokenInputViewDelegate, UITableViewDataSource, UITableViewDelegate {
+class NewFigViewController: UIViewController, CLLocationManagerDelegate, CLTokenInputViewDelegate, UITableViewDataSource, UITableViewDelegate {
+    
+    
+    //MARK: Properties
     
     let userID: String = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
-    //var userEventID: String = ""
     
     var names:[String] = []
     var filteredNames:[String] = []
     var selectedNames:[String] = []
     
     var eventData: FigEvent!
-    
     var nameDict: [String: String] = [:]
     
     @IBOutlet var tableView: UITableView!
@@ -33,6 +34,7 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
     
     let locationManager = CLLocationManager()
     
+    //MARK: Actions
 
     @IBAction func createFig(sender: AnyObject) {
         
@@ -64,6 +66,9 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
             alert.setValue(attributedString, forKey: "attributedTitle")
             alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
             self.presentViewController(alert, animated: true){}
+            alert.view.tintColor = StyleManager.sharedInstance.primaryColor
+            
+            
         } else {
             
             var userIDList:[String] = []
@@ -100,9 +105,7 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
     }
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func getAllUsers() {
         APIRequestHandler.sharedInstance.getAllUsers({ ( dataArray: NSArray) -> Void in
             
             dispatch_async(dispatch_get_main_queue(), {
@@ -112,8 +115,8 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
                 var nameList: [String] = []
                 var nameDict: [String: String] = [:]
                 for user in dataArray {
-                    var name = user["displayName"] as! String
-                    var id = user["_id"] as! String
+                    let name = user["displayName"] as! String
+                    let id = user["_id"] as! String
                     
                     if id != self.userID {
                         nameList.append(name)
@@ -123,7 +126,6 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
                 }
                 
                 self.names = nameList;
-                
                 self.nameDict = nameDict;
                 
                 print(nameDict)
@@ -132,14 +134,22 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
             
         })
         
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        getAllUsers()
+        
         
         locationActivityIndicator.hidden = true
         
         
-//        self.tokenInputView.layer.borderWidth = 0.5
-//        self.tokenInputView.layer.borderColor = UIColor.grayColor().CGColor
+//        self.tableView.layer.borderWidth = 0.5
+//        self.tableView.layer.borderColor = UIColor.grayColor().CGColor
 //        
-//        self.tokenInputView.layer.cornerRadius = 8.0
+//        self.tableView.layer.cornerRadius = 8.0
         
         
         // tapping outside screen clear keyboard
@@ -154,12 +164,9 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
     
         
         self.tokenInputView.placeholderText = "Enter a name ";
-        //self.tokenInputView.accessoryView = self.contactAddButton();
         self.tokenInputView.drawBottomBorder = true;
         self.tokenInputView.delegate = self
-        
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        
         self.tableView.hidden = true;
         
     }
@@ -180,13 +187,10 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
         locationBtn.hidden = true
         locationActivityIndicator.hidden = false
         locationActivityIndicator.startAnimating()
-        
-        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-        
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -232,33 +236,6 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
         }
 
     }
-    
-    
-
-
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        
-        if (segue.identifier == "showPreWaiting") {
-            let navController = segue.destinationViewController as! UINavigationController
-           
-            let viewController = navController.topViewController as! PreWaitingViewController
-           
-            viewController.eventData = self.eventData
-     
-        }
-        
-    }
- 
-    
-    
-    
-    
     
     //MARK: CLTokenInputViewDelegate
     
@@ -356,7 +333,22 @@ class newFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
         super.touchesBegan(touches, withEvent: event)
     }
     
-
-
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        
+        if (segue.identifier == "showPreWaiting") {
+            let navController = segue.destinationViewController as! UINavigationController
+            
+            let viewController = navController.topViewController as! PreWaitingViewController
+            
+            viewController.eventData = self.eventData
+            
+        }
+        
+    }
 
 }

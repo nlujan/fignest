@@ -10,37 +10,15 @@ import UIKit
 
 class PreWaitingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet var waitingTable: UITableView!
-    
-    var eventData: FigEvent!
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    //MARK: Properties
     
     var users: [String] = []
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        let prefs = NSUserDefaults.standardUserDefaults()
-        let name: String = prefs.stringForKey("userFBName")!
-        
-        print(eventData);
-        
-        self.title = eventData.name.uppercaseString
-        
-        activityIndicator.startAnimating()
-        
-    }
+    var eventData: FigEvent!
     
+    @IBOutlet var waitingTable: UITableView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
-    func takeUserToHomePage() {
-        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
-        
-        let homePageNav = UINavigationController(rootViewController: homePage)
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        appDelegate.window!.rootViewController = homePageNav
-    }
+    //MARK: Actions
     
     @IBAction func preWaitingShowOptions(sender: AnyObject) {
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
@@ -62,19 +40,33 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         
         
         self.presentViewController(optionMenu, animated: true, completion: nil)
+        optionMenu.view.tintColor = StyleManager.sharedInstance.primaryColor
     }
     
     @IBAction func buttonPressed(sender: AnyObject) {
-         self.performSegueWithIdentifier("showGameView", sender: nil)
+        self.performSegueWithIdentifier("showGameView", sender: nil)
     }
     
+    //MARK: Functions
     
+    func takeUserToHomePage() {
+        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
+        
+        let homePageNav = UINavigationController(rootViewController: homePage)
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        appDelegate.window!.rootViewController = homePageNav
+    }
     
+    //MARK: UITableViewDelegate
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
+    
+    
+    //MARK: UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -88,6 +80,23 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         cell.nameLabel.text = users[indexPath.row]
         
         return cell
+    }
+    
+    //MARK: Override View Functions
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+        let prefs = NSUserDefaults.standardUserDefaults()
+        let name: String = prefs.stringForKey("userFBName")!
+        
+        print(eventData);
+        
+        self.title = eventData.name.uppercaseString
+        
+        activityIndicator.startAnimating()
+        
     }
     
     override func didReceiveMemoryWarning() {

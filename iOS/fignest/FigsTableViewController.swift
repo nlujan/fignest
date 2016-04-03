@@ -12,16 +12,18 @@ import FBSDKCoreKit
 
 class FigsTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    var figEvents: [FigEvent] = []
-    @IBOutlet var figTableView: UITableView!
     
+    //MARK: Properties
+    
+    var figEvents: [FigEvent] = []
     var selectedEventData: FigEvent!
     var userIDMapping: NSDictionary = [:]
     
+    @IBOutlet var figTableView: UITableView!
     @IBOutlet var activityView: UIView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
-    let prefs = NSUserDefaults.standardUserDefaults()
+    
     
     func takeUserToLoginPage() {
         let loginPageController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
@@ -31,6 +33,8 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         appDelegate.window!.rootViewController = loginPageController
     }
     
+    
+    //MARK: Actions
     
     @IBAction func showHomeOptions(sender: AnyObject) {
         
@@ -53,8 +57,12 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         optionMenu.addAction(logoutAction)
         optionMenu.addAction(cancelAction)
         
+        let subview = optionMenu.view.subviews.first! as UIView
+        let alertContentView = subview.subviews.first! as UIView
+        subview.layer.cornerRadius = 2;
         
         self.presentViewController(optionMenu, animated: true, completion: nil)
+        optionMenu.view.tintColor = StyleManager.sharedInstance.primaryColor
     }
     
     @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue){
@@ -78,6 +86,7 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         })
     }
 
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,10 +95,11 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         // self.clearsSelectionOnViewWillAppear = false
         
         activityIndicator.startAnimating()
-    
-        var userID = prefs.stringForKey("ID")!
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let userID = userDefaults.stringForKey("ID")!
 
-        //let userID: String = prefs.stringForKey("ID")!
+        //let userID: String = userDefaults.stringForKey("ID")!
         
         print("userID: \(userID)")
         
@@ -97,7 +107,7 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         APIRequestHandler.sharedInstance.getUserInvitations(userID, callback: { ( dataArray: NSArray) -> Void in
            
             dispatch_async(dispatch_get_main_queue(), {
-                //var dataArray = self.prefs.objectForKey("figInvitations") as! NSArray
+                //var dataArray = self.userDefaults.objectForKey("figInvitations") as! NSArray
                 
                 var eventList: [FigEvent] = []
                 for event in dataArray {
@@ -119,12 +129,14 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
+    // MARK: - UITableViewDataSource
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
+    
+    
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -138,6 +150,7 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         
     }
 
+    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! FigsTableViewCell
@@ -231,65 +244,16 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     }
     
     
+    
+    // MARK: - Navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
-        
         if (segue.identifier == "showPreWaiting") {
             let navController = segue.destinationViewController as! UINavigationController
-//            
             let viewController = navController.topViewController as! PreWaitingViewController
-//            
             viewController.eventData = self.selectedEventData
-            
         }
-//        
-//        if segue.identifier == "enterEventSegue" {
-//            if let destination = segue.destinationViewController as? PreWaitingViewController {
-//                if let eventIndex = tableView.indexPathForSelectedRow?.row {
-//                    print("cheayyy \(figEvents[eventIndex])")
-//                    destination.eventData = figEvents[eventIndex]
-//                }
-//            }
-//
-//        }
     }
     
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-     if editingStyle == .Delete {
-     // Delete the row from the data source
-     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-     } else if editingStyle == .Insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
 
 }

@@ -10,22 +10,20 @@ import UIKit
 
 class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
+    //MARK: Properties
+    
+    var imageIndex: Int = 0
+    var selections: [Int] = []
+    var placesArray: NSArray = []
+    var eventData: FigEvent!
+    var foodImages: [UIImage] = []
+    var userImages: [UIImage] = []
+    var progressVals: [Float] = [0, 0]
+    
     @IBOutlet var picCollectionView: UICollectionView!
     @IBOutlet var playerProgressTable: UITableView!
     
     
-    var imageIndex = 0
-    var selections: [Int] = []
-    var placesArray: NSArray = []
-    
-    var eventData: FigEvent!
-    
-    var foodImages: [UIImage] = []
-    
-    var userImages: [UIImage] = []
-    
-    var progressVals: [Float] = [0, 0]
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -80,7 +78,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell: foodCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("foodCell", forIndexPath: indexPath) as! foodCollectionViewCell
+        let cell: FoodCell = collectionView.dequeueReusableCellWithReuseIdentifier("FoodCell", forIndexPath: indexPath) as! FoodCell
         
         
         //cell.foodImageView.image = UIImage(named: foodImages[indexPath.row])
@@ -95,6 +93,8 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("cell \(indexPath.row) selected")
+        
+        
         animateCellAtIndexPath(collectionView, indexPath: indexPath)
         
         
@@ -171,29 +171,9 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
                     
                     
                     print(dataDict)
-                    
                     print("everything is awesome!")
-                    
-                    //self.getFinalResult()
                 })
-                
-                
-                
             })
-            
-//            func setTimeout(delay:NSTimeInterval, block:()->Void) -> NSTimer {
-//                return NSTimer.scheduledTimerWithTimeInterval(delay, target: NSBlockOperation(block: block), selector: "main", userInfo: nil, repeats: false)
-//            }
-//            
-//            setTimeout(10.0, block:getFinalResult)
-            
-            
-            
-
-            
-            
-            
-    
             
             takeUserToPostWaitingPage();
         }

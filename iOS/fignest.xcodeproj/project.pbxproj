@@ -106,9 +106,9 @@
 		2B4512CD1C8FB02200F14099 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512CC1C8FB02200F14099 /* GameViewController.swift */; };
 		2B4512CE1C8FB02200F14099 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512CC1C8FB02200F14099 /* GameViewController.swift */; };
 		2B4512CF1C8FB02200F14099 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512CC1C8FB02200F14099 /* GameViewController.swift */; };
-		2B4512D11C8FEF3000F14099 /* foodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512D01C8FEF3000F14099 /* foodCollectionViewCell.swift */; };
-		2B4512D21C8FEF3000F14099 /* foodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512D01C8FEF3000F14099 /* foodCollectionViewCell.swift */; };
-		2B4512D31C8FEF3000F14099 /* foodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512D01C8FEF3000F14099 /* foodCollectionViewCell.swift */; };
+		2B4512D11C8FEF3000F14099 /* FoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512D01C8FEF3000F14099 /* FoodCell.swift */; };
+		2B4512D21C8FEF3000F14099 /* FoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512D01C8FEF3000F14099 /* FoodCell.swift */; };
+		2B4512D31C8FEF3000F14099 /* FoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512D01C8FEF3000F14099 /* FoodCell.swift */; };
 		2B4512F51C92564700F14099 /* PlayerProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512F41C92564700F14099 /* PlayerProgressCell.swift */; };
 		2B4512F61C92564700F14099 /* PlayerProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512F41C92564700F14099 /* PlayerProgressCell.swift */; };
 		2B4512F71C92564700F14099 /* PlayerProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512F41C92564700F14099 /* PlayerProgressCell.swift */; };
@@ -141,9 +141,9 @@
 		2BAAE8551C8AA7100004D067 /* FigsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */; };
 		2BAAE8561C8AA7100004D067 /* FigsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */; };
 		2BAAE8571C8AA7100004D067 /* FigsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */; };
-		2BAAE8591C8B9FE50004D067 /* newFigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */; };
-		2BAAE85A1C8B9FE50004D067 /* newFigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */; };
-		2BAAE85B1C8B9FE50004D067 /* newFigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */; };
+		2BAAE8591C8B9FE50004D067 /* NewFigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8581C8B9FE50004D067 /* NewFigViewController.swift */; };
+		2BAAE85A1C8B9FE50004D067 /* NewFigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8581C8B9FE50004D067 /* NewFigViewController.swift */; };
+		2BAAE85B1C8B9FE50004D067 /* NewFigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8581C8B9FE50004D067 /* NewFigViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -197,7 +197,7 @@
 		2B3EA3981C9F689800079C1A /* CLTokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CLTokenView.swift; path = "../../../../../Desktop/CLTokenInputView-Swift-master/CLTokenInputView/CLTokenView.swift"; sourceTree = "<group>"; };
 		2B3EA3991C9F689800079C1A /* CLBackspaceDetectingTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CLBackspaceDetectingTextField.swift; path = "../../../../../Desktop/CLTokenInputView-Swift-master/CLTokenInputView/CLBackspaceDetectingTextField.swift"; sourceTree = "<group>"; };
 		2B4512CC1C8FB02200F14099 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		2B4512D01C8FEF3000F14099 /* foodCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = foodCollectionViewCell.swift; sourceTree = "<group>"; };
+		2B4512D01C8FEF3000F14099 /* FoodCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodCell.swift; sourceTree = "<group>"; };
 		2B4512F41C92564700F14099 /* PlayerProgressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerProgressCell.swift; sourceTree = "<group>"; };
 		2B4F02741CA3A93800ACE165 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		2B4F02781CA4DD1700ACE165 /* ResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
@@ -222,7 +222,7 @@
 		2BAAE84C1C8A9D8A0004D067 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2BAAE8501C8AA5810004D067 /* FigsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FigsTableViewController.swift; sourceTree = "<group>"; };
 		2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FigsTableViewCell.swift; path = ../FigsTableViewCell.swift; sourceTree = "<group>"; };
-		2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = newFigViewController.swift; sourceTree = "<group>"; };
+		2BAAE8581C8B9FE50004D067 /* NewFigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewFigViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,7 +259,7 @@
 			children = (
 				2BAAE84C1C8A9D8A0004D067 /* LoginViewController.swift */,
 				2BAAE8501C8AA5810004D067 /* FigsTableViewController.swift */,
-				2BAAE8581C8B9FE50004D067 /* newFigViewController.swift */,
+				2BAAE8581C8B9FE50004D067 /* NewFigViewController.swift */,
 				2B3EA2E61C95DBD400079C1A /* PreWaitingViewController.swift */,
 				2B4512CC1C8FB02200F14099 /* GameViewController.swift */,
 				2B3EA3501C9DF7C000079C1A /* PostWaitingViewController.swift */,
@@ -272,9 +272,9 @@
 			isa = PBXGroup;
 			children = (
 				2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */,
-				2B4512D01C8FEF3000F14099 /* foodCollectionViewCell.swift */,
-				2B4512F41C92564700F14099 /* PlayerProgressCell.swift */,
 				2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */,
+				2B4512D01C8FEF3000F14099 /* FoodCell.swift */,
+				2B4512F41C92564700F14099 /* PlayerProgressCell.swift */,
 				2B3EA2EA1C95DD2800079C1A /* PreWaitingCell.swift */,
 				2B3EA3541C9DF91700079C1A /* PostWaitingCell.swift */,
 			);
@@ -329,7 +329,7 @@
 			name = "Autocomplete Files";
 			sourceTree = "<group>";
 		};
-		2B870ACF1CAF052E00455570 /* Framework */ = {
+		2B870ACF1CAF052E00455570 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				2B5CAFEC1C8D2DCB00FE7B6D /* CoreLocation.framework */,
@@ -337,13 +337,13 @@
 				2B870AD11CAF055C00455570 /* FBSDKLoginKit.framework */,
 				2B870AD21CAF055C00455570 /* FBSDKShareKit.framework */,
 			);
-			name = Framework;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		2BAAE80F1C8A9CAE0004D067 = {
 			isa = PBXGroup;
 			children = (
-				2B870ACF1CAF052E00455570 /* Framework */,
+				2B870ACF1CAF052E00455570 /* Frameworks */,
 				2BAAE81A1C8A9CAE0004D067 /* fignest */,
 				2BAAE8321C8A9CAE0004D067 /* fignestTests */,
 				2BAAE83D1C8A9CAE0004D067 /* fignestUITests */,
@@ -575,8 +575,8 @@
 				2B3EA3131C95F02400079C1A /* SocketEngineClient.swift in Sources */,
 				2BAAE81C1C8A9CAE0004D067 /* AppDelegate.swift in Sources */,
 				2B3EA32B1C95F02400079C1A /* SocketIOClientStatus.swift in Sources */,
-				2BAAE8591C8B9FE50004D067 /* newFigViewController.swift in Sources */,
-				2B4512D11C8FEF3000F14099 /* foodCollectionViewCell.swift in Sources */,
+				2BAAE8591C8B9FE50004D067 /* NewFigViewController.swift in Sources */,
+				2B4512D11C8FEF3000F14099 /* FoodCell.swift in Sources */,
 				2B591AB51CAF6A0300F307D3 /* StyleManager.swift in Sources */,
 				2BAAE8551C8AA7100004D067 /* FigsTableViewCell.swift in Sources */,
 				2B3EA3281C95F02400079C1A /* SocketIOClientOption.swift in Sources */,
@@ -602,7 +602,7 @@
 				2B3EA3381C95F02400079C1A /* SocketStringReader.swift in Sources */,
 				2B3EA3291C95F02400079C1A /* SocketIOClientOption.swift in Sources */,
 				2B3EA3A11C9F689800079C1A /* CLTokenView.swift in Sources */,
-				2BAAE85A1C8B9FE50004D067 /* newFigViewController.swift in Sources */,
+				2BAAE85A1C8B9FE50004D067 /* NewFigViewController.swift in Sources */,
 				2BAAE8561C8AA7100004D067 /* FigsTableViewCell.swift in Sources */,
 				2B4512CE1C8FB02200F14099 /* GameViewController.swift in Sources */,
 				2B3EA3261C95F02400079C1A /* SocketIOClient.swift in Sources */,
@@ -621,7 +621,7 @@
 				2B3EA30B1C95F02400079C1A /* SocketAnyEvent.swift in Sources */,
 				2B3EA3231C95F02400079C1A /* SocketEventHandler.swift in Sources */,
 				2B3EA3111C95F02400079C1A /* SocketEngine.swift in Sources */,
-				2B4512D21C8FEF3000F14099 /* foodCollectionViewCell.swift in Sources */,
+				2B4512D21C8FEF3000F14099 /* FoodCell.swift in Sources */,
 				2BAAE8341C8A9CAE0004D067 /* fignestTests.swift in Sources */,
 				2B3EA39B1C9F689800079C1A /* CLToken.swift in Sources */,
 				2B3EA3171C95F02400079C1A /* SocketEnginePacketType.swift in Sources */,
@@ -651,7 +651,7 @@
 				2B3EA3391C95F02400079C1A /* SocketStringReader.swift in Sources */,
 				2B3EA32A1C95F02400079C1A /* SocketIOClientOption.swift in Sources */,
 				2B3EA3A21C9F689800079C1A /* CLTokenView.swift in Sources */,
-				2BAAE85B1C8B9FE50004D067 /* newFigViewController.swift in Sources */,
+				2BAAE85B1C8B9FE50004D067 /* NewFigViewController.swift in Sources */,
 				2BAAE8571C8AA7100004D067 /* FigsTableViewCell.swift in Sources */,
 				2B4512CF1C8FB02200F14099 /* GameViewController.swift in Sources */,
 				2B3EA3271C95F02400079C1A /* SocketIOClient.swift in Sources */,
@@ -670,7 +670,7 @@
 				2B3EA30C1C95F02400079C1A /* SocketAnyEvent.swift in Sources */,
 				2B3EA3241C95F02400079C1A /* SocketEventHandler.swift in Sources */,
 				2B3EA3121C95F02400079C1A /* SocketEngine.swift in Sources */,
-				2B4512D31C8FEF3000F14099 /* foodCollectionViewCell.swift in Sources */,
+				2B4512D31C8FEF3000F14099 /* FoodCell.swift in Sources */,
 				2BAAE83F1C8A9CAE0004D067 /* fignestUITests.swift in Sources */,
 				2B3EA39C1C9F689800079C1A /* CLToken.swift in Sources */,
 				2B3EA3181C95F02400079C1A /* SocketEnginePacketType.swift in Sources */,

@@ -11,10 +11,14 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
-
-    @IBOutlet var loginButton: FBSDKLoginButton!
-    let prefs = NSUserDefaults.standardUserDefaults()
     
+    
+    
+    // MARK: Properties
+    @IBOutlet var loginButton: FBSDKLoginButton!
+    
+    
+    // MARK: Generic functions
     func takeUserToHomePage() {
         let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
         let homePageNav = UINavigationController(rootViewController: homePage)
@@ -22,6 +26,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         appDelegate.window!.rootViewController = homePageNav
     }
     
+    
+    
+    // MARK: Override functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,8 +79,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                     let fbID = result["id"] as! String
                     let email = result["email"] as! String
                     
-                    self.prefs.setValue(name, forKey: "userFBName")
-                    self.prefs.setValue(fbID, forKey: "userFBID")
+                    let userDefaults = NSUserDefaults.standardUserDefaults()
+                    
+                    userDefaults.setValue(name, forKey: "userFBName")
+                    userDefaults.setValue(fbID, forKey: "userFBID")
   
                     
                     //post user to database
@@ -84,16 +93,16 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                             print(userID)
                             
                             //save value of ID
-                            self.prefs.setValue(userID, forKey: "ID")
+                            userDefaults.setValue(userID, forKey: "ID")
                             self.takeUserToHomePage();
                             
-                            //self.performSegueWithIdentifier("showHomePage", sender: nil)
+                            
                         })
                     })
         
                 }
                 else {
-                    print("error \(error)")
+                    print("error: \(error)")
                 }
             })
             

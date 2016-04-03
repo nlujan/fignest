@@ -8,7 +8,7 @@
 
 import UIKit
 
-class foodCollectionViewCell: UICollectionViewCell {
+class FoodCell: UICollectionViewCell {
 
     @IBOutlet var foodImageView: UIImageView!
     

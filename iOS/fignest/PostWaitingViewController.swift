@@ -46,6 +46,7 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
         
         
         self.presentViewController(optionMenu, animated: true, completion: nil)
+        optionMenu.view.tintColor = StyleManager.sharedInstance.primaryColor
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

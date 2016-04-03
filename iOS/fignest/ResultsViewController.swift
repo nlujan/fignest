@@ -10,11 +10,27 @@ import UIKit
 
 class ResultsViewController: UIViewController {
     
-    var eventData: FigEvent!
+    //MARK: Properties
     
+    var eventData: FigEvent!
     var resultData: NSDictionary!
-
     @IBOutlet var resultName: UILabel!
+    
+    
+    //MARK: Actions
+    
+    @IBAction func goToYelpPage(sender: AnyObject) {
+        if let url = NSURL(string: resultData["urls"]!["mobile"] as! String){
+            UIApplication.sharedApplication().openURL(url)
+        }
+    }
+    
+    @IBAction func homeButtonPressed(sender: AnyObject) {
+        takeUserToHomePage()
+    }
+    
+    
+    //MARK: Override functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +42,10 @@ class ResultsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    
+    //MARK: Generic functions
     
     func takeUserToHomePage() {
         let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
@@ -42,12 +62,9 @@ class ResultsViewController: UIViewController {
             dispatch_async(dispatch_get_main_queue(), {
                 
                 print(dataDict)
-                
                 self.resultData = dataDict
-                
                 print("We did it!!")
-                
-                self.resultName.text = dataDict["name"] as! String
+                self.resultName.text = dataDict["name"] as? String
                 
             })
             
@@ -55,15 +72,6 @@ class ResultsViewController: UIViewController {
         
     }
     
-    @IBAction func goToYelpPage(sender: AnyObject) {
-        if let url = NSURL(string: resultData["urls"]!["mobile"] as! String){
-            UIApplication.sharedApplication().openURL(url)
-        }
-    }
-    
-    @IBAction func homeButtonPressed(sender: AnyObject) {
-        takeUserToHomePage()
-    }
     
     /*
     // MARK: - Navigation

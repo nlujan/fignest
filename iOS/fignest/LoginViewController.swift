@@ -12,8 +12,6 @@ import FBSDKCoreKit
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
-    
-    
     // MARK: Properties
     @IBOutlet var loginButton: FBSDKLoginButton!
     
@@ -26,6 +24,20 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         appDelegate.window!.rootViewController = homePageNav
     }
     
+    func addUser(name: String, fbID: String, email: String) {
+        APIRequestHandler.sharedInstance.addUserToDatabase(name, fbID: fbID, email: email, callback: { ( dataDict: NSDictionary) -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                let userID = dataDict["_id"] as! String
+                print(userID)
+                
+                //save value of ID
+                NSUserDefaults.standardUserDefaults().setValue(userID, forKey: "ID")
+                self.takeUserToHomePage();
+            })
+        })
+        
+    }
     
     
     // MARK: Override functions
@@ -63,14 +75,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         }
         
         if let userToken = result.token {
-            //get user access token
-            //let token:FBSDKAccessToken = result.token
-            
             let userID = userToken.userID as String
             
             print("token = \(userToken.tokenString)")
             print("User ID = \(userID)")
-            
             
             let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"id,email,first_name,last_name"], tokenString: userToken.tokenString, version: nil, HTTPMethod: "GET")
             req.startWithCompletionHandler({ (connection, result, error : NSError!) -> Void in
@@ -81,24 +89,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                     
                     let userDefaults = NSUserDefaults.standardUserDefaults()
                     
+                    // save values in userDefaults
                     userDefaults.setValue(name, forKey: "userFBName")
                     userDefaults.setValue(fbID, forKey: "userFBID")
   
                     
                     //post user to database
-                    APIRequestHandler.sharedInstance.addUserToDatabase(name, fbID: fbID, email: email, callback: { ( dataDict: NSDictionary) -> Void in
-                        dispatch_async(dispatch_get_main_queue(), {
-                            
-                            let userID = dataDict["_id"] as! String
-                            print(userID)
-                            
-                            //save value of ID
-                            userDefaults.setValue(userID, forKey: "ID")
-                            self.takeUserToHomePage();
-                            
-                            
-                        })
-                    })
+                    self.addUser(name, fbID: fbID, email: email)
+
         
                 }
                 else {

@@ -11,7 +11,7 @@ import UIKit
 class APIRequestHandler {
     
     static let sharedInstance = APIRequestHandler()
-    private let apiURL: String = "https://c6943934.ngrok.io"
+    private let apiURL: String = "https://fc57cf15.ngrok.io"
     
     var imagesURLs = [
         "https://s3-media4.fl.yelpcdn.com/bphoto/0OIgMcReW_hlcOQYNrKWjA/258s.jpg",
@@ -78,7 +78,7 @@ class APIRequestHandler {
         let session = NSURLSession.sharedSession()
         let url = NSURL(string: postEndpoint)!
         
-        // Make the POST call and handle it in a completion handler
+        // Make the GET call and handle it in a completion handler
         session.dataTaskWithURL(url, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             // Make sure we get an OK response
             guard let realResponse = response as? NSHTTPURLResponse where
@@ -87,36 +87,16 @@ class APIRequestHandler {
                     return
             }
             
-            // Read the JSON
-//            do {
-//                if let ipString = NSString(data:data!, encoding: NSUTF8StringEncoding) {
-//                    // Print what we got from the call
-//                    print(ipString)
-//                    
-//                    // Parse the JSON to get the IP
-//                    let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
-//                    
-//                    
-//                    print(jsonDictionary)
-            
-                    //THIS IS A TESTTT
-                    successHandler(response: data as NSData?);
-                    //PLEASE WORK!!
-                    
-                    //let origin = jsonDictionary["origin"] as! String
-                    
-                    // Perform function that is desired
-                    //self.performSelectorOnMainThread("updateIPLabel:", withObject: origin, waitUntilDone: false)
-//                }
-//            } catch {
-//                print("bad things happened")
-//            }
+            //calls successHandler func
+            successHandler(response: data as NSData?);
+
         }).resume()
     }
     
     private func post(postParams : [String: AnyObject], postEndpoint : String, successHandler: (response: NSData?) -> Void) {
-        let url = NSURL(string: postEndpoint)!
+        
         let session = NSURLSession.sharedSession()
+        let url = NSURL(string: postEndpoint)!
         
         // Create the request
         let request = NSMutableURLRequest(URL: url)
@@ -139,34 +119,8 @@ class APIRequestHandler {
                     return
             }
             
-            // Read the JSON
-            
-//            do {
-//                if let postString = NSString(data:data!, encoding: NSUTF8StringEncoding) as? String {
-//                    // Print what we got from the call
-//                    print("POST: " + postString)
-//                    
-//                    // Perform function that is desired
-//                    
-//                    
-//                    
-//                    
-//                    
-//                    let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-            
-                    //print("fucking ID!: \(jsonDictionary["_id"] as! String)")
-                    
-                    //self.performSelectorOnMainThread("printPostResult:", withObject: data, waitUntilDone: false)
-                    
-                    
-                    //THIS IS A TESTTT
-                    successHandler(response: data as NSData?);
-                    //PLEASE WORK!!
-                    
-//                }
-//            } catch {
-//                print("bad things happened")
-//            }
+            //calls successHandler func
+            successHandler(response: data as NSData?);
             
         }).resume()
     }

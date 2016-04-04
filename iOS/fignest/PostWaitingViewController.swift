@@ -10,22 +10,12 @@ import UIKit
 
 class PostWaitingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var users = ["naim", "toks"]
+    //MARK: Properties
     
+    var users = ["naim", "toks"]
     var eventData: FigEvent!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    func takeUserToHomePage() {
-        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
-        
-        let homePageNav = UINavigationController(rootViewController: homePage)
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        appDelegate.window!.rootViewController = homePageNav
-    }
+    //MARK: Actions
     
     @IBAction func showOptions(sender: AnyObject) {
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
@@ -49,10 +39,18 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
         optionMenu.view.tintColor = StyleManager.sharedInstance.primaryColor
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+    //MARK: Functions
+    
+    func takeUserToHomePage() {
+        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
+        
+        let homePageNav = UINavigationController(rootViewController: homePage)
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        appDelegate.window!.rootViewController = homePageNav
     }
+    
+    //MARK: Table DataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -63,12 +61,16 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostWaitingCell", forIndexPath: indexPath) as! PostWaitingCell
         
-        // Configure the cell...
-        
         cell.nameLabel.text = users[indexPath.row]
         cell.contentView.tag = indexPath.row
         
         return cell
+    }
+    
+    //MARK: Override Functions
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
     
     override func didReceiveMemoryWarning() {
@@ -76,6 +78,8 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
         // Dispose of any resources that can be recreated.
     }
     
+    
+    // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

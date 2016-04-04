@@ -23,28 +23,10 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     @IBOutlet var picCollectionView: UICollectionView!
     @IBOutlet var playerProgressTable: UITableView!
     
+    //MARK: API Functions
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        playerProgressTable.backgroundColor = UIColor.clearColor()
-        
-        //foodImages = APIRequestHandler.sharedInstance.getImages()
-        
-        
-        var userImg: UIImage!
-        let userID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
-        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(userID)/picture?type=square&height=60&width=60")
-        if let data = NSData(contentsOfURL: facebookProfileUrl!) {
-            userImg = UIImage(data: data)!
-        }
-        
-        userImages.append(userImg)
-        userImages.append(userImg)
-        
-        print(eventData)
-        
-        APIRequestHandler.sharedInstance.getFigEventPlaces(eventData.id, callback: { ( dataArray: NSArray) -> Void in
+    func getPlacesImages(eventID: String) {
+        APIRequestHandler.sharedInstance.getFigEventPlaces(eventID, callback: { ( dataArray: NSArray) -> Void in
             
             dispatch_async(dispatch_get_main_queue(), {
                 self.placesArray = dataArray
@@ -58,19 +40,38 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
                 print(images)
                 
                 self.foodImages = APIRequestHandler.sharedInstance.getImagesFromUrlStringArray(images)
-                
-                
                 self.picCollectionView.reloadData()
-                
-                
+            
             })
             
         })
-
-        // Do any additional setup after loading the view.
     }
     
+    func postAction(userID: String, eventID: String, selections: [NSDictionary]) {
+        APIRequestHandler.sharedInstance.postAction(userID, eventID: eventID, selections: selections, callback: { ( dataDict: NSDictionary) -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                print(dataDict)
+                print("everything is awesome!")
+            })
+        })
+    }
     
+    //MARK: Additional Functions
+    
+    func takeUserToPostWaitingPage() {
+        let postWaitingPage = self.storyboard?.instantiateViewControllerWithIdentifier("PostWaitingViewController") as! PostWaitingViewController
+        let postWaitingPageNav = UINavigationController(rootViewController: postWaitingPage)
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        // pass event data to postWaiting screen
+        postWaitingPage.eventData = eventData
+        
+        appDelegate.window!.rootViewController = postWaitingPageNav
+        
+    }
+    
+    //MARK: picCollectionView DataSource
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return placesArray.count
@@ -90,6 +91,8 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         return cell
     }
+    
+    //MARK: picCollectionView Delegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("cell \(indexPath.row) selected")
@@ -164,16 +167,18 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
                 
             }
             
+            postAction(NSUserDefaults.standardUserDefaults().stringForKey("ID")!, eventID: eventData.id, selections: actionData as! [NSDictionary])
             
-            APIRequestHandler.sharedInstance.postAction(NSUserDefaults.standardUserDefaults().stringForKey("ID")!, eventID: eventData.id, selections: actionData, callback: { ( dataDict: NSDictionary) -> Void in
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    
-                    
-                    print(dataDict)
-                    print("everything is awesome!")
-                })
-            })
+            
+//            APIRequestHandler.sharedInstance.postAction(NSUserDefaults.standardUserDefaults().stringForKey("ID")!, eventID: eventData.id, selections: actionData, callback: { ( dataDict: NSDictionary) -> Void in
+//                
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    
+//                    
+//                    print(dataDict)
+//                    print("everything is awesome!")
+//                })
+//            })
             
             takeUserToPostWaitingPage();
         }
@@ -208,10 +213,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     ///END OF TESTTTT
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
+    //MARK: playerProgressTable DataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -234,7 +236,34 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         return cell
     }
-
+    
+    //MARK: Override Functions
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        playerProgressTable.backgroundColor = UIColor.clearColor()
+        
+        //foodImages = APIRequestHandler.sharedInstance.getImages()
+        
+        
+        var userImg: UIImage!
+        let userID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
+        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(userID)/picture?type=square&height=60&width=60")
+        if let data = NSData(contentsOfURL: facebookProfileUrl!) {
+            userImg = UIImage(data: data)!
+        }
+        
+        userImages.append(userImg)
+        userImages.append(userImg)
+        
+        print(eventData)
+        
+        
+        getPlacesImages(eventData.id)
+        
+        // Do any additional setup after loading the view.
+    }
     
     
 
@@ -242,21 +271,6 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    func takeUserToPostWaitingPage() {
-        let postWaitingPage = self.storyboard?.instantiateViewControllerWithIdentifier("PostWaitingViewController") as! PostWaitingViewController
-        
-        postWaitingPage.eventData = eventData
-        
-        let postWaitingPageNav = UINavigationController(rootViewController: postWaitingPage)
-        
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        appDelegate.window!.rootViewController = postWaitingPageNav
-        
-    }
-    
 
     /*
     // MARK: - Navigation

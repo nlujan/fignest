@@ -135,13 +135,13 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
             
             print("placesArray: \(placesArray)")
             
-            for var i = 0; i < placesArray.count; i += 1 {
+            for i in 0 ..< placesArray.count {
                 print(i)
                 
                 print("place: \(placesArray[i])")
                 let imageCount = placesArray[i]["images"]!!.count
                 
-                 for var j = 0; j < imageCount; j += 1 {
+                 for j in 0 ..< imageCount {
                     
 
                     var actionDict: [String:AnyObject] = [:]
@@ -167,18 +167,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
                 
             }
             
-            postAction(NSUserDefaults.standardUserDefaults().stringForKey("ID")!, eventID: eventData.id, selections: actionData as! [NSDictionary])
-            
-            
-//            APIRequestHandler.sharedInstance.postAction(NSUserDefaults.standardUserDefaults().stringForKey("ID")!, eventID: eventData.id, selections: actionData, callback: { ( dataDict: NSDictionary) -> Void in
-//                
-//                dispatch_async(dispatch_get_main_queue(), {
-//                    
-//                    
-//                    print(dataDict)
-//                    print("everything is awesome!")
-//                })
-//            })
+            postAction(NSUserDefaults.standardUserDefaults().stringForKey("ID")!, eventID: eventData.id, selections: actionData)
             
             takeUserToPostWaitingPage();
         }
@@ -244,21 +233,15 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         playerProgressTable.backgroundColor = UIColor.clearColor()
         
-        //foodImages = APIRequestHandler.sharedInstance.getImages()
-        
-        
         var userImg: UIImage!
-        let userID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
-        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(userID)/picture?type=square&height=60&width=60")
+        let userFBID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
+        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(userFBID)/picture?type=square&height=60&width=60")
         if let data = NSData(contentsOfURL: facebookProfileUrl!) {
             userImg = UIImage(data: data)!
         }
         
         userImages.append(userImg)
         userImages.append(userImg)
-        
-        print(eventData)
-        
         
         getPlacesImages(eventData.id)
         

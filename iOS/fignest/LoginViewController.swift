@@ -16,7 +16,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     @IBOutlet var loginButton: FBSDKLoginButton!
     
     
-    // MARK: Generic functions
+    // MARK: Functions
     func takeUserToHomePage() {
         let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
         let homePageNav = UINavigationController(rootViewController: homePage)
@@ -36,6 +36,57 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 self.takeUserToHomePage();
             })
         })
+        
+    }
+    
+    //MARK: FB Login Button Functions
+    
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!){
+        
+        if(error != nil) {
+            print(error.localizedDescription)
+            return
+        }
+        
+        if let userToken = result.token {
+            let userID = userToken.userID as String
+            
+            print("token = \(userToken.tokenString)")
+            print("User ID = \(userID)")
+            
+            let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"id,email,first_name,last_name"], tokenString: userToken.tokenString, version: nil, HTTPMethod: "GET")
+            req.startWithCompletionHandler({ (connection, result, error : NSError!) -> Void in
+                if(error == nil) {
+                    let name = "\(result["first_name"] as! String) \(result["last_name"] as! String)"
+                    let fbID = result["id"] as! String
+                    let email = result["email"] as! String
+                    
+                    let userDefaults = NSUserDefaults.standardUserDefaults()
+                    
+                    // save values in userDefaults
+                    userDefaults.setValue(name, forKey: "userFBName")
+                    userDefaults.setValue(fbID, forKey: "userFBID")
+                    
+                    
+                    //post user to database
+                    self.addUser(name, fbID: fbID, email: email)
+                    
+                    
+                }
+                else {
+                    print("error: \(error)")
+                }
+            })
+            
+        }
+        
+    }
+    
+    
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!){
+        let loginManager = FBSDKLoginManager();
+        loginManager.logOut()
+        print("User is logged out")
         
     }
     
@@ -67,54 +118,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!){
-        
-        if(error != nil) {
-            print(error.localizedDescription)
-            return
-        }
-        
-        if let userToken = result.token {
-            let userID = userToken.userID as String
-            
-            print("token = \(userToken.tokenString)")
-            print("User ID = \(userID)")
-            
-            let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"id,email,first_name,last_name"], tokenString: userToken.tokenString, version: nil, HTTPMethod: "GET")
-            req.startWithCompletionHandler({ (connection, result, error : NSError!) -> Void in
-                if(error == nil) {
-                    let name = "\(result["first_name"] as! String) \(result["last_name"] as! String)"
-                    let fbID = result["id"] as! String
-                    let email = result["email"] as! String
-                    
-                    let userDefaults = NSUserDefaults.standardUserDefaults()
-                    
-                    // save values in userDefaults
-                    userDefaults.setValue(name, forKey: "userFBName")
-                    userDefaults.setValue(fbID, forKey: "userFBID")
-  
-                    
-                    //post user to database
-                    self.addUser(name, fbID: fbID, email: email)
-
-        
-                }
-                else {
-                    print("error: \(error)")
-                }
-            })
-            
-        }
-        
-    }
-    
-
-    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!){
-        let loginManager = FBSDKLoginManager();
-        loginManager.logOut()
-        print("User is logged out")
-    
-    }
     
 
     /*

@@ -54,20 +54,7 @@ class NewFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
         
         if (nilInputs.count > 0) {
             
-            let invalidInputString = "Please enter: " + nilInputs.joinWithSeparator(", ")
-            
-            let attributedString = NSAttributedString(string: "Invalid input!", attributes: [
-                NSFontAttributeName : UIFont.systemFontOfSize(15), //your font here,
-                NSForegroundColorAttributeName : UIColor.redColor()
-                ])
-            
-            let alert = UIAlertController(title: "Invalid input!", message: invalidInputString, preferredStyle: .Alert)
-            
-            alert.setValue(attributedString, forKey: "attributedTitle")
-            alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
-            self.presentViewController(alert, animated: true){}
-            alert.view.tintColor = StyleManager.sharedInstance.primaryColor
-            
+            presentErrorView(nilInputs)
             
         } else {
             
@@ -78,109 +65,12 @@ class NewFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
                 userIDList.append(nameDict[name]!)
             }
             
-            print("\(locationTextField.text!)")
-            print(locationTextField.text == nil)
-            print("\(titleTextField.text!)")
-            print("\(foodTypeTextField.text!)")
-            print(userIDList)
             
-            APIRequestHandler.sharedInstance.createNewFig(titleTextField.text!, address: locationTextField.text!, users: userIDList, search: foodTypeTextField.text!, callback: { ( dataDict: NSDictionary) -> Void in
-                dispatch_async(dispatch_get_main_queue(), {
-                    //var dataArray = self.prefs.objectForKey("figInvitations") as! NSArray
-                 
-                    
-//                self.userEventID = dataDict["_id"] as! String
-//                print(dataDict["_id"] as! String)
-                    
-                self.eventData = FigEvent(data: dataDict)
-                    
-                self.performSegueWithIdentifier("showPreWaiting", sender: nil)
-                    
-                })
-            })
+            createNewFig(titleTextField.text!, address: locationTextField.text!, users: userIDList, search: foodTypeTextField.text!)
             
         }
         
 
-    }
-    
-    
-    func getAllUsers() {
-        APIRequestHandler.sharedInstance.getAllUsers({ ( dataArray: NSArray) -> Void in
-            
-            dispatch_async(dispatch_get_main_queue(), {
-                //var dataArray = self.prefs.objectForKey("figInvitations") as! NSArray
-                
-                
-                var nameList: [String] = []
-                var nameDict: [String: String] = [:]
-                for user in dataArray {
-                    let name = user["displayName"] as! String
-                    let id = user["_id"] as! String
-                    
-                    if id != self.userID {
-                        nameList.append(name)
-                        nameDict[name] = id
-                    }
-                    
-                }
-                
-                self.names = nameList;
-                self.nameDict = nameDict;
-                
-                print(nameDict)
-                
-            })
-            
-        })
-        
-    }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        getAllUsers()
-        
-        
-        locationActivityIndicator.hidden = true
-        
-        
-//        self.tableView.layer.borderWidth = 0.5
-//        self.tableView.layer.borderColor = UIColor.grayColor().CGColor
-//        
-//        self.tableView.layer.cornerRadius = 8.0
-        
-        
-        // tapping outside screen clear keyboard
-//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-//        view.addGestureRecognizer(tap)
-        
-        let origImage = UIImage(named: "CurrentLocation");
-        let tintedImage = origImage?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        locationBtn.setImage(tintedImage, forState: .Normal)
-        locationBtn.tintColor = UIColor.blueColor()
-
-    
-        
-        self.tokenInputView.placeholderText = "Enter a name ";
-        self.tokenInputView.drawBottomBorder = true;
-        self.tokenInputView.delegate = self
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.tableView.hidden = true;
-        
-    }
-    
-    
-    //Calls this function when the tap is recognized.
-    func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
-        view.endEditing(true)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func getUserLocation(sender: AnyObject) {
@@ -193,8 +83,70 @@ class NewFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
         locationManager.startUpdatingLocation()
     }
     
+    //MARK: API Functions
+    
+    private func createNewFig(title: String, address: String, users: [String], search: String) {
+        APIRequestHandler.sharedInstance.createNewFig(title, address: address, users: users, search: search, callback: { ( dataDict: NSDictionary) -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                self.eventData = FigEvent(data: dataDict)
+                
+                self.performSegueWithIdentifier("showPreWaiting", sender: nil)
+                
+            })
+        })
+    }
+    
+    private func getAllUsers() {
+        APIRequestHandler.sharedInstance.getAllUsers({ ( dataArray: NSArray) -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                var nameList: [String] = []
+                var nameDict: [String: String] = [:]
+                for user in dataArray {
+                    let name = user["displayName"] as! String
+                    let id = user["_id"] as! String
+                    
+                    if id != self.userID {
+                        nameList.append(name)
+                        nameDict[name] = id
+                    }
+                }
+                self.names = nameList;
+                self.nameDict = nameDict;
+            })
+        })
+    }
+    
+    //MARK: Functions
+    
+    //Calls this function when the tap is recognized.
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
+    
+    
+    func presentErrorView(nilInputs: [String]) {
+        let invalidInputString = "Please enter: " + nilInputs.joinWithSeparator(", ")
+        
+        let attributedString = NSAttributedString(string: "Invalid input!", attributes: [
+            NSFontAttributeName : UIFont.systemFontOfSize(15), //your font here,
+            NSForegroundColorAttributeName : UIColor.redColor()
+            ])
+        
+        let alert = UIAlertController(title: "Invalid input!", message: invalidInputString, preferredStyle: .Alert)
+        
+        alert.setValue(attributedString, forKey: "attributedTitle")
+        alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
+        self.presentViewController(alert, animated: true){}
+        alert.view.tintColor = StyleManager.sharedInstance.primaryColor
+    }
+    
+    //MARK: Location Manager Functions
+    
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        var userLocation: CLLocation = locations[0] as! CLLocation
+        var userLocation: CLLocation = locations[0] 
 
         CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error) in
 
@@ -219,10 +171,6 @@ class NewFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
         
         if (placemark.subThoroughfare != nil) {
             let address = "\(placemark.subThoroughfare!) \(placemark.thoroughfare!), \(placemark.locality!), \(placemark.administrativeArea!)"
-            
-            
-            print(address)
-            
             
             locationTextField.text = address
             
@@ -326,11 +274,49 @@ class NewFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
         }
     }
     
-    
-    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
         view.endEditing(true)
         super.touchesBegan(touches, withEvent: event)
+    }
+    
+    //MARK: Override Functions
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        getAllUsers()
+        
+        locationActivityIndicator.hidden = true
+        
+        
+        //        self.tableView.layer.borderWidth = 0.5
+        //        self.tableView.layer.borderColor = UIColor.grayColor().CGColor
+        //
+        //        self.tableView.layer.cornerRadius = 8.0
+        
+        
+        // tapping outside screen clear keyboard
+        //        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        //        view.addGestureRecognizer(tap)
+        
+        let origImage = UIImage(named: "CurrentLocation");
+        let tintedImage = origImage?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        locationBtn.setImage(tintedImage, forState: .Normal)
+        locationBtn.tintColor = UIColor.blueColor()
+        
+        
+        
+        self.tokenInputView.placeholderText = "Enter a name ";
+        self.tokenInputView.drawBottomBorder = true;
+        self.tokenInputView.delegate = self
+        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.tableView.hidden = true;
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Navigation

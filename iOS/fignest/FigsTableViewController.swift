@@ -23,17 +23,6 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     @IBOutlet var activityView: UIView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
-    
-    
-    func takeUserToLoginPage() {
-        let loginPageController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
-        
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        appDelegate.window!.rootViewController = loginPageController
-    }
-    
-    
     //MARK: Actions
     
     @IBAction func showHomeOptions(sender: AnyObject) {
@@ -57,10 +46,6 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         optionMenu.addAction(logoutAction)
         optionMenu.addAction(cancelAction)
         
-        let subview = optionMenu.view.subviews.first! as UIView
-        let alertContentView = subview.subviews.first! as UIView
-        subview.layer.cornerRadius = 2;
-        
         self.presentViewController(optionMenu, animated: true, completion: nil)
         optionMenu.view.tintColor = StyleManager.sharedInstance.primaryColor
     }
@@ -68,6 +53,8 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue){
         
     }
+    
+    //MARK: Functions
     
     private func getUserPics() {
         
@@ -85,27 +72,9 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
             })
         })
     }
-
     
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        activityIndicator.startAnimating()
-        
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let userID = userDefaults.stringForKey("ID")!
-
-        //let userID: String = userDefaults.stringForKey("ID")!
-        
-        print("userID: \(userID)")
-        
-        
+    private func getUserInvitations(userID: String) {
         APIRequestHandler.sharedInstance.getUserInvitations(userID, callback: { ( dataArray: NSArray) -> Void in
-           
             dispatch_async(dispatch_get_main_queue(), {
                 //var dataArray = self.userDefaults.objectForKey("figInvitations") as! NSArray
                 
@@ -119,24 +88,15 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
                 
             })
         })
-        
-
-
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - UITableViewDataSource
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
     }
     
-    
+    private func takeUserToLoginPage() {
+        let loginPageController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.window!.rootViewController = loginPageController
+    }
+
+    // MARK: - figTable DataSource
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -149,8 +109,6 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         }
         
     }
-
-    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! FigsTableViewCell
@@ -172,19 +130,20 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         return cell
     }
     
+    // MARK: - figTable Delegate
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        print("\(figEvents[indexPath.row].name) Selected!");
+
         
         self.selectedEventData = figEvents[indexPath.row]
-        
         self.performSegueWithIdentifier("showPreWaiting", sender: nil)
         
     }
     
+    //MARK: picCollectionView DataSource
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         if self.userIDMapping.count > 0 {
             return min(figEvents[collectionView.superview!.tag].users.count, 4)
         }
@@ -196,33 +155,20 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        var collectionIndex = collectionView.superview!.tag
-        
-        var numUsers = figEvents[collectionIndex].users.count
-        
-        print(figEvents[collectionIndex].users);
-        
+        let collectionIndex = collectionView.superview!.tag
+        let numUsers = figEvents[collectionIndex].users.count
         
         let cell: UserImageCell = collectionView.dequeueReusableCellWithReuseIdentifier("UserImageCell", forIndexPath: indexPath) as! UserImageCell
+        let userId = figEvents[collectionIndex].users[indexPath.row]
         
-        let id = figEvents[collectionIndex].users[indexPath.row] as! String
-        
-        print("hellooo")
 
-        let userDict = userIDMapping[id] as! NSDictionary
-        let fbDict = userDict["facebook"] as! NSDictionary
-        let fbId = fbDict["id"] as! String
-        print("yeahhh")
-        print("id: \(id)")
-        var fbUserID = fbId
-
-
+        let userInfoDict = userIDMapping[userId] as! NSDictionary
+        let fbDict = userInfoDict["facebook"] as! NSDictionary
+        let userFBId = fbDict["id"] as! String
         
-            
-
         
-        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(fbUserID)/picture?type=square&height=60&width=60")
         
+        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(userFBId)/picture?type=square&height=60&width=60")
         if let data = NSData(contentsOfURL: facebookProfileUrl!) {
             cell.userImage.image = UIImage(data: data)
         }
@@ -239,11 +185,31 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         
     }
     
+     //MARK: picCollectionView Delegate
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("cell \(indexPath.row) selected")
     }
     
+    //MARK: Override Functions
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        activityIndicator.startAnimating()
+        
+        let userID = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
+        
+        getUserInvitations(userID)
+        
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
     // MARK: - Navigation
     

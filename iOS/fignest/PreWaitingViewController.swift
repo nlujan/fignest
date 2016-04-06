@@ -87,10 +87,6 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        let prefs = NSUserDefaults.standardUserDefaults()
-        let name: String = prefs.stringForKey("userFBName")!
-        
         print(eventData);
         
         self.title = eventData.name.uppercaseString

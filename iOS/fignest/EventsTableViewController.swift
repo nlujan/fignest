@@ -1,5 +1,5 @@
 //
-//  FigsTableViewController.swift
+//  EventsTableViewController.swift
 //  fignest
 //
 //  Created by Naim on 3/5/16.
@@ -10,7 +10,7 @@ import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
 
-class FigsTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class EventsTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     
     //MARK: Properties
@@ -57,9 +57,7 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     //MARK: Functions
     
     private func getUserPics() {
-        
         APIRequestHandler.sharedInstance.getUsersMapById({ ( dataDict: NSDictionary) -> Void in
-            
             dispatch_async(dispatch_get_main_queue(), {
                 self.userIDMapping = dataDict
                 
@@ -99,9 +97,7 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     // MARK: - figTable DataSource
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         
-        print("count: \(figEvents.count)")
         if self.userIDMapping.count == 0 {
             return 0
         } else {
@@ -139,6 +135,33 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
         self.selectedEventData = figEvents[indexPath.row]
         self.performSegueWithIdentifier("showPreWaiting", sender: nil)
         
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        
+        let border = CALayer()
+        let width = CGFloat(0.5)
+        border.borderColor = UIColor(red:0.784, green:0.78, blue:0.8, alpha:1).CGColor
+        border.frame = CGRect(x: 0, y: cell.frame.size.height - width, width:  cell.frame.size.width, height: cell.frame.size.height)
+        
+        border.borderWidth = width
+        cell.layer.addSublayer(border)
+        cell.layer.masksToBounds = true
+        
+//        cell.contentView.layer.borderWidth = 0.5;
+//        cell.contentView.layer.borderColor = UIColor.grayColor().CGColor
+        
+        
+        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -500, 10, 0)
+        cell.layer.transform = rotationTransform
+        
+        let animationInterval = 0.3 + (0.3 * Double(indexPath.row))
+        
+        UIView.animateWithDuration(animationInterval, animations: { () -> Void in
+            cell.layer.transform = CATransform3DIdentity
+            
+        })
     }
     
     //MARK: picCollectionView DataSource
@@ -196,14 +219,12 @@ class FigsTableViewController: UITableViewController, UICollectionViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         activityIndicator.startAnimating()
         
         let userID = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
         
         getUserInvitations(userID)
-        
-        
+
     }
     
     override func didReceiveMemoryWarning() {

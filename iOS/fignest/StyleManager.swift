@@ -16,6 +16,7 @@ class StyleManager {
     let primaryColor: UIColor = UIColor(red: 0.549, green:0.133, blue:0.165, alpha: 1.0)
     
     
+    let progressViewColors: [UIColor] = [UIColor.redColor(), UIColor.greenColor(), UIColor.blueColor()]
     
     
     private init() {
@@ -25,3 +26,5 @@ class StyleManager {
     
 
 }
+
+

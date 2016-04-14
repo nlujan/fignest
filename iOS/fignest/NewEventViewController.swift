@@ -1,5 +1,5 @@
 //
-//  newFigViewController.swift
+//  NewEventViewController.swift
 //  fignest
 //
 //  Created by Naim on 3/5/16.
@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class NewFigViewController: UIViewController, CLLocationManagerDelegate, CLTokenInputViewDelegate, UITableViewDataSource, UITableViewDelegate {
+class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTokenInputViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     
     //MARK: Properties
@@ -25,6 +25,7 @@ class NewFigViewController: UIViewController, CLLocationManagerDelegate, CLToken
     
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tokenInputView: CLTokenInputView!
+    
     @IBOutlet var locationBtn: UIButton!
     @IBOutlet var locationActivityIndicator: UIActivityIndicatorView!
     

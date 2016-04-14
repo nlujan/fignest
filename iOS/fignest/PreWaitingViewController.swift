@@ -12,7 +12,9 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     
     //MARK: Properties
     
-    var users: [String] = []
+    var testIds: [String] = ["584566895045734", "10208530090233237"]
+    
+    var users: [String] = ["Naim Lujan", "Kiera Johnson"]
     var eventData: FigEvent!
     
     @IBOutlet var waitingTable: UITableView!
@@ -50,7 +52,7 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     //MARK: Functions
     
     func takeUserToHomePage() {
-        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
+        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("EventsTableViewController") as! EventsTableViewController
         
         let homePageNav = UINavigationController(rootViewController: homePage)
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -70,12 +72,14 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return users.count
+        return testIds.count
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PreWaitingCell", forIndexPath: indexPath) as! PreWaitingCell
+        
+        cell.playerImage.image = ImageUtil.sharedInstance.getFBImageFromID(testIds[indexPath.row])
                 
         cell.nameLabel.text = users[indexPath.row]
         
@@ -114,7 +118,6 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
             let gameController = segue.destinationViewController as! GameViewController
             
             gameController.eventData = self.eventData
-            
         }
         
         

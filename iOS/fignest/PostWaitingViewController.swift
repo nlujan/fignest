@@ -12,8 +12,9 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     
     //MARK: Properties
     
-    var users = ["naim", "toks"]
+    var progressData: [[AnyObject]] = [["584566895045734", 1.0], ["10208530090233237", 0.5], ["584566895045734", 0.3]]
     var eventData: FigEvent!
+    var colors: [UIColor] = StyleManager.sharedInstance.progressViewColors
     
     //MARK: Actions
     
@@ -39,10 +40,14 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
         optionMenu.view.tintColor = StyleManager.sharedInstance.primaryColor
     }
     
+    @IBAction func sendPostWaitingMessage(sender: UIButton) {
+        print(sender.currentTitle!)
+    }
+    
     //MARK: Functions
     
     func takeUserToHomePage() {
-        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
+        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("EventsTableViewController") as! EventsTableViewController
         
         let homePageNav = UINavigationController(rootViewController: homePage)
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -54,15 +59,21 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return users.count
+        return progressData.count
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostWaitingCell", forIndexPath: indexPath) as! PostWaitingCell
         
-        cell.nameLabel.text = users[indexPath.row]
-        cell.contentView.tag = indexPath.row
+        cell.playerImg.image = ImageUtil.sharedInstance.getFBImageFromID(progressData[indexPath.row][0] as! String)
+        cell.playerProgress.progress = progressData[indexPath.row][1] as! Float
+        cell.playerProgress.tintColor = colors[indexPath.row]
+        
+        cell.playerProgress.trackTintColor = colors[indexPath.row].colorWithAlphaComponent(0.5)
+        
+        cell.playerProgress.backgroundColor = UIColor.blackColor()
+        
         
         return cell
     }

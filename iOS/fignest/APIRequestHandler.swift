@@ -13,63 +13,8 @@ class APIRequestHandler {
     static let sharedInstance = APIRequestHandler()
     private let apiURL: String = "https://fc57cf15.ngrok.io"
     
-    var imagesURLs = [
-        "https://s3-media4.fl.yelpcdn.com/bphoto/0OIgMcReW_hlcOQYNrKWjA/258s.jpg",
-        "https://s3-media1.fl.yelpcdn.com/bphoto/nkau8U5Z48-dl4ICQZBDRw/258s.jpg",
-        "https://s3-media4.fl.yelpcdn.com/bphoto/CKfZc1IzacmhbsHaRFLa-w/258s.jpg",
-        "https://s3-media3.fl.yelpcdn.com/bphoto/4wDXAtgWzjr779xG6bjQNA/258s.jpg",
-        "https://s3-media2.fl.yelpcdn.com/bphoto/PdTB4h6Tt34mZMCGerhzXA/258s.jpg",
-        "https://s3-media1.fl.yelpcdn.com/bphoto/jUVmJB47saALPsuQ0fIg6g/258s.jpg",
-        "https://s3-media3.fl.yelpcdn.com/bphoto/_-RSSS86gvL95lRWpCwiKA/258s.jpg",
-        "https://s3-media1.fl.yelpcdn.com/bphoto/DngwFbKFGlYEGiZplWTjpQ/258s.jpg",
-        "https://s3-media4.fl.yelpcdn.com/bphoto/Mvq73rEh-g3ohhnUdLZwWw/258s.jpg",
-        "https://s3-media4.fl.yelpcdn.com/bphoto/pQtu7hOdZnTZRdJwUH2tTQ/258s.jpg",
-        "https://s3-media1.fl.yelpcdn.com/bphoto/MlhzYXoeEKv6mhC2T6I0Vg/258s.jpg",
-        "https://s3-media3.fl.yelpcdn.com/bphoto/6qf5dLlGoTFAU1nthCvfEA/258s.jpg",
-        "https://s3-media2.fl.yelpcdn.com/bphoto/zs93C4dltzUWcr9Sx3gMxQ/258s.jpg",
-        "https://s3-media3.fl.yelpcdn.com/bphoto/KIsCEzlUv0et4HWrzSKqRg/258s.jpg",
-        "https://s3-media2.fl.yelpcdn.com/bphoto/XvQlCeB0pJgpJVRzFAuU3Q/258s.jpg",
-        "https://s3-media1.fl.yelpcdn.com/bphoto/NbSNlBvHFOBAEvznMpw6CQ/258s.jpg",
-        "https://s3-media4.fl.yelpcdn.com/bphoto/jBnVho-x4iFyEoruqdJmeA/258s.jpg",
-        "https://s3-media1.fl.yelpcdn.com/bphoto/dIZ3TFzxEBwOlWmgsu3Lfw/258s.jpg",
-        "https://s3-media1.fl.yelpcdn.com/bphoto/aWM2XtVAYQe-dNIEIlmdgw/258s.jpg",
-        "https://s3-media3.fl.yelpcdn.com/bphoto/e8QAAxn0cAsPK0vXajdJrw/258s.jpg",
-        "https://s3-media4.fl.yelpcdn.com/bphoto/7Vsibpgy11dkkIjzP4_u2g/258s.jpg",
-        "https://s3-media3.fl.yelpcdn.com/bphoto/upFBoRMCpxgsUqZeC9FhDQ/258s.jpg",
-        "https://s3-media2.fl.yelpcdn.com/bphoto/zDcpeQMHmNw0U53SHkYygQ/258s.jpg",
-        "https://s3-media3.fl.yelpcdn.com/bphoto/4THQ0F_Hgvs9MeieIyKU2A/258s.jpg",
-        "https://s3-media1.fl.yelpcdn.com/bphoto/Ktnc3ppDOSlokSO46L680A/258s.jpg",
-        "https://s3-media3.fl.yelpcdn.com/bphoto/YEVHM-eiJMcX2ufQiitfIg/258s.jpg",
-        "https://s3-media4.fl.yelpcdn.com/bphoto/IGWIAHHY2UpyZ7FU4HbT2w/258s.jpg",
-        "https://s3-media3.fl.yelpcdn.com/bphoto/3cKhlxP4PEfFAbP1pTkVNg/258s.jpg",
-        "https://s3-media3.fl.yelpcdn.com/bphoto/_nKiWOO9yqvt5Nm3J-3nCw/258s.jpg",
-        "https://s3-media4.fl.yelpcdn.com/bphoto/dpDHWDblLoS_YUsb2Mm4Yg/258s.jpg"
-    ]
-    
     private init() {
         //super.init()
-       
-    }
-    
-    func getImagesFromUrlStringArray(stringArray: [String]) -> [UIImage] {
-        
-        var result: [UIImage] = []
-        
-        for urlString in stringArray {
-            //print(urlString)
-            
-            if let url = NSURL(string: urlString) {
-                if let data = NSData(contentsOfURL: url) {
-                    //print(UIImage(data: data)!)
-                    result.append(UIImage(data: data)!)
-                }        
-            }
-        }
-        return result
-    }
-    
-    func getImages() -> [UIImage] {
-         return getImagesFromUrlStringArray(imagesURLs)
     }
     
     private func get(postEndpoint : String, successHandler: (response: NSData?) -> Void) {
@@ -134,12 +79,10 @@ class APIRequestHandler {
                 let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
                 print("Getting Users Success!")
                 
-                print(jsonArray)
-                
                 callback(dataArray: jsonArray)
                 
             } catch {
-                print("bad happened!")
+                print("getAllUsers failed!")
             }
             
         });
@@ -161,12 +104,12 @@ class APIRequestHandler {
             
             do {
                 let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                print("Success!")
+                print("addUserToDatabase Success!")
                 
                 callback(dataDict: jsonDictionary)
                 
             } catch {
-                print("bad happened!")
+                print("addUserToDatabase failed!")
             }
            
         });
@@ -181,18 +124,14 @@ class APIRequestHandler {
                 let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
                 print("Getting Invitations Success!")
                 
-                print(jsonArray)
-                
                 callback(dataArray: jsonArray)
             
             } catch {
-                print("bad happened!")
+                print("Getting Invitations failed!")
             }
         
         });
-        
     }
-    
     
     func getEvent(eventID: String, callback: (dataDict: NSDictionary) -> Void) {
         
@@ -203,20 +142,14 @@ class APIRequestHandler {
                 let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
                 print("Getting Single Event Success!")
                 
-                print(jsonDict)
-                
                 callback(dataDict: jsonDict)
                 
-                
             } catch {
-                print("bad happened!")
-                
-                
+                print("Getting Single Event failed!")
             }
         });
         
     }
-    
     
     func createNewFig(name: String, address: String, users: [String], search: String, callback: (dataDict: NSDictionary) -> Void) {
         
@@ -237,21 +170,15 @@ class APIRequestHandler {
             
             do {
                 let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                // Print what we got from the call
-                print(jsonDict)
-                
                 
                 callback(dataDict: jsonDict)
                 
             } catch {
-                print("bad happened!")
+                print("Posting failed!")
             }
             
         })
-        
-        
     }
-    
     
     func getFigEventPlaces(eventID: String, callback: (dataArray: NSArray) -> Void) {
         
@@ -262,15 +189,11 @@ class APIRequestHandler {
                 let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
                 print("Getting Places Success!")
                 
-                print(jsonArray)
-                
                 callback(dataArray: jsonArray)
                 
             
             } catch {
-                print("bad happened!")
-                
-                
+                print("Getting Places Failed!")
             }
         });
     
@@ -287,21 +210,14 @@ class APIRequestHandler {
                 let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
                 print("Getting Final Result Success!")
                 
-                print(jsonDict)
-                
                 callback(dataDict: jsonDict)
                 
-                
             } catch {
-                print("bad happened!")
-                
-                
+                print("Getting Final Result failed!")
             }
         });
         
     }
-    
-    
     
     func postAction(userID: String, eventID: String, selections: [NSDictionary],  callback: (jsonDict: NSDictionary) -> Void) {
         
@@ -318,20 +234,13 @@ class APIRequestHandler {
                 let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
                 print("Posting Action Success!")
                 
-                print(jsonDict)
-                
                 callback(jsonDict: jsonDict)
-                
-                
             } catch {
-                print("bad happened!")
-                
-                
+                print("Posting Action failed!")
             }
         });
         
     }
-    
     
     func getUsersMapById(callback: (jsonDict: NSDictionary) -> Void) {
         
@@ -342,19 +251,12 @@ class APIRequestHandler {
                 let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
                 print("Getting Users Mapping Success!")
                 
-                print(jsonDict)
-                
                 callback(jsonDict: jsonDict)
                 
-                
             } catch {
-                print("bad happened!")
-                
-                
+                print("Getting Users Mapping failed!")
             }
         });
-        
-        
     }
 
 }

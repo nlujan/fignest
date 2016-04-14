@@ -9,12 +9,15 @@
 import UIKit
 
 class PostWaitingCell: UITableViewCell {
-
-    @IBOutlet var nameLabel: UILabel!
+    
+    @IBOutlet var playerImg: UIImageView!
+    @IBOutlet var playerProgress: UIProgressView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        playerProgress.transform = CGAffineTransformScale(playerProgress.transform, 1, 10)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

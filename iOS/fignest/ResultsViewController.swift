@@ -48,7 +48,7 @@ class ResultsViewController: UIViewController {
     //MARK: Generic functions
     
     func takeUserToHomePage() {
-        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("FigsTableViewController") as! FigsTableViewController
+        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("EventsTableViewController") as! EventsTableViewController
         
         let homePageNav = UINavigationController(rootViewController: homePage)
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate

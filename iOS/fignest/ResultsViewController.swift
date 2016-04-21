@@ -12,7 +12,7 @@ class ResultsViewController: UIViewController {
     
     //MARK: Properties
     
-    var eventData: FigEvent!
+    var eventData: Event!
     var resultData: NSDictionary!
     @IBOutlet var resultName: UILabel!
     
@@ -57,7 +57,7 @@ class ResultsViewController: UIViewController {
     }
     
     private func getFinalResult()  {
-        APIRequestHandler.sharedInstance.getSolution(eventData.id, callback: { ( dataDict: NSDictionary) -> Void in
+        APIRequestHandler().getSolution(eventData.id, callback: { ( dataDict: NSDictionary) -> Void in
             
             dispatch_async(dispatch_get_main_queue(), {
                 

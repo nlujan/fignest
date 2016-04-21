@@ -13,12 +13,12 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     //MARK: Properties
     
     var testIds: [String] = ["584566895045734", "10208530090233237"]
-    var colors: [UIColor] = StyleManager.sharedInstance.progressViewColors
+    var colors: [UIColor] = StyleManager().progressViewColors
     
     var picPageIndex: Int = 0
     var selections: [Int:Bool] = [:]
     var placesArray: NSArray = []
-    var eventData: FigEvent!
+    var eventData: Event!
     
     var imagePlaceArray: [[String]] = []
     var foodImages: [UIImage] = []
@@ -32,7 +32,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     //MARK: API Functions
     
     func getPlacesImages(eventID: String) {
-        APIRequestHandler.sharedInstance.getFigEventPlaces(eventID, callback: { ( dataArray: NSArray) -> Void in
+        APIRequestHandler().getFigEventPlaces(eventID, callback: { ( dataArray: NSArray) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 self.placesArray = dataArray
                 
@@ -46,11 +46,11 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     }
     
     func postAction(userID: String, eventID: String, selections: [NSDictionary]) {
-        APIRequestHandler.sharedInstance.postAction(userID, eventID: eventID, selections: selections, callback: { ( dataDict: NSDictionary) -> Void in
+        APIRequestHandler().postAction(userID, eventID: eventID, selections: selections, callback: { ( dataDict: NSDictionary) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
-                print(dataDict)
-                print("everything is awesome!")
+                //print(dataDict)
+                //print("Action Posted!")
             })
         })
     }
@@ -78,11 +78,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         }
         
         let newimagePlaceArray = imagePlaceArray.shuffle()
-        
-        var images: [String] = []
-        for imagePlace in newimagePlaceArray {
-            images.append(imagePlace[0])
-        }
+        let images = newimagePlaceArray.map({imagePlace in imagePlace[0]})
         
         self.foodImages = ImageUtil.sharedInstance.getImagesFromUrlStringArray(images)
     }
@@ -99,8 +95,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
             
             if selections[i] != nil {
                 actionDict["isSelected"] = true
-            }
-            else {
+            } else {
                 actionDict["isSelected"] = false
             }
             
@@ -113,10 +108,9 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     //MARK: picCollectionView DataSource
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if foodImages.count == 0 {
+        if foodImages.isEmpty {
             return 0
-        }
-        else {
+        } else {
             return 6
         }
     }
@@ -135,7 +129,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     }
     
     //MARK: picCollectionView Delegate
-//    
+    
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         
         cell.alpha = 0

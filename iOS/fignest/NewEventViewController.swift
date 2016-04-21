@@ -20,7 +20,7 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
     var filteredNames:[String] = []
     var selectedNames:[String] = []
     
-    var eventData: FigEvent!
+    var eventData: Event!
     var nameDict: [String: String] = [:]
     
     @IBOutlet var tableView: UITableView!
@@ -66,7 +66,6 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
                 userIDList.append(nameDict[name]!)
             }
             
-            
             createNewFig(titleTextField.text!, address: locationTextField.text!, users: userIDList, search: foodTypeTextField.text!)
             
         }
@@ -87,10 +86,10 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
     //MARK: API Functions
     
     private func createNewFig(title: String, address: String, users: [String], search: String) {
-        APIRequestHandler.sharedInstance.createNewFig(title, address: address, users: users, search: search, callback: { ( dataDict: NSDictionary) -> Void in
+        APIRequestHandler().createNewFig(title, address: address, users: users, search: search, callback: { ( dataDict: NSDictionary) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
-                self.eventData = FigEvent(data: dataDict)
+                self.eventData = Event(data: dataDict)
                 
                 self.performSegueWithIdentifier("showPreWaiting", sender: nil)
                 
@@ -99,7 +98,7 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
     }
     
     private func getAllUsers() {
-        APIRequestHandler.sharedInstance.getAllUsers({ ( dataArray: NSArray) -> Void in
+        APIRequestHandler().getAllUsers({ ( dataArray: NSArray) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
                 var nameList: [String] = []
@@ -141,20 +140,19 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
         alert.setValue(attributedString, forKey: "attributedTitle")
         alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
         self.presentViewController(alert, animated: true){}
-        alert.view.tintColor = StyleManager.sharedInstance.primaryColor
+        alert.view.tintColor = StyleManager().primaryColor
     }
     
     //MARK: Location Manager Functions
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        var userLocation: CLLocation = locations[0] 
+        let userLocation: CLLocation = locations[0] 
 
         CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error) in
 
             if error != nil {
                 print(error)
-            }
-            else {
+            } else {
                 let pm = CLPlacemark(placemark: placemarks?[0] as CLPlacemark!)
                 self.displayLocationInfo(pm)
             }
@@ -193,8 +191,7 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
         if text == "" {
             self.filteredNames = []
             self.tableView.hidden = true
-        }
-        else {
+        } else {
             let predicate:NSPredicate = NSPredicate(format: "self contains[cd] %@", argumentArray: [text])
             self.filteredNames = self.names.filter { predicate.evaluateWithObject($0) }
             self.tableView.hidden = false
@@ -255,8 +252,7 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
         //print("name = \(name)  cell=\(cell)")
         if self.selectedNames.contains(name) {
             cell.accessoryType = .Checkmark
-        }
-        else {
+        } else {
             cell.accessoryType = .None
         }
         return cell

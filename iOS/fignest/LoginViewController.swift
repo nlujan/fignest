@@ -15,7 +15,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     // MARK: Properties
     @IBOutlet var loginButton: FBSDKLoginButton!
     
-    
     // MARK: Functions
     func takeUserToHomePage() {
         let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("EventsTableViewController") as! EventsTableViewController
@@ -25,7 +24,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
     
     func addUser(name: String, fbID: String, email: String) {
-        APIRequestHandler.sharedInstance.addUserToDatabase(name, fbID: fbID, email: email, callback: { ( dataDict: NSDictionary) -> Void in
+        APIRequestHandler().addUserToDatabase(name, fbID: fbID, email: email, callback: { ( dataDict: NSDictionary) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
                 let userID = dataDict["_id"] as! String
@@ -56,7 +55,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             
             let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"id,email,first_name,last_name"], tokenString: userToken.tokenString, version: nil, HTTPMethod: "GET")
             req.startWithCompletionHandler({ (connection, result, error : NSError!) -> Void in
-                if(error == nil) {
+                if error == nil {
                     let name = "\(result["first_name"] as! String) \(result["last_name"] as! String)"
                     let fbID = result["id"] as! String
                     let email = result["email"] as! String
@@ -72,8 +71,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                     self.addUser(name, fbID: fbID, email: email)
                     
                     
-                }
-                else {
+                } else {
                     print("error: \(error)")
                 }
             })
@@ -100,7 +98,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         let accessToken = FBSDKAccessToken.currentAccessToken()
         
-        if(accessToken != nil) {
+        if accessToken != nil {
             takeUserToHomePage()
         }
         

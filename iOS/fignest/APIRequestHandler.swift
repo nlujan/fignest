@@ -8,14 +8,9 @@
 
 import UIKit
 
-class APIRequestHandler {
+struct APIRequestHandler {
     
-    static let sharedInstance = APIRequestHandler()
-    private let apiURL: String = "https://fc57cf15.ngrok.io"
-    
-    private init() {
-        //super.init()
-    }
+    private let apiURL: String = "https://5c9d79ef.ngrok.io"
     
     private func get(postEndpoint : String, successHandler: (response: NSData?) -> Void) {
         
@@ -49,7 +44,7 @@ class APIRequestHandler {
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         do {
             request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(postParams, options: NSJSONWritingOptions())
-            print(postParams)
+            //print(postParams)
         } catch {
             print("bad things happened")
         }

@@ -12,10 +12,10 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     
     //MARK: Properties
     
-    var testIds: [String] = ["584566895045734", "10208530090233237"]
+    let testIds: [String] = ["584566895045734", "10208530090233237"]
     
-    var users: [String] = ["Naim Lujan", "Kiera Johnson"]
-    var eventData: FigEvent!
+    let users: [String] = ["Naim Lujan", "Kiera Johnson"]
+    var eventData: Event!
     
     @IBOutlet var waitingTable: UITableView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
@@ -27,7 +27,7 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         
         let logoutAction = UIAlertAction(title: "Exit Fig", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
-            print("User Logged Out")
+            print("User Exited to Home Page")
             
             self.takeUserToHomePage();
         })
@@ -42,7 +42,7 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         
         
         self.presentViewController(optionMenu, animated: true, completion: nil)
-        optionMenu.view.tintColor = StyleManager.sharedInstance.primaryColor
+        optionMenu.view.tintColor = StyleManager().primaryColor
     }
     
     @IBAction func buttonPressed(sender: AnyObject) {
@@ -90,8 +90,6 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(eventData);
         
         self.title = eventData.name.uppercaseString
         

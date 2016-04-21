@@ -1,5 +1,5 @@
 //
-//  FigEvent.swift
+//  Event.swift
 //  fignest
 //
 //  Created by Naim on 3/22/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FigEvent {
+struct Event {
     
     var id: String
     var name: String

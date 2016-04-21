@@ -13,8 +13,8 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     //MARK: Properties
     
     var progressData: [[AnyObject]] = [["584566895045734", 1.0], ["10208530090233237", 0.5], ["584566895045734", 0.3]]
-    var eventData: FigEvent!
-    var colors: [UIColor] = StyleManager.sharedInstance.progressViewColors
+    var eventData: Event?
+    var colors: [UIColor] = StyleManager().progressViewColors
     
     //MARK: Actions
     
@@ -37,7 +37,7 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
         
         
         self.presentViewController(optionMenu, animated: true, completion: nil)
-        optionMenu.view.tintColor = StyleManager.sharedInstance.primaryColor
+        optionMenu.view.tintColor = StyleManager().primaryColor
     }
     
     @IBAction func sendPostWaitingMessage(sender: UIButton) {

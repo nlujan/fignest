@@ -15,8 +15,8 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     
     //MARK: Properties
     
-    var figEvents: [FigEvent] = []
-    var selectedEventData: FigEvent!
+    var events: [Event] = []
+    var selectedEventData: Event?
     var userIDMapping: NSDictionary = [:]
     
     @IBOutlet var figTableView: UITableView!
@@ -47,7 +47,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         optionMenu.addAction(cancelAction)
         
         self.presentViewController(optionMenu, animated: true, completion: nil)
-        optionMenu.view.tintColor = StyleManager.sharedInstance.primaryColor
+        optionMenu.view.tintColor = StyleManager().primaryColor
     }
     
     @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue){
@@ -57,10 +57,9 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     //MARK: Functions
     
     private func getUserPics() {
-        APIRequestHandler.sharedInstance.getUsersMapById({ ( dataDict: NSDictionary) -> Void in
+        APIRequestHandler().getUsersMapById({ ( dataDict: NSDictionary) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 self.userIDMapping = dataDict
-                
                 
                 self.activityIndicator.stopAnimating()
                 self.activityIndicator.hidden = true
@@ -72,16 +71,10 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     }
     
     private func getUserInvitations(userID: String) {
-        APIRequestHandler.sharedInstance.getUserInvitations(userID, callback: { ( dataArray: NSArray) -> Void in
+        APIRequestHandler().getUserInvitations(userID, callback: { ( dataArray: NSArray) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
-                //var dataArray = self.userDefaults.objectForKey("figInvitations") as! NSArray
-                
-                var eventList: [FigEvent] = []
-                for event in dataArray {
-                    eventList.append(FigEvent(data: event as! NSDictionary))
-                }
-                
-                self.figEvents = eventList
+            
+                self.events = dataArray.map({data in Event(data: data as! NSDictionary)})
                 self.getUserPics()
                 
             })
@@ -101,7 +94,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         if self.userIDMapping.count == 0 {
             return 0
         } else {
-            return figEvents.count
+            return events.count
         }
         
     }
@@ -111,14 +104,13 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
 
         // Configure the cell...
         
-        cell.figLabel.text = figEvents[indexPath.row].name
-        cell.searchLabel.text = figEvents[indexPath.row].searchText
-        cell.userCountLabel.text = "\(figEvents[indexPath.row].users.count)"
+        cell.figLabel.text = events[indexPath.row].name
+        cell.searchLabel.text = events[indexPath.row].searchText
+        cell.userCountLabel.text = "\(events[indexPath.row].users.count)"
 
-        //cell.userCountLabel.text = figEvents[indexPath.row].users.count
+        //cell.userCountLabel.text = events[indexPath.row].users.count
         
         cell.contentView.tag = indexPath.row
-        
         
         
         //cell.userImageCollectionView.reloadData()
@@ -130,9 +122,8 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
-
         
-        self.selectedEventData = figEvents[indexPath.row]
+        self.selectedEventData = events[indexPath.row]
         self.performSegueWithIdentifier("showPreWaiting", sender: nil)
         
     }
@@ -153,24 +144,23 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
 //        cell.contentView.layer.borderColor = UIColor.grayColor().CGColor
         
         
-        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -500, 10, 0)
-        cell.layer.transform = rotationTransform
-        
-        let animationInterval = 0.3 + (0.3 * Double(indexPath.row))
-        
-        UIView.animateWithDuration(animationInterval, animations: { () -> Void in
-            cell.layer.transform = CATransform3DIdentity
-            
-        })
+//        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -500, 10, 0)
+//        cell.layer.transform = rotationTransform
+//        
+//        let animationInterval = 0.3 + (0.3 * Double(indexPath.row))
+//        
+//        UIView.animateWithDuration(animationInterval, animations: { () -> Void in
+//            cell.layer.transform = CATransform3DIdentity
+//            
+//        })
     }
     
     //MARK: picCollectionView DataSource
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if self.userIDMapping.count > 0 {
-            return min(figEvents[collectionView.superview!.tag].users.count, 4)
-        }
-        else {
+            return min(events[collectionView.superview!.tag].users.count, 4)
+        } else {
             return 0
         }
     }
@@ -179,10 +169,10 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let collectionIndex = collectionView.superview!.tag
-        let numUsers = figEvents[collectionIndex].users.count
+        let numUsers = events[collectionIndex].users.count
         
         let cell: UserImageCell = collectionView.dequeueReusableCellWithReuseIdentifier("UserImageCell", forIndexPath: indexPath) as! UserImageCell
-        let userId = figEvents[collectionIndex].users[indexPath.row]
+        let userId = events[collectionIndex].users[indexPath.row]
         
 
         let userInfoDict = userIDMapping[userId] as! NSDictionary
@@ -195,7 +185,6 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         if let data = NSData(contentsOfURL: facebookProfileUrl!) {
             cell.userImage.image = UIImage(data: data)
         }
-        
         
         if (indexPath.row == 3 && numUsers > 4){
             cell.imageLabel.text = "+\(numUsers - 3)"

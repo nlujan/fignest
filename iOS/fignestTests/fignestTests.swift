@@ -33,4 +33,12 @@ class fignestTests: XCTestCase {
         }
     }
     
+    func testCreatingPeoplePerformance() {
+        measureBlock() {
+            for i in 1...1000 {
+                _ = Event(data: ["_id": "123", "name": "Brunch", "users": ["Naim", "kiera"], "search": "Sushi"])
+            }
+        }
+    }
+    
 }

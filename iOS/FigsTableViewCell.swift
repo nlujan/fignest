@@ -20,7 +20,7 @@ class FigsTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         personIcon.image = personIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        personIcon.tintColor = StyleManager.sharedInstance.primaryColor
+        personIcon.tintColor = StyleManager().primaryColor
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

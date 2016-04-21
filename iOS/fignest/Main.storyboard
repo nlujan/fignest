@@ -499,7 +499,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="1" sectionFooterHeight="26" translatesAutoresizingMaskIntoConstraints="NO" id="FS9-y3-Mry">
                                 <rect key="frame" x="0.0" y="15" width="375" height="455"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.38823529410000002" green="0.047058823530000002" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PreWaitingCell" id="wjV-JZ-pdU" customClass="PreWaitingCell" customModule="fignest" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="65" width="375" height="50"/>
@@ -511,7 +511,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NnP-6s-C81">
                                                     <rect key="frame" x="99" y="14" width="177" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.99753605769999998" green="0.99753605769999998" blue="0.99753605769999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eo2-hM-P4Q">
@@ -523,6 +523,7 @@
                                                 </view>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.38823529410000002" green="0.047058823530000002" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="nameLabel" destination="NnP-6s-C81" id="YiF-sh-xvo"/>
                                             <outlet property="playerImage" destination="Eo2-hM-P4Q" id="BCo-BY-FUv"/>
@@ -542,18 +543,21 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="waiting for all users to join" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zr9-do-osJ">
                                 <rect key="frame" x="68" y="570" width="239" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.99753605769999998" green="0.99753605769999998" blue="0.99753605769999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8r-Ld-h8w">
-                                <rect key="frame" x="146" y="463" width="82" height="30"/>
-                                <state key="normal" title="Go to Game"/>
+                                <rect key="frame" x="129" y="466" width="116" height="30"/>
+                                <color key="backgroundColor" red="0.99753605769999998" green="0.99753605769999998" blue="0.99753605769999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Go to Game">
+                                    <color key="titleColor" red="0.38823529410000002" green="0.047058823530000002" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="eux-Cr-Jmm" eventType="touchUpInside" id="I1X-Af-wuG"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.38823529410000002" green="0.047058823530000002" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="JOINING " id="SMI-5k-BEm">
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="iHE-Ly-0xO">
@@ -616,13 +620,6 @@
                                     <outlet property="delegate" destination="5uy-VJ-Tcz" id="xUB-bd-PqA"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lq1-xZ-MKU">
-                                <rect key="frame" x="148" y="553" width="79" height="30"/>
-                                <state key="normal" title="Get Results"/>
-                                <connections>
-                                    <segue destination="crf-Oj-WOI" kind="presentation" identifier="ShowResults" id="C0b-hK-rAc"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F20-GS-lbt">
                                 <rect key="frame" x="7" y="351" width="127" height="30"/>
                                 <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
@@ -721,6 +718,16 @@
                                 </state>
                                 <connections>
                                     <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="hHh-mR-hbZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lq1-xZ-MKU">
+                                <rect key="frame" x="123" y="553" width="122" height="30"/>
+                                <color key="backgroundColor" red="0.99753605769999998" green="0.99753605769999998" blue="0.99753605769999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Get Results">
+                                    <color key="titleColor" red="0.38823529410000002" green="0.047058823530000002" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="crf-Oj-WOI" kind="presentation" identifier="ShowResults" id="C0b-hK-rAc"/>
                                 </connections>
                             </button>
                         </subviews>

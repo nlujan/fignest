@@ -2,7 +2,9 @@
 
 var MongoClient = require('mongodb').MongoClient;
 // var ObjectId = require('mongodb').ObjectID;
-const mongoUrlLocal = 'mongodb://localhost:27017/test'
+const mongoUrlLocal = 'mongodb://localhost:27017/test';
+const mongoUrlTest = 'mongodb://localhost:27017/testing';
+// var url = process.env.MONGOLAB_URI || mongoUrlTest;
 var url = process.env.MONGOLAB_URI || mongoUrlLocal;
 var _db;
 
@@ -15,7 +17,7 @@ class Mongo {
           console.log('Error connecting to mongo');
           reject(err);
         }
-        console.log("Connected to mongo...");
+        console.log(`Connected to mongo at ${url}`);
         resolve();
       });
     });

@@ -24,7 +24,9 @@ const eventLimitDefault = 6;
 
 class Event {
 	constructor(params) {
-    this._id = params._id;
+    if (params._id) {
+      this._id = params._id;  
+    }
     this.name = params.name;
     this.location = params.location;
     this.users = params.users;
@@ -240,7 +242,9 @@ class Event {
 
   static fromJson(data) {
     var params = {};
-    params._id = data._id || null;
+    if (data._id) {
+      params._id = data._id;
+    }
     params.name = data.name;
     params.location = data.location;
     params.location.radius = data.location.radius || eventRadiusDefault;
@@ -260,7 +264,11 @@ class Event {
           console.log(`error finding document with _id:${_id}`);
           reject(err);
         }
-        resolve(new this(res));
+        if (!res) {
+          var errorMsg = `Can't find event with id: ${_id}`;
+          return reject(errorMsg);
+        }
+        return resolve(new this(res));
       });
     });
   }

@@ -12,6 +12,16 @@ struct APIRequestHandler {
     
     private let apiURL: String = "https://11dc75c5.ngrok.io"
     
+    
+    /**
+     Just testing documentation using Markdown
+     - returns: Bool
+     - parameter name: Name of the user
+     - parameter fbID: String
+     - parameter email: asd
+     - parameter callback: function to be called after success
+     - Throws: error lists
+     */
     private func get(postEndpoint : String, successHandler: (response: NSData?) -> Void) {
         
         // Setup the session to make REST GET call.  Notice the URL is https NOT http!!
@@ -33,6 +43,14 @@ struct APIRequestHandler {
         }).resume()
     }
     
+    /**
+     Just testing documentation using Markdown
+     - returns: Void
+     - parameter postParams: Name of the user
+     - parameter postEndpoint: String
+     - parameter successHandler: asd
+     - Throws: error lists
+     */
     private func post(postParams : [String: AnyObject], postEndpoint : String, successHandler: (response: NSData?) -> Void) {
         
         let session = NSURLSession.sharedSession()
@@ -83,7 +101,15 @@ struct APIRequestHandler {
         })
     }
     
-    //adds New User To Database and saves the new user ID created
+    /**
+     Just testing documentation using Markdown
+     - returns: Bool
+     - parameter name: Name of the user
+     - parameter fbID: String
+     - parameter email: asd
+     - parameter callback: function to be called after success
+     - Throws: error lists
+     */
     func addUserToDatabase(name: String, fbID: String, email: String,  callback: (dataDict: NSDictionary) -> Void) {
         
         let jsonObject: [String: AnyObject] = [
@@ -106,7 +132,6 @@ struct APIRequestHandler {
             } catch {
                 print("addUserToDatabase failed!")
             }
-           
         })
     }
     

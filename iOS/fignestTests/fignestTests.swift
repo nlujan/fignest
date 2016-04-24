@@ -31,14 +31,5 @@ class fignestTests: XCTestCase {
         self.measureBlock {
             // Put the code you want to measure the time of here.
         }
-    }
-    
-    func testCreatingPeoplePerformance() {
-        measureBlock() {
-            for i in 1...1000 {
-                _ = Event(data: ["_id": "123", "name": "Brunch", "users": ["Naim", "kiera"], "search": "Sushi"])
-            }
-        }
-    }
-    
+    }    
 }

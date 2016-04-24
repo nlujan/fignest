@@ -189,8 +189,9 @@ function run() {
     Event.fromId(req.params.eventId).then((event) => {
       res.status(200).json(event.asJson());
     }).catch((err) => {
-      console.log(`Error in GET /events/:eventId`, err);
-      res.status(500).json(err);
+      var errMsg = `Error in GET /events/:eventId with id: ${req.params.eventId} ${err}`;
+      console.log(errMsg);
+      res.status(500).json(errMsg);
     });
   });
 

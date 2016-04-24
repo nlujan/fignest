@@ -141,12 +141,15 @@
 		2BAAE8511C8AA5810004D067 /* EventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8501C8AA5810004D067 /* EventsTableViewController.swift */; };
 		2BAAE8521C8AA5810004D067 /* EventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8501C8AA5810004D067 /* EventsTableViewController.swift */; };
 		2BAAE8531C8AA5810004D067 /* EventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8501C8AA5810004D067 /* EventsTableViewController.swift */; };
-		2BAAE8551C8AA7100004D067 /* FigsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */; };
-		2BAAE8561C8AA7100004D067 /* FigsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */; };
-		2BAAE8571C8AA7100004D067 /* FigsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */; };
+		2BAAE8551C8AA7100004D067 /* EventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8541C8AA7100004D067 /* EventsTableViewCell.swift */; };
+		2BAAE8561C8AA7100004D067 /* EventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8541C8AA7100004D067 /* EventsTableViewCell.swift */; };
+		2BAAE8571C8AA7100004D067 /* EventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8541C8AA7100004D067 /* EventsTableViewCell.swift */; };
 		2BAAE8591C8B9FE50004D067 /* NewEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8581C8B9FE50004D067 /* NewEventViewController.swift */; };
 		2BAAE85A1C8B9FE50004D067 /* NewEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8581C8B9FE50004D067 /* NewEventViewController.swift */; };
 		2BAAE85B1C8B9FE50004D067 /* NewEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAAE8581C8B9FE50004D067 /* NewEventViewController.swift */; };
+		2BBE48B11CCB203800618B5C /* NavigationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE48B01CCB203800618B5C /* NavigationUtil.swift */; };
+		2BBE48B21CCB203800618B5C /* NavigationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE48B01CCB203800618B5C /* NavigationUtil.swift */; };
+		2BBE48B31CCB203800618B5C /* NavigationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE48B01CCB203800618B5C /* NavigationUtil.swift */; };
 		2BDC73F51CB7E31700C77218 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC73F41CB7E31700C77218 /* ImageUtil.swift */; };
 		2BDC73F61CB7E31700C77218 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC73F41CB7E31700C77218 /* ImageUtil.swift */; };
 		2BDC73F71CB7E31700C77218 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC73F41CB7E31700C77218 /* ImageUtil.swift */; };
@@ -243,8 +246,9 @@
 		2BAAE8401C8A9CAE0004D067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BAAE84C1C8A9D8A0004D067 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2BAAE8501C8AA5810004D067 /* EventsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsTableViewController.swift; sourceTree = "<group>"; };
-		2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FigsTableViewCell.swift; path = ../FigsTableViewCell.swift; sourceTree = "<group>"; };
+		2BAAE8541C8AA7100004D067 /* EventsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventsTableViewCell.swift; path = ../EventsTableViewCell.swift; sourceTree = "<group>"; };
 		2BAAE8581C8B9FE50004D067 /* NewEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewEventViewController.swift; sourceTree = "<group>"; };
+		2BBE48B01CCB203800618B5C /* NavigationUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationUtil.swift; sourceTree = "<group>"; };
 		2BDC73F41CB7E31700C77218 /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
 		2BF4EDBD1CC41B6900CECDD3 /* PerformanceUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceUtil.swift; sourceTree = "<group>"; };
 		2BF4EDC61CC432A900CECDD3 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../FacebookSDKs-iOS/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
@@ -289,13 +293,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2B0CDB751CBF1A57006C24EE /* Uitls */ = {
+		2B0CDB751CBF1A57006C24EE /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				2BDC73F41CB7E31700C77218 /* ImageUtil.swift */,
 				2BF4EDBD1CC41B6900CECDD3 /* PerformanceUtil.swift */,
+				2BBE48B01CCB203800618B5C /* NavigationUtil.swift */,
 			);
-			name = Uitls;
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		2B3EA2D31C94BD9000079C1A /* View Controllers */ = {
@@ -315,7 +320,7 @@
 		2B3EA2D41C94BDD900079C1A /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
-				2BAAE8541C8AA7100004D067 /* FigsTableViewCell.swift */,
+				2BAAE8541C8AA7100004D067 /* EventsTableViewCell.swift */,
 				2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */,
 				2B4512D01C8FEF3000F14099 /* FoodCell.swift */,
 				2B4512F41C92564700F14099 /* PlayerProgressCell.swift */,
@@ -419,7 +424,7 @@
 		2BAAE81A1C8A9CAE0004D067 /* fignest */ = {
 			isa = PBXGroup;
 			children = (
-				2B0CDB751CBF1A57006C24EE /* Uitls */,
+				2B0CDB751CBF1A57006C24EE /* Utils */,
 				2B5E0F921CBDD5B100F65BA9 /* Extensions */,
 				2B3EA3951C9F687400079C1A /* Autocomplete Files */,
 				2B3EA3431C95F03A00079C1A /* SocketIO */,
@@ -622,6 +627,7 @@
 				2B3EA3491C9DE09900079C1A /* APIRequestHandler.swift in Sources */,
 				2B3EA2EB1C95DD2800079C1A /* PreWaitingCell.swift in Sources */,
 				2B3EA33D1C95F02400079C1A /* SwiftRegex.swift in Sources */,
+				2BBE48B11CCB203800618B5C /* NavigationUtil.swift in Sources */,
 				2B3EA3251C95F02400079C1A /* SocketIOClient.swift in Sources */,
 				2B3EA33A1C95F02400079C1A /* SocketTypes.swift in Sources */,
 				2B3EA39A1C9F689800079C1A /* CLToken.swift in Sources */,
@@ -637,7 +643,7 @@
 				2BAAE8591C8B9FE50004D067 /* NewEventViewController.swift in Sources */,
 				2B4512D11C8FEF3000F14099 /* FoodCell.swift in Sources */,
 				2B591AB51CAF6A0300F307D3 /* StyleManager.swift in Sources */,
-				2BAAE8551C8AA7100004D067 /* FigsTableViewCell.swift in Sources */,
+				2BAAE8551C8AA7100004D067 /* EventsTableViewCell.swift in Sources */,
 				2B3EA3281C95F02400079C1A /* SocketIOClientOption.swift in Sources */,
 				2BF4EDBE1CC41B6900CECDD3 /* PerformanceUtil.swift in Sources */,
 			);
@@ -663,7 +669,7 @@
 				2B3EA3291C95F02400079C1A /* SocketIOClientOption.swift in Sources */,
 				2B3EA3A11C9F689800079C1A /* CLTokenView.swift in Sources */,
 				2BAAE85A1C8B9FE50004D067 /* NewEventViewController.swift in Sources */,
-				2BAAE8561C8AA7100004D067 /* FigsTableViewCell.swift in Sources */,
+				2BAAE8561C8AA7100004D067 /* EventsTableViewCell.swift in Sources */,
 				2B4512CE1C8FB02200F14099 /* GameViewController.swift in Sources */,
 				2B3EA3261C95F02400079C1A /* SocketIOClient.swift in Sources */,
 				2B3EA3201C95F02400079C1A /* SocketEngineWebsocket.swift in Sources */,
@@ -676,6 +682,7 @@
 				2BF4EDC41CC4323000CECDD3 /* Event.swift in Sources */,
 				2B3EA3141C95F02400079C1A /* SocketEngineClient.swift in Sources */,
 				2B3EA31A1C95F02400079C1A /* SocketEnginePollable.swift in Sources */,
+				2BBE48B21CCB203800618B5C /* NavigationUtil.swift in Sources */,
 				2B3EA3A41C9F689800079C1A /* CLBackspaceDetectingTextField.swift in Sources */,
 				2B3EA3521C9DF7C000079C1A /* PostWaitingViewController.swift in Sources */,
 				2B3EA2D81C94D1C500079C1A /* UserImageCell.swift in Sources */,
@@ -717,7 +724,7 @@
 				2B3EA32A1C95F02400079C1A /* SocketIOClientOption.swift in Sources */,
 				2B3EA3A21C9F689800079C1A /* CLTokenView.swift in Sources */,
 				2BAAE85B1C8B9FE50004D067 /* NewEventViewController.swift in Sources */,
-				2BAAE8571C8AA7100004D067 /* FigsTableViewCell.swift in Sources */,
+				2BAAE8571C8AA7100004D067 /* EventsTableViewCell.swift in Sources */,
 				2B4512CF1C8FB02200F14099 /* GameViewController.swift in Sources */,
 				2B3EA3271C95F02400079C1A /* SocketIOClient.swift in Sources */,
 				2B3EA3211C95F02400079C1A /* SocketEngineWebsocket.swift in Sources */,
@@ -730,6 +737,7 @@
 				2BF4EDC51CC4323000CECDD3 /* Event.swift in Sources */,
 				2B3EA3151C95F02400079C1A /* SocketEngineClient.swift in Sources */,
 				2B3EA31B1C95F02400079C1A /* SocketEnginePollable.swift in Sources */,
+				2BBE48B31CCB203800618B5C /* NavigationUtil.swift in Sources */,
 				2B3EA3A51C9F689800079C1A /* CLBackspaceDetectingTextField.swift in Sources */,
 				2B3EA3531C9DF7C000079C1A /* PostWaitingViewController.swift in Sources */,
 				2B3EA2D91C94D1C500079C1A /* UserImageCell.swift in Sources */,

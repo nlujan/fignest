@@ -1,5 +1,5 @@
 //
-//  FigsTableViewCell.swift
+//  EventsTableViewCell.swift
 //  fignest
 //
 //  Created by Naim on 3/5/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FigsTableViewCell: UITableViewCell {
+class EventsTableViewCell: UITableViewCell {
     
     @IBOutlet var figLabel: UILabel!
     @IBOutlet var userImageCollectionView: UICollectionView!

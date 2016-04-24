@@ -29,7 +29,7 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
             (alert: UIAlertAction!) -> Void in
             print("User Exited to Home Page")
             
-            self.takeUserToHomePage();
+            NavigationUtil().takeUserToHomePage(self.storyboard)
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
@@ -51,14 +51,6 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     
     //MARK: Functions
     
-    func takeUserToHomePage() {
-        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("EventsTableViewController") as! EventsTableViewController
-        
-        let homePageNav = UINavigationController(rootViewController: homePage)
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        appDelegate.window!.rootViewController = homePageNav
-    }
     
     //MARK: UITableViewDelegate
     

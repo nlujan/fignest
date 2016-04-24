@@ -142,7 +142,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        picPageIndex += 1;
+        picPageIndex += 1
         
         guard let selectedCell = collectionView.cellForItemAtIndexPath(indexPath) else { return }
         selectedCell.layer.borderWidth = 5.0
@@ -191,7 +191,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
             let actionData = getActionObject(selections)
             postAction(NSUserDefaults.standardUserDefaults().stringForKey("ID")!, eventID: eventData.id, selections: actionData)
             
-            takeUserToPostWaitingPage();
+            takeUserToPostWaitingPage()
         }
         
     }

@@ -10,7 +10,7 @@ import UIKit
 
 struct APIRequestHandler {
     
-    private let apiURL: String = "https://5c9d79ef.ngrok.io"
+    private let apiURL: String = "https://11dc75c5.ngrok.io"
     
     private func get(postEndpoint : String, successHandler: (response: NSData?) -> Void) {
         
@@ -28,7 +28,7 @@ struct APIRequestHandler {
             }
             
             //calls successHandler func
-            successHandler(response: data as NSData?);
+            successHandler(response: data as NSData?)
 
         }).resume()
     }
@@ -60,7 +60,7 @@ struct APIRequestHandler {
             }
             
             //calls successHandler func
-            successHandler(response: data as NSData?);
+            successHandler(response: data as NSData?)
             
         }).resume()
     }
@@ -80,7 +80,7 @@ struct APIRequestHandler {
                 print("getAllUsers failed!")
             }
             
-        });
+        })
     }
     
     //adds New User To Database and saves the new user ID created
@@ -107,7 +107,7 @@ struct APIRequestHandler {
                 print("addUserToDatabase failed!")
             }
            
-        });
+        })
     }
     
     func getUserInvitations(userID: String,  callback: (dataArray: NSArray) -> Void) {
@@ -125,7 +125,7 @@ struct APIRequestHandler {
                 print("Getting Invitations failed!")
             }
         
-        });
+        })
     }
     
     func getEvent(eventID: String, callback: (dataDict: NSDictionary) -> Void) {
@@ -142,7 +142,7 @@ struct APIRequestHandler {
             } catch {
                 print("Getting Single Event failed!")
             }
-        });
+        })
         
     }
     
@@ -190,7 +190,7 @@ struct APIRequestHandler {
             } catch {
                 print("Getting Places Failed!")
             }
-        });
+        })
     
     }
     
@@ -210,7 +210,7 @@ struct APIRequestHandler {
             } catch {
                 print("Getting Final Result failed!")
             }
-        });
+        })
         
     }
     
@@ -233,7 +233,7 @@ struct APIRequestHandler {
             } catch {
                 print("Posting Action failed!")
             }
-        });
+        })
         
     }
     
@@ -251,7 +251,7 @@ struct APIRequestHandler {
             } catch {
                 print("Getting Users Mapping failed!")
             }
-        });
+        })
     }
 
 }

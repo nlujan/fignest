@@ -35,7 +35,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
             
             let loginManager = FBSDKLoginManager()
             loginManager.logOut()
-            self.takeUserToLoginPage();
+            NavigationUtil().takeUserToLoginPage(self.storyboard)
         })
     
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
@@ -80,12 +80,6 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
             })
         })
     }
-    
-    private func takeUserToLoginPage() {
-        let loginPageController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.window!.rootViewController = loginPageController
-    }
 
     // MARK: - figTable DataSource
 
@@ -96,11 +90,10 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         } else {
             return events.count
         }
-        
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! FigsTableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! EventsTableViewCell
 
         // Configure the cell...
         
@@ -140,7 +133,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         cell.layer.addSublayer(border)
         cell.layer.masksToBounds = true
         
-//        cell.contentView.layer.borderWidth = 0.5;
+//        cell.contentView.layer.borderWidth = 0.5
 //        cell.contentView.layer.borderColor = UIColor.grayColor().CGColor
         
         

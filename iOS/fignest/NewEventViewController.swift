@@ -112,7 +112,7 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
                         nameDict[name] = id
                     }
                 }
-                self.names = nameList;
+                self.names = nameList
                 self.nameDict = nameDict;
             })
         })
@@ -296,18 +296,18 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
         //        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         //        view.addGestureRecognizer(tap)
         
-        let origImage = UIImage(named: "CurrentLocation");
+        let origImage = UIImage(named: "CurrentLocation")
         let tintedImage = origImage?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         locationBtn.setImage(tintedImage, forState: .Normal)
         locationBtn.tintColor = UIColor.blueColor()
         
         
         
-        self.tokenInputView.placeholderText = "Enter a name ";
-        self.tokenInputView.drawBottomBorder = true;
+        self.tokenInputView.placeholderText = "Enter a name "
+        self.tokenInputView.drawBottomBorder = true
         self.tokenInputView.delegate = self
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.tableView.hidden = true;
+        self.tableView.hidden = true
         
     }
     

@@ -24,7 +24,7 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
         let logoutAction = UIAlertAction(title: "Exit Fig", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             
-            self.takeUserToHomePage();
+            NavigationUtil().takeUserToHomePage(self.storyboard)
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
@@ -45,15 +45,6 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     //MARK: Functions
-    
-    func takeUserToHomePage() {
-        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("EventsTableViewController") as! EventsTableViewController
-        
-        let homePageNav = UINavigationController(rootViewController: homePage)
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        appDelegate.window!.rootViewController = homePageNav
-    }
     
     //MARK: Table DataSource
     

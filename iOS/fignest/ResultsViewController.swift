@@ -26,7 +26,7 @@ class ResultsViewController: UIViewController {
     }
     
     @IBAction func homeButtonPressed(sender: AnyObject) {
-        takeUserToHomePage()
+        NavigationUtil().takeUserToHomePage(self.storyboard)
     }
     
     
@@ -46,15 +46,6 @@ class ResultsViewController: UIViewController {
     
     
     //MARK: Generic functions
-    
-    func takeUserToHomePage() {
-        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("EventsTableViewController") as! EventsTableViewController
-        
-        let homePageNav = UINavigationController(rootViewController: homePage)
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        appDelegate.window!.rootViewController = homePageNav
-    }
     
     private func getFinalResult()  {
         APIRequestHandler().getSolution(eventData.id, callback: { ( dataDict: NSDictionary) -> Void in

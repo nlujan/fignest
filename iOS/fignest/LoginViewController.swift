@@ -13,15 +13,10 @@ import FBSDKCoreKit
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     // MARK: Properties
+    
     @IBOutlet var loginButton: FBSDKLoginButton!
     
     // MARK: Functions
-    func takeUserToHomePage() {
-        let homePage = self.storyboard?.instantiateViewControllerWithIdentifier("EventsTableViewController") as! EventsTableViewController
-        let homePageNav = UINavigationController(rootViewController: homePage)
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.window!.rootViewController = homePageNav
-    }
     
     func addUser(name: String, fbID: String, email: String) {
         APIRequestHandler().addUserToDatabase(name, fbID: fbID, email: email, callback: { ( dataDict: NSDictionary) -> Void in
@@ -32,7 +27,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 
                 //save value of ID
                 NSUserDefaults.standardUserDefaults().setValue(userID, forKey: "ID")
-                self.takeUserToHomePage();
+                
+                NavigationUtil().takeUserToHomePage(self.storyboard)
+                
             })
         })
         
@@ -66,20 +63,15 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                     userDefaults.setValue(name, forKey: "userFBName")
                     userDefaults.setValue(fbID, forKey: "userFBID")
                     
-                    
                     //post user to database
                     self.addUser(name, fbID: fbID, email: email)
-                    
                     
                 } else {
                     print("error: \(error)")
                 }
             })
-            
         }
-        
     }
-    
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!){
         let loginManager = FBSDKLoginManager();
@@ -99,7 +91,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         let accessToken = FBSDKAccessToken.currentAccessToken()
         
         if accessToken != nil {
-            takeUserToHomePage()
+            NavigationUtil().takeUserToHomePage(self.storyboard)
         }
         
         loginButton.delegate = self
@@ -115,7 +107,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
 
     /*

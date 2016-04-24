@@ -3,12 +3,15 @@
 var Mongo = require('./mongo');
 var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
-var Event = require('./event');
+// See circular dependency note in getInvitations()
+// var Event = require('./event');
 var _ = require('underscore');
 
 class User {
 	constructor(params) {
-    this._id = params._id;
+    if (params._id) {
+      this._id = params._id;  
+    }
     this.displayName = params.displayName;
     this.facebook = params.facebook;
 	}
@@ -45,6 +48,8 @@ class User {
           console.log(`Error getting invitations for user: ${this}`, err);
           reject(err);
         }
+        // Todo: circular dependency here, since Event requires User.
+        var Event = require('./event');
         resolve(invitations.map((inv) => Event.fromJson(inv) ));
       });
     });
@@ -126,7 +131,9 @@ class User {
 
 	static fromJson(data) {
     var params = {};
-    params._id = data._id || null;
+    if (data._id) {
+      params._id = data._id;  
+    }
     params.displayName = this.getDisplayName(data);
     params.facebook = data.facebook;
     return new this(params);

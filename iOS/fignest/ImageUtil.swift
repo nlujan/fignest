@@ -18,7 +18,7 @@ class ImageUtil {
     }
     
     func getImagesFromUrlStringArray(stringArray: [String]) -> [UIImage] {
-        var result: [UIImage] = []
+        var imageArray: [UIImage] = []
         
         for urlString in stringArray {
             
@@ -26,17 +26,18 @@ class ImageUtil {
             
             //workaround for undefined images
             if u == "https:undefined" {
+                print("there are undefined images")
                 u = "https://s3-media2.fl.yelpcdn.com/bphoto/7ztu4J0gMn468PNiOmOwew/258s.jpg"
             }
             
             if let url = NSURL(string: u) {
                 if let data = NSData(contentsOfURL: url) {
                     //print(UIImage(data: data)!)
-                    result.append(UIImage(data: data)!)
+                    imageArray.append(UIImage(data: data)!)
                 }
             }
         }
-        return result
+        return imageArray
     }
     
     

@@ -80,7 +80,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         let newimagePlaceArray = imagePlaceArray.shuffle()
         let images = newimagePlaceArray.map({imagePlace in imagePlace[0]})
         
-        self.foodImages = ImageUtil.sharedInstance.getImagesFromUrlStringArray(images)
+        self.foodImages = ImageUtil().getImagesFromUrlStringArray(images)
     }
     
     func getActionObject(selections: [Int:Bool]) -> [NSDictionary]{
@@ -248,17 +248,11 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("progressCell", forIndexPath: indexPath) as! PlayerProgressCell
 
-        cell.playerImage.image = ImageUtil.sharedInstance.getFBImageFromID(testIds[indexPath.row])
-        
+        cell.playerImage.image = ImageUtil().getFBImageFromID(testIds[indexPath.row])
         cell.playerProgressBar.progress = progressVals[indexPath.row]
-        
-        
+    
         cell.playerProgressBar.tintColor = colors[indexPath.row]
-        
         cell.playerProgressBar.trackTintColor = colors[indexPath.row].colorWithAlphaComponent(0.2)
-        
-        
-        
         
         return cell
     }
@@ -270,12 +264,10 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         playerProgressTable.backgroundColor = UIColor.clearColor()
         
-        var userImg: UIImage!
+
         let userFBID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
-        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(userFBID)/picture?type=square&height=60&width=60")
-        if let data = NSData(contentsOfURL: facebookProfileUrl!) {
-            userImg = UIImage(data: data)!
-        }
+        let userImg = ImageUtil().getFBImageFromID(userFBID)
+
         
         userImages.append(userImg)
         userImages.append(userImg)

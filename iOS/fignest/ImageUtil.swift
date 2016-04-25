@@ -9,13 +9,7 @@
 import UIKit
 
 
-class ImageUtil {
-    
-    static let sharedInstance = ImageUtil()
-    
-    private init() {
-        
-    }
+struct ImageUtil {
     
     func getImagesFromUrlStringArray(stringArray: [String]) -> [UIImage] {
         var imageArray: [UIImage] = []

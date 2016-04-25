@@ -12,9 +12,11 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     
     //MARK: Properties
     
-    let testIds: [String] = ["584566895045734", "10208530090233237"]
+//    let testIds: [String] = ["584566895045734", "10208530090233237"]
+//    
+//    let users: [String] = ["Naim Lujan", "Kiera Johnson"]
+    var users = []
     
-    let users: [String] = ["Naim Lujan", "Kiera Johnson"]
     var eventData: Event!
     
     @IBOutlet var waitingTable: UITableView!
@@ -64,16 +66,24 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return testIds.count
+        return users.count
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PreWaitingCell", forIndexPath: indexPath) as! PreWaitingCell
         
-        cell.playerImage.image = ImageUtil.sharedInstance.getFBImageFromID(testIds[indexPath.row])
+        let userInfo = users[indexPath.row] as! [String:AnyObject]
+        
+        cell.playerImage.image = ImageUtil().getFBImageFromID((userInfo["facebook"] as! [String:String])["id"]!)
                 
-        cell.nameLabel.text = users[indexPath.row]
+        cell.nameLabel.text = (userInfo["displayName"] as! String)
+        
+        let status = userInfo["status"] as! String
+        
+        if status == "ready" {
+            cell.statusView.backgroundColor = UIColor.greenColor()
+        }
         
         return cell
     }
@@ -87,6 +97,20 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         
         activityIndicator.startAnimating()
         
+        let userId = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
+        
+
+        
+        SocketIOManager.sharedInstance.joinRoom(userId, eventId: eventData.id, completionHandler: { (userList: [[String: AnyObject]]) -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                self.users = userList
+                self.waitingTable.reloadData()
+                
+            })
+        })
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -94,7 +118,6 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         // Dispose of any resources that can be recreated.
     }
     
-
 
     // MARK: - Navigation
 

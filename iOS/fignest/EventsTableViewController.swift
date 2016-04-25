@@ -16,7 +16,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     //MARK: Properties
     
     var events: [Event] = []
-    var selectedEventData: Event?
+    var selectedEventData: Event!
     var userIDMapping: NSDictionary = [:]
     
     @IBOutlet var figTableView: UITableView!
@@ -172,12 +172,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         let fbDict = userInfoDict["facebook"] as! NSDictionary
         let userFBId = fbDict["id"] as! String
         
-        
-        
-        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(userFBId)/picture?type=square&height=60&width=60")
-        if let data = NSData(contentsOfURL: facebookProfileUrl!) {
-            cell.userImage.image = UIImage(data: data)
-        }
+        cell.userImage.image = ImageUtil().getFBImageFromID(userFBId)
         
         if (indexPath.row == 3 && numUsers > 4){
             cell.imageLabel.text = "+\(numUsers - 3)"

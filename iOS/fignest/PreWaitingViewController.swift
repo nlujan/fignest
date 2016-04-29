@@ -53,6 +53,25 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     
     //MARK: Functions
     
+    func joinRoom(userId: String, eventId: String) {
+        SocketIOManager.sharedInstance.joinRoom(userId, eventId: eventData.id, completionHandler: { (userList: [[String: AnyObject]]) -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                if (userList.count == 1) && (userList[0].count == 0) {
+                    print("done!")
+                    
+                    
+                    self.performSegueWithIdentifier("showGameView", sender: nil)
+                    
+                } else {
+                    print("Status update received")
+                    self.users = userList
+                    self.waitingTable.reloadData()
+                }
+            })
+        })
+    }
+    
     
     //MARK: UITableViewDelegate
     
@@ -99,17 +118,8 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         
         let userId = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
         
+        joinRoom(userId, eventId: eventData.id)
 
-        
-        SocketIOManager.sharedInstance.joinRoom(userId, eventId: eventData.id, completionHandler: { (userList: [[String: AnyObject]]) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                
-                self.users = userList
-                self.waitingTable.reloadData()
-                
-            })
-        })
-        
         
     }
     

@@ -39,7 +39,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!){
         
-        if(error != nil) {
+        if error != nil {
             print(error.localizedDescription)
             return
         }

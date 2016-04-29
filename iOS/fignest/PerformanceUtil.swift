@@ -9,8 +9,7 @@
 import Foundation
 import UIKit
 
-struct PerformancUtil {
-    
+struct PerformanceUtil {
     
     func measure(call: () -> Void) {
         let startTime = CACurrentMediaTime()

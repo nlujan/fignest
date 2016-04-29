@@ -39,10 +39,19 @@ class SocketIOManager: NSObject {
         }
         
         socket.on("start") { (dataArray, ack) -> Void in
-            print("started!")
-            print(dataArray)
+            completionHandler(userList: [[:]])
         }
         
+    }
+    
+    
+    func sendProgress(userId: String, eventId: String, level: Float, completionHandler: (progressData: [AnyObject]) -> Void) {
+        
+        socket.emit("progress", ["userId": userId, "eventId": eventId, "level": level])
+        
+        socket.on("progress") { (data, ack) -> Void in
+            completionHandler(progressData: data)
+        }
     }
     
     func adduserToEvent(nickname: String, figName: String, completionHandler: (userList: [[String: AnyObject]]!) -> Void) {
@@ -63,19 +72,15 @@ class SocketIOManager: NSObject {
     }
 }
 
-//
-//socket.on('join', (data) => {
-//    // Race condition if 1 person joins before another is done joining
+//socket.on('progress', (data) => {
 //    var userId = data.userId;
 //    var eventId = data.eventId;
-//    joinRoom(userId, eventId).then(() => {
-//        // Add user to room and broadcast to everyone (including user)
-//        socket.join(eventId);
-//        io.sockets.in(eventId).emit('status', rooms[eventId]);
-//        
-//        // Check if we should start event
-//        if (shouldStartEvent(eventId)) {
-//            io.sockets.in(eventId).emit('start');
-//        }
-//        });
+//    var level = data.level;
+//    var user = _.find(rooms[eventId], (user) => user._id.toString() === userId);
+//    
+//    // Broadcast to room (except client)
+//    socket.broadcast.to(eventId).emit('progress', {
+//        user: user,
+//        level: level
+//    });
 //    });

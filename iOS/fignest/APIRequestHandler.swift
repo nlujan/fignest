@@ -14,13 +14,10 @@ struct APIRequestHandler {
     
     
     /**
-     Just testing documentation using Markdown
+     GET Request
      - returns: Bool
-     - parameter name: Name of the user
-     - parameter fbID: String
-     - parameter email: asd
-     - parameter callback: function to be called after success
-     - Throws: error lists
+     - parameter postEndpoint: endpoint for request
+     - parameter successHandler: String
      */
     private func get(postEndpoint : String, successHandler: (response: NSData?) -> Void) {
         
@@ -44,12 +41,11 @@ struct APIRequestHandler {
     }
     
     /**
-     Just testing documentation using Markdown
+     POST Request
      - returns: Void
      - parameter postParams: Name of the user
      - parameter postEndpoint: String
      - parameter successHandler: asd
-     - Throws: error lists
      */
     private func post(postParams : [String: AnyObject], postEndpoint : String, successHandler: (response: NSData?) -> Void) {
         

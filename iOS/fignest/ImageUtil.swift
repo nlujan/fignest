@@ -11,7 +11,7 @@ import UIKit
 
 struct ImageUtil {
     
-    func getImagesFromUrlStringArray(stringArray: [String]) -> [UIImage] {
+    func getImagesFromUrlStringArray(stringArray: [String]) throws -> [UIImage] {
         var imageArray: [UIImage] = []
         
         for urlString in stringArray {
@@ -24,12 +24,16 @@ struct ImageUtil {
                 u = "https://s3-media2.fl.yelpcdn.com/bphoto/7ztu4J0gMn468PNiOmOwew/258s.jpg"
             }
             
-            if let url = NSURL(string: u) {
-                if let data = NSData(contentsOfURL: url) {
-                    //print(UIImage(data: data)!)
-                    imageArray.append(UIImage(data: data)!)
-                }
+            guard let url = NSURL(string: u) else {
+                throw ImageError.BadUrlString("Could not turn string to url")
             }
+            
+            guard let data = NSData(contentsOfURL: url) else {
+                throw ImageError.InvalidUrl("Could not retreive contents of url")
+            }
+            
+            imageArray.append(UIImage(data: data)!)
+            
         }
         return imageArray
     }

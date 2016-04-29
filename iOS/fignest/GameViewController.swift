@@ -15,15 +15,17 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     var testIds: [String] = ["584566895045734", "10208530090233237"]
     var colors: [UIColor] = StyleManager().progressViewColors
     
+    let userId = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
+    let userFBID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
+    
     var picPageIndex: Int = 0
     var selections: [Int:Bool] = [:]
-    var placesArray: NSArray = []
+    var numPlaces = 0
     var eventData: Event!
     
     var imagePlaceArray: [[String]] = []
     var foodImages: [UIImage] = []
     
-    var userImages: [UIImage] = []
     var progressVals: [Float] = [0, 0]
     
     @IBOutlet var picCollectionView: UICollectionView!
@@ -34,12 +36,25 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     func getPlacesImages(eventID: String) {
         APIRequestHandler().getFigEventPlaces(eventID, callback: { ( dataArray: NSArray) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
-                self.placesArray = dataArray
                 
-                //set the images to be desiplayed
-                self.getFoodImages(dataArray)
+                self.numPlaces = dataArray.count
                 
-                //reload collectin view
+                let foodImageStrings = self.getFoodImages(dataArray)
+                
+
+                do {
+                    let startTime = CACurrentMediaTime()
+          
+                    self.foodImages = try ImageUtil().getImagesFromUrlStringArray(foodImageStrings)
+                    
+                    let endTime = CACurrentMediaTime()
+                    print("Time - \(endTime - startTime)")
+
+                } catch let error {
+                    print(error)
+                }
+                
+                //reload collection view
                 self.picCollectionView.reloadData()
             })
         })
@@ -48,7 +63,6 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     func postAction(userID: String, eventID: String, selections: [NSDictionary]) {
         APIRequestHandler().postAction(userID, eventID: eventID, selections: selections, callback: { ( dataDict: NSDictionary) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
-                
                 //print(dataDict)
                 //print("Action Posted!")
             })
@@ -57,35 +71,45 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     //MARK: Additional Functions
     
-    func takeUserToPostWaitingPage() {
-        let postWaitingPage = self.storyboard?.instantiateViewControllerWithIdentifier("PostWaitingViewController") as! PostWaitingViewController
-        let postWaitingPageNav = UINavigationController(rootViewController: postWaitingPage)
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        // pass event data to postWaiting screen
-        postWaitingPage.eventData = eventData
-        
-        appDelegate.window!.rootViewController = postWaitingPageNav
-        
+    func sendProgress(userId: String, eventId: String, level: Float) {
+        SocketIOManager.sharedInstance.sendProgress(userId, eventId: eventId, level: level, completionHandler: { (progressData: [AnyObject]) -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                print(progressData)
+                
+                //                [{
+                //                    level = "0.1666667";
+                //                    user =     {
+                //                        "_id" = 56f33ad84da9dbb50bae6b9d;
+                //                        displayName = "Kiera Johnson";
+                //                        facebook =         {
+                //                            email = "kiera@colorhill.com";
+                //                            id = 10208530090233237;
+                //                            name = "Kiera Johnson";
+                //                        };
+                //                        status = ready;
+                //                    };
+                //                    }]
+            })
+        })
     }
     
-    func getFoodImages(places: NSArray) {
+    func getFoodImages(places: NSArray) -> [String] {
         
+        var tempPlaceArray: [[String]] = []
         for place in places {
             for i in 0 ..< 6 {
-                imagePlaceArray.append([(place["images"] as! [String])[i], place["_id"] as! String])
+                tempPlaceArray.append([(place["images"] as! [String])[i], place["_id"] as! String])
             }
         }
         
-        let newimagePlaceArray = imagePlaceArray.shuffle()
-        let images = newimagePlaceArray.map({imagePlace in imagePlace[0]})
+        imagePlaceArray = tempPlaceArray.shuffle()
         
-        self.foodImages = ImageUtil().getImagesFromUrlStringArray(images)
+        return imagePlaceArray.map({imagePlace in imagePlace[0]})
     }
     
     func getActionObject(selections: [Int:Bool]) -> [NSDictionary]{
         
-        var actionData: [NSDictionary] = []
+        var actionData = [[:]]
         
         for i in 0 ..< imagePlaceArray.count {
             var actionDict: [String:AnyObject] = [:]
@@ -105,6 +129,18 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         return actionData
     }
     
+    func takeUserToPostWaitingPage() {
+        let postWaitingPage = self.storyboard?.instantiateViewControllerWithIdentifier("PostWaitingViewController") as! PostWaitingViewController
+        let postWaitingPageNav = UINavigationController(rootViewController: postWaitingPage)
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        // pass event data to postWaiting screen
+        postWaitingPage.eventData = eventData
+        
+        appDelegate.window!.rootViewController = postWaitingPageNav
+        
+    }
+    
     //MARK: picCollectionView DataSource
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -121,9 +157,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         let picIndex = (picPageIndex * 6) + indexPath.row
         
         cell.foodImageView.image = foodImages[picIndex]
-        
-        cell.layer.borderWidth = 0
-        cell.layer.borderColor = UIColor.clearColor().CGColor
+
         
         return cell
     }
@@ -162,9 +196,11 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
             cell.alpha = 1
         }
         
-        let val = Float(picPageIndex)/Float(self.placesArray.count)
+        let val = Float(picPageIndex)/Float(numPlaces)
         let cell = playerProgressTable.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! PlayerProgressCell
         cell.playerProgressBar.setProgress(val, animated: true)
+        
+        sendProgress(userId, eventId: eventData.id, level: val)
         
         UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             for cell in cells {
@@ -182,14 +218,14 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     func picSelectedHandler(collectionView: UICollectionView, indexPath: NSIndexPath) {
         selections[(6 * picPageIndex) + indexPath.row] = true
 
-        if (picPageIndex < placesArray.count) {
+        if (picPageIndex < numPlaces) {
             
             collectionView.reloadData()
 
         } else {
 
             let actionData = getActionObject(selections)
-            postAction(NSUserDefaults.standardUserDefaults().stringForKey("ID")!, eventID: eventData.id, selections: actionData)
+            postAction(userId, eventID: eventData.id, selections: actionData)
             
             takeUserToPostWaitingPage()
         }
@@ -203,36 +239,12 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
 //    }
     
     func animateCell(cell: UICollectionViewCell) {
-//        let animation = CABasicAnimation(keyPath: "opacity")
-//        animation.fromValue = 1
-//        animation.toValue = 0
-//        animation.duration = 0.5
-//        cell.layer.addAnimation(animation, forKey: animation.keyPath)
-        
-//        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -500, 10, 0)
-//        cell.layer.transform = rotationTransform
-        
-        cell.alpha = 1
-        
-        //let animationInterval = 0.7 + (0.3 * Double(indexPath.row))
-        
-        UIView.animateWithDuration(1.0, animations: { () -> Void in
-            cell.alpha = 0
-            
-        })
-        
-        cell.layer.borderWidth = 5.0
-        cell.layer.borderColor = UIColor(red: 0.549, green:0.133, blue:0.165, alpha: 1.0).CGColor
     }
     
     func animateCellAtIndexPath(collectionView: UICollectionView, indexPath: NSIndexPath) {
         guard let cell = collectionView.cellForItemAtIndexPath(indexPath) else { return }
         animateCell(cell)
     }
-    
-//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        animateCellAtIndexPath(indexPath)
-//    }
     
     
     ///END OF TESTTTT
@@ -247,10 +259,15 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("progressCell", forIndexPath: indexPath) as! PlayerProgressCell
+        
+        if indexPath.row == 0 {
+            cell.playerImage.image = ImageUtil().getFBImageFromID(userFBID)
+        } else {
+            cell.playerImage.image = ImageUtil().getFBImageFromID(testIds[indexPath.row])
+        }
 
-        cell.playerImage.image = ImageUtil().getFBImageFromID(testIds[indexPath.row])
+        
         cell.playerProgressBar.progress = progressVals[indexPath.row]
-    
         cell.playerProgressBar.tintColor = colors[indexPath.row]
         cell.playerProgressBar.trackTintColor = colors[indexPath.row].colorWithAlphaComponent(0.2)
         
@@ -261,16 +278,6 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        playerProgressTable.backgroundColor = UIColor.clearColor()
-        
-
-        let userFBID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
-        let userImg = ImageUtil().getFBImageFromID(userFBID)
-
-        
-        userImages.append(userImg)
-        userImages.append(userImg)
         
 
         getPlacesImages(eventData.id)

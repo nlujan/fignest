@@ -125,6 +125,9 @@
 		2B591AB61CAF6A0300F307D3 /* StyleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B591AB41CAF6A0300F307D3 /* StyleManager.swift */; };
 		2B591AB71CAF6A0300F307D3 /* StyleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B591AB41CAF6A0300F307D3 /* StyleManager.swift */; };
 		2B5CAFED1C8D2DCB00FE7B6D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B5CAFEC1C8D2DCB00FE7B6D /* CoreLocation.framework */; };
+		2B8404441CD2E2A9005A5498 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8404431CD2E2A8005A5498 /* Error.swift */; };
+		2B8404451CD2E2A9005A5498 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8404431CD2E2A8005A5498 /* Error.swift */; };
+		2B8404461CD2E2A9005A5498 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8404431CD2E2A8005A5498 /* Error.swift */; };
 		2B870AD31CAF055C00455570 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B870AD01CAF055C00455570 /* FBSDKCoreKit.framework */; };
 		2B870AD41CAF055C00455570 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B870AD11CAF055C00455570 /* FBSDKLoginKit.framework */; };
 		2B870AD51CAF055C00455570 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B870AD21CAF055C00455570 /* FBSDKShareKit.framework */; };
@@ -228,6 +231,7 @@
 		2B4F02781CA4DD1700ACE165 /* ResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		2B591AB41CAF6A0300F307D3 /* StyleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleManager.swift; sourceTree = "<group>"; };
 		2B5CAFEC1C8D2DCB00FE7B6D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		2B8404431CD2E2A8005A5498 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		2B870AD01CAF055C00455570 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../FacebookSDKs-iOS-20160210/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
 		2B870AD11CAF055C00455570 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../FacebookSDKs-iOS-20160210/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
 		2B870AD21CAF055C00455570 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "../../../FacebookSDKs-iOS-20160210/FBSDKShareKit.framework"; sourceTree = "<group>"; };
@@ -386,6 +390,14 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		2B8404421CD2E284005A5498 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				2B8404431CD2E2A8005A5498 /* Error.swift */,
+			);
+			name = Enums;
+			sourceTree = "<group>";
+		};
 		2B870ACF1CAF052E00455570 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
@@ -424,6 +436,7 @@
 		2BAAE81A1C8A9CAE0004D067 /* fignest */ = {
 			isa = PBXGroup;
 			children = (
+				2B8404421CD2E284005A5498 /* Enums */,
 				2B0CDB751CBF1A57006C24EE /* Utils */,
 				2B5E0F921CBDD5B100F65BA9 /* Extensions */,
 				2B3EA3951C9F687400079C1A /* Autocomplete Files */,
@@ -645,6 +658,7 @@
 				2B591AB51CAF6A0300F307D3 /* StyleManager.swift in Sources */,
 				2BAAE8551C8AA7100004D067 /* EventsTableViewCell.swift in Sources */,
 				2B3EA3281C95F02400079C1A /* SocketIOClientOption.swift in Sources */,
+				2B8404441CD2E2A9005A5498 /* Error.swift in Sources */,
 				2BF4EDBE1CC41B6900CECDD3 /* PerformanceUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -700,6 +714,7 @@
 				2B3EA33E1C95F02400079C1A /* SwiftRegex.swift in Sources */,
 				2B3EA2EC1C95DD2800079C1A /* PreWaitingCell.swift in Sources */,
 				2B591AB61CAF6A0300F307D3 /* StyleManager.swift in Sources */,
+				2B8404451CD2E2A9005A5498 /* Error.swift in Sources */,
 				2BF4EDBF1CC41B6900CECDD3 /* PerformanceUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -755,6 +770,7 @@
 				2B3EA33F1C95F02400079C1A /* SwiftRegex.swift in Sources */,
 				2B3EA2ED1C95DD2800079C1A /* PreWaitingCell.swift in Sources */,
 				2B591AB71CAF6A0300F307D3 /* StyleManager.swift in Sources */,
+				2B8404461CD2E2A9005A5498 /* Error.swift in Sources */,
 				2BF4EDC01CC41B6900CECDD3 /* PerformanceUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

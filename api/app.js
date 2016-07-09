@@ -88,6 +88,8 @@ function run() {
       var user = _.find(rooms[eventId], (user) => user._id.toString() === userId);
       user.status = statusDone;
       io.sockets.in(eventId).emit('status', rooms[eventId]);
+      console.log(userId)
+      console.log(eventId)
 
       // Check if we should finish event
       if (shouldFinishEvent(eventId)) {

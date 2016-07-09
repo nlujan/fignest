@@ -15,6 +15,7 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     var progressData: [[AnyObject]] = [["584566895045734", 1.0], ["10208530090233237", 0.5], ["584566895045734", 0.3]]
     var eventData: Event?
     var colors: [UIColor] = StyleManager().progressViewColors
+    let userId = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
     
     //MARK: Actions
     
@@ -46,6 +47,15 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     
     //MARK: Functions
     
+    func gameDone(userId: String, eventId: String) {
+        SocketIOManager.sharedInstance.gameDone(userId, eventId: eventId, completionHandler: { (userList: [[String:AnyObject]]) -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                print("User has finished game!!");
+                print(userList)
+            })
+        })
+    }
+    
     //MARK: Table DataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -73,6 +83,8 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        gameDone(userId, eventId: eventData!.id)
     }
     
     override func didReceiveMemoryWarning() {

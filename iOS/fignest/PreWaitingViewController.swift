@@ -60,7 +60,6 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
                 if (userList.count == 1) && (userList[0].count == 0) {
                     print("done!")
                     
-                    
                     self.performSegueWithIdentifier("showGameView", sender: nil)
                     
                 } else {

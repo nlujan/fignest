@@ -23,10 +23,11 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     var numPlaces = 0
     var eventData: Event!
     
+    var userTableData = [["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": 0]]
+    
     var imagePlaceArray: [[String]] = []
     var foodImages: [UIImage] = []
     
-    var progressVals: [Float] = [0, 0]
     
     @IBOutlet var picCollectionView: UICollectionView!
     @IBOutlet var playerProgressTable: UITableView!
@@ -38,18 +39,10 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
             dispatch_async(dispatch_get_main_queue(), {
                 
                 self.numPlaces = dataArray.count
-                
-                let foodImageStrings = self.getFoodImages(dataArray)
-                
 
                 do {
-                    let startTime = CACurrentMediaTime()
-          
+                    let foodImageStrings = self.getFoodImages(dataArray)
                     self.foodImages = try ImageUtil().getImagesFromUrlStringArray(foodImageStrings)
-                    
-                    let endTime = CACurrentMediaTime()
-                    print("Time - \(endTime - startTime)")
-
                 } catch let error {
                     print(error)
                 }
@@ -71,10 +64,29 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     //MARK: Additional Functions
     
-    func sendProgress(userId: String, eventId: String, level: Float) {
-        SocketIOManager.sharedInstance.sendProgress(userId, eventId: eventId, level: level, completionHandler: { (progressData: [AnyObject]) -> Void in
+    func setupProgressListener() {
+        SocketIOManager.sharedInstance.setupProgressListener({ (progressData: [AnyObject]) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
-                print(progressData)
+                
+                let fbID = progressData[0]["user"]!!["facebook"]!!["id"] as! String
+                let progress = progressData[0]["level"] as! Float
+                
+                
+                
+                
+                print("level: \(progress)")
+                print("fbID: \(fbID)")
+                
+                if self.userTableData.count == 1 {
+                    self.userTableData.append(["id":fbID, "progress": progress])
+                } else {
+                    self.userTableData[1] = ["id":fbID, "progress": progress]
+                }
+                
+                
+                self.playerProgressTable.reloadData()
+                
+                
                 
                 //                [{
                 //                    level = "0.1666667";
@@ -91,6 +103,10 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
                 //                    }]
             })
         })
+    }
+    
+    func sendProgress(userId: String, eventId: String, level: Float) {
+        SocketIOManager.sharedInstance.sendProgress(userId, eventId: eventId, level: level)
     }
     
     func getFoodImages(places: NSArray) -> [String] {
@@ -166,6 +182,8 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         
+        cell.layer.borderWidth = 0.0
+        
         cell.alpha = 0
         
         UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
@@ -199,6 +217,8 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         let val = Float(picPageIndex)/Float(numPlaces)
         let cell = playerProgressTable.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! PlayerProgressCell
         cell.playerProgressBar.setProgress(val, animated: true)
+        
+        userTableData[0] = ["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": val]
         
         sendProgress(userId, eventId: eventData.id, level: val)
         
@@ -252,22 +272,19 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     //MARK: playerProgressTable DataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 2
+        return userTableData.count
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("progressCell", forIndexPath: indexPath) as! PlayerProgressCell
         
-        if indexPath.row == 0 {
-            cell.playerImage.image = ImageUtil().getFBImageFromID(userFBID)
-        } else {
-            cell.playerImage.image = ImageUtil().getFBImageFromID(testIds[indexPath.row])
-        }
+        let user = userTableData[indexPath.row]
+        
+        cell.playerImage.image = ImageUtil().getFBImageFromID(user["id"] as! String)
 
         
-        cell.playerProgressBar.progress = progressVals[indexPath.row]
+        cell.playerProgressBar.progress = user["progress"] as! Float
         cell.playerProgressBar.tintColor = colors[indexPath.row]
         cell.playerProgressBar.trackTintColor = colors[indexPath.row].colorWithAlphaComponent(0.2)
         
@@ -279,9 +296,9 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         getPlacesImages(eventData.id)
-            
+        
+        setupProgressListener()
     }
     
     override func didReceiveMemoryWarning() {

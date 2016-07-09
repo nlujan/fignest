@@ -78,7 +78,7 @@ class Event {
   getUsers() {
     return new Promise((resolve, reject) => {
       // $in query instead
-      Promise.all(this.users.map((user) => User.fromId(user))).then((users) => {
+      Promise.all(_.map(this.users, (user) => User.fromId(user))).then((users) => {
         resolve(users);
       }).catch((err) => {
         reject(err);
@@ -92,7 +92,7 @@ class Event {
         // Just get current places; no need to generate new places.
         // Use $in query instead of Promise.all, or single query of places using
         // eventId.
-        Promise.all(this.places.map((id) => {
+        Promise.all(_.map(this.places, (id) => {
           return Place.fromId(id);
         })).then((places) => {
           resolve(places);
@@ -117,13 +117,13 @@ class Event {
         // pick this.limit businesses at random
         yelpBusinesses = _.sample(yelpBusinesses, this.limit);
 
-        var places = yelpBusinesses.map((biz) => Place.fromYelpJson(biz, this._id));
-        return Promise.all(places.map((place) => place.getImages()));
+        var places = _.map(yelpBusinesses, (biz) => Place.fromYelpJson(biz, this._id));
+        return Promise.all(_.map(places, (place) => place.getImages()));
       }).then((places) => {
         // Save places
         // Hanlde in Place.getImages() instead?
         // Bulk save instead?
-        return Promise.all(places.map((place) => place.save() ));
+        return Promise.all(_.map(places, (place) => place.save() ));
       }).then((places) => {
         _places = places;
 
@@ -141,7 +141,7 @@ class Event {
   }
 
   addPlaces(places) {
-    this.places = places.map((place) => place._id);
+    this.places = _.map(places, (place) => place._id);
   }
 
   hasPlaces() {
@@ -248,7 +248,7 @@ class Event {
     params.name = data.name;
     params.location = data.location;
     params.location.radius = data.location.radius || eventRadiusDefault;
-    params.users = data.users.map((user) => ObjectId(user));
+    params.users = _.map(data.users, (user) => ObjectId(user));
     params.search = data.search || '';
     params.isOver = data.isOver == null ? false : data.isOver;
     params.limit = data.limit || eventLimitDefault;

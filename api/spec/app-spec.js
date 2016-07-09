@@ -67,6 +67,9 @@ describe('API', () => {
     });
   });
 
+
+
+  // GET /users
   describe('GET /users', () => {
     beforeEach((done) => {
       db.collection('users').drop((err, res) => {
@@ -87,7 +90,7 @@ describe('API', () => {
       it('returns an array of users', (done) => {
         request.get(`${url}/users`, (err, res, body) => {
           var response = JSON.parse(body);
-          expect(Array.isArray(response)).toBeTruthy();
+          expect(_.isArray(response)).toBeTruthy();
           expect(response.length).toBe(_users().length);
           done();
         });
@@ -104,7 +107,7 @@ describe('API', () => {
       it('returns an empty array', (done) => {
         request.get(`${url}/users`, (err, res, body) => {
           var response = JSON.parse(body);
-          expect(Array.isArray(response)).toBeTruthy();
+          expect(_.isArray(response)).toBeTruthy();
           expect(response.length).toBe(0);
           done();
         });
@@ -112,6 +115,9 @@ describe('API', () => {
     });
   });
 
+
+
+  // GET /usersMapById
   describe('GET /usersMapById', () => {
     beforeEach((done) => {
       db.collection('users').drop((err, res) => {
@@ -124,12 +130,15 @@ describe('API', () => {
     it('returns a key for each user', (done) => {
       request.get(`${url}/usersMapById`, (err, res, body) => {
         var response = JSON.parse(body);
-        expect(Object.keys(response).length).toBe(_users().length);
+        expect(_.keys(response).length).toBe(_users().length);
         done();
       });
     });
   });
 
+
+
+  // POST /users
   describe('POST /users', () => {
     beforeEach((done) => {
       db.collection('users').drop((err, res) => {
@@ -186,6 +195,9 @@ describe('API', () => {
     });
   });
 
+
+
+  // GET /users/:userId/invitations
   describe('GET /users/:userId/invitations', () => {
     beforeEach((done) => {
       db.collection('users').drop((err, res) => {
@@ -246,6 +258,9 @@ describe('API', () => {
     });
   });
 
+
+
+  // GET /events/:eventId
   describe('GET /events/:eventId', () => {
     beforeEach((done) => {
       db.collection('events').drop((err, res) => {
@@ -278,6 +293,72 @@ describe('API', () => {
       });
     });
   });
+
+
+
+  // POST /events
+  describe('POST /events', () => {
+    beforeEach((done) => {
+      db.collection('events').drop(() => {
+        done();
+      });
+    });
+
+    it('responds with the posted event', (done) => {
+      request.post({
+        url: `${url}/events`,
+        body: _event0(),
+        json: true
+      }, (err, res, body) => {
+        expect(body._id).not.toBeNull();
+        expect(body.name).toBe(_event0().name);
+        expect(body.search).toBe(_event0().search);
+        expect(_.isNumber(body.location.radius)).toBeTruthy();
+        done();
+      });
+    });
+    
+    it('adds the event to the db', (done) => {
+      request.post({
+        url: `${url}/events`,
+        body: _event0(),
+        json: true
+      }, (err, res, body) => {
+        db.collection('events').findOne({ _id: ObjectId(body._id) }, (err, res) => {
+          expect(res).not.toBeNull();
+          done();
+        });
+      });
+    });
+  });
+
+
+
+
+  // GET /events/:eventId/places
+  // describe('GET /events/:eventId/places', () => {
+    
+  // })
+
+
+
+  // GET /events/:eventId/places
+  // gets 5 places
+  // for each place, gets the right images
+  // 
+  // 
+  // GET /events/:eventId/solution
+  // when there are no actions
+  // gets the right action
+  // when there's a tie?
+  // 
+  // 
+  // POST /events/:eventId/actions
+  // can send actions
+  // can receive same action
+  
+
+
 
   
 });

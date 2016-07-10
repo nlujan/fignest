@@ -10,7 +10,7 @@ import UIKit
 
 struct APIRequestHandler {
     
-    private let apiURL: String = "https://7258b6f4.ngrok.io"
+    private let apiURL: String = "https://eb8c1ae0.ngrok.io"
     
     
     /**

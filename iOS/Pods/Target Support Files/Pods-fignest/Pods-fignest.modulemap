@@ -1,0 +1,6 @@
+framework module Pods_fignest {
+  umbrella header "Pods-fignest-umbrella.h"
+
+  export *
+  module * { export * }
+}

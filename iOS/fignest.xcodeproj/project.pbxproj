@@ -8,18 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1A8FC296FB2F28C5E6D005C1 /* Pods_fignest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67A56EB2959AD0BA62C6F18C /* Pods_fignest.framework */; };
-		2B3695D01D0B3D7400304A9B /* CLBackspaceDetectingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3695CC1D0B3D7400304A9B /* CLBackspaceDetectingTextField.swift */; };
-		2B3695D11D0B3D7400304A9B /* CLBackspaceDetectingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3695CC1D0B3D7400304A9B /* CLBackspaceDetectingTextField.swift */; };
-		2B3695D21D0B3D7400304A9B /* CLBackspaceDetectingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3695CC1D0B3D7400304A9B /* CLBackspaceDetectingTextField.swift */; };
-		2B3695D31D0B3D7400304A9B /* CLToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3695CD1D0B3D7400304A9B /* CLToken.swift */; };
-		2B3695D41D0B3D7400304A9B /* CLToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3695CD1D0B3D7400304A9B /* CLToken.swift */; };
-		2B3695D51D0B3D7400304A9B /* CLToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3695CD1D0B3D7400304A9B /* CLToken.swift */; };
-		2B3695D61D0B3D7400304A9B /* CLTokenInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3695CE1D0B3D7400304A9B /* CLTokenInputView.swift */; };
-		2B3695D71D0B3D7400304A9B /* CLTokenInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3695CE1D0B3D7400304A9B /* CLTokenInputView.swift */; };
-		2B3695D81D0B3D7400304A9B /* CLTokenInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3695CE1D0B3D7400304A9B /* CLTokenInputView.swift */; };
-		2B3695D91D0B3D7400304A9B /* CLTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3695CF1D0B3D7400304A9B /* CLTokenView.swift */; };
-		2B3695DA1D0B3D7400304A9B /* CLTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3695CF1D0B3D7400304A9B /* CLTokenView.swift */; };
-		2B3695DB1D0B3D7400304A9B /* CLTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3695CF1D0B3D7400304A9B /* CLTokenView.swift */; };
 		2B3EA2D71C94D1C500079C1A /* UserImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */; };
 		2B3EA2D81C94D1C500079C1A /* UserImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */; };
 		2B3EA2D91C94D1C500079C1A /* UserImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */; };
@@ -87,6 +75,18 @@
 		2BBE48B11CCB203800618B5C /* NavigationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE48B01CCB203800618B5C /* NavigationUtil.swift */; };
 		2BBE48B21CCB203800618B5C /* NavigationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE48B01CCB203800618B5C /* NavigationUtil.swift */; };
 		2BBE48B31CCB203800618B5C /* NavigationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE48B01CCB203800618B5C /* NavigationUtil.swift */; };
+		2BCEBBF41D3247D500A75B95 /* CLBackspaceDetectingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF11D3247D500A75B95 /* CLBackspaceDetectingTextField.swift */; };
+		2BCEBBF51D3247D500A75B95 /* CLBackspaceDetectingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF11D3247D500A75B95 /* CLBackspaceDetectingTextField.swift */; };
+		2BCEBBF61D3247D500A75B95 /* CLBackspaceDetectingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF11D3247D500A75B95 /* CLBackspaceDetectingTextField.swift */; };
+		2BCEBBF71D3247D500A75B95 /* CLToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF21D3247D500A75B95 /* CLToken.swift */; };
+		2BCEBBF81D3247D500A75B95 /* CLToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF21D3247D500A75B95 /* CLToken.swift */; };
+		2BCEBBF91D3247D500A75B95 /* CLToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF21D3247D500A75B95 /* CLToken.swift */; };
+		2BCEBBFA1D3247D500A75B95 /* CLTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF31D3247D500A75B95 /* CLTokenView.swift */; };
+		2BCEBBFB1D3247D500A75B95 /* CLTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF31D3247D500A75B95 /* CLTokenView.swift */; };
+		2BCEBBFC1D3247D500A75B95 /* CLTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF31D3247D500A75B95 /* CLTokenView.swift */; };
+		2BCEBBFF1D32492B00A75B95 /* CLTokenInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBFE1D32492B00A75B95 /* CLTokenInputView.swift */; };
+		2BCEBC001D32492B00A75B95 /* CLTokenInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBFE1D32492B00A75B95 /* CLTokenInputView.swift */; };
+		2BCEBC011D32492B00A75B95 /* CLTokenInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBFE1D32492B00A75B95 /* CLTokenInputView.swift */; };
 		2BDC73F51CB7E31700C77218 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC73F41CB7E31700C77218 /* ImageUtil.swift */; };
 		2BDC73F61CB7E31700C77218 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC73F41CB7E31700C77218 /* ImageUtil.swift */; };
 		2BDC73F71CB7E31700C77218 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC73F41CB7E31700C77218 /* ImageUtil.swift */; };
@@ -121,10 +121,6 @@
 /* Begin PBXFileReference section */
 		19BC61A4318FBC85003149B5 /* Pods-fignestUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fignestUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fignestUITests/Pods-fignestUITests.release.xcconfig"; sourceTree = "<group>"; };
 		288F4D3554E27184EE5C7A62 /* Pods-fignestUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fignestUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-fignestUITests/Pods-fignestUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		2B3695CC1D0B3D7400304A9B /* CLBackspaceDetectingTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLBackspaceDetectingTextField.swift; sourceTree = "<group>"; };
-		2B3695CD1D0B3D7400304A9B /* CLToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLToken.swift; sourceTree = "<group>"; };
-		2B3695CE1D0B3D7400304A9B /* CLTokenInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLTokenInputView.swift; sourceTree = "<group>"; };
-		2B3695CF1D0B3D7400304A9B /* CLTokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLTokenView.swift; sourceTree = "<group>"; };
 		2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserImageCell.swift; sourceTree = "<group>"; };
 		2B3EA2E61C95DBD400079C1A /* PreWaitingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreWaitingViewController.swift; sourceTree = "<group>"; };
 		2B3EA2EA1C95DD2800079C1A /* PreWaitingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreWaitingCell.swift; sourceTree = "<group>"; };
@@ -158,6 +154,10 @@
 		2BAAE8541C8AA7100004D067 /* EventsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsTableViewCell.swift; sourceTree = "<group>"; };
 		2BAAE8581C8B9FE50004D067 /* NewEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewEventViewController.swift; sourceTree = "<group>"; };
 		2BBE48B01CCB203800618B5C /* NavigationUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationUtil.swift; sourceTree = "<group>"; };
+		2BCEBBF11D3247D500A75B95 /* CLBackspaceDetectingTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLBackspaceDetectingTextField.swift; sourceTree = "<group>"; };
+		2BCEBBF21D3247D500A75B95 /* CLToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLToken.swift; sourceTree = "<group>"; };
+		2BCEBBF31D3247D500A75B95 /* CLTokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLTokenView.swift; sourceTree = "<group>"; };
+		2BCEBBFE1D32492B00A75B95 /* CLTokenInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLTokenInputView.swift; sourceTree = "<group>"; };
 		2BDC73F41CB7E31700C77218 /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
 		2BF4EDBD1CC41B6900CECDD3 /* PerformanceUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceUtil.swift; sourceTree = "<group>"; };
 		44F06D32490BEA1BDEE58698 /* Pods-fignest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fignest.release.xcconfig"; path = "Pods/Target Support Files/Pods-fignest/Pods-fignest.release.xcconfig"; sourceTree = "<group>"; };
@@ -234,17 +234,6 @@
 			path = "Custom Cells";
 			sourceTree = "<group>";
 		};
-		2B3EA3951C9F687400079C1A /* Autocomplete Files */ = {
-			isa = PBXGroup;
-			children = (
-				2B3695CC1D0B3D7400304A9B /* CLBackspaceDetectingTextField.swift */,
-				2B3695CD1D0B3D7400304A9B /* CLToken.swift */,
-				2B3695CE1D0B3D7400304A9B /* CLTokenInputView.swift */,
-				2B3695CF1D0B3D7400304A9B /* CLTokenView.swift */,
-			);
-			path = "Autocomplete Files";
-			sourceTree = "<group>";
-		};
 		2B5E0F921CBDD5B100F65BA9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,10 +275,10 @@
 		2BAAE81A1C8A9CAE0004D067 /* fignest */ = {
 			isa = PBXGroup;
 			children = (
+				2BCEBBFD1D3247E700A75B95 /* CLTokenInputView */,
 				2B8404421CD2E284005A5498 /* Enums */,
 				2B0CDB751CBF1A57006C24EE /* Utils */,
 				2B5E0F921CBDD5B100F65BA9 /* Extensions */,
-				2B3EA3951C9F687400079C1A /* Autocomplete Files */,
 				2B3EA2D41C94BDD900079C1A /* Custom Cells */,
 				2B3EA2D31C94BD9000079C1A /* View Controllers */,
 				2B3EA3441C95F07400079C1A /* SocketIOManager.swift */,
@@ -322,6 +311,17 @@
 				2BAAE8401C8A9CAE0004D067 /* Info.plist */,
 			);
 			path = fignestUITests;
+			sourceTree = "<group>";
+		};
+		2BCEBBFD1D3247E700A75B95 /* CLTokenInputView */ = {
+			isa = PBXGroup;
+			children = (
+				2BCEBBFE1D32492B00A75B95 /* CLTokenInputView.swift */,
+				2BCEBBF31D3247D500A75B95 /* CLTokenView.swift */,
+				2BCEBBF11D3247D500A75B95 /* CLBackspaceDetectingTextField.swift */,
+				2BCEBBF21D3247D500A75B95 /* CLToken.swift */,
+			);
+			path = CLTokenInputView;
 			sourceTree = "<group>";
 		};
 		8140666AAF70E8EA850C604E /* Frameworks */ = {
@@ -618,25 +618,25 @@
 				2B3EA3511C9DF7C000079C1A /* PostWaitingViewController.swift in Sources */,
 				2B4F02791CA4DD1700ACE165 /* ResultsViewController.swift in Sources */,
 				2B4512CD1C8FB02200F14099 /* GameViewController.swift in Sources */,
+				2BCEBBFF1D32492B00A75B95 /* CLTokenInputView.swift in Sources */,
 				2B3EA3551C9DF91700079C1A /* PostWaitingCell.swift in Sources */,
-				2B3695D01D0B3D7400304A9B /* CLBackspaceDetectingTextField.swift in Sources */,
 				2B3EA2E71C95DBD400079C1A /* PreWaitingViewController.swift in Sources */,
+				2BCEBBF41D3247D500A75B95 /* CLBackspaceDetectingTextField.swift in Sources */,
 				2BDC73F51CB7E31700C77218 /* ImageUtil.swift in Sources */,
 				2B3EA3451C95F07400079C1A /* SocketIOManager.swift in Sources */,
 				2B3EA2D71C94D1C500079C1A /* UserImageCell.swift in Sources */,
-				2B3695D61D0B3D7400304A9B /* CLTokenInputView.swift in Sources */,
 				2BAAE8511C8AA5810004D067 /* EventsTableViewController.swift in Sources */,
 				2B3EA3491C9DE09900079C1A /* APIRequestHandler.swift in Sources */,
 				2B3EA2EB1C95DD2800079C1A /* PreWaitingCell.swift in Sources */,
 				2BBE48B11CCB203800618B5C /* NavigationUtil.swift in Sources */,
-				2B3695D31D0B3D7400304A9B /* CLToken.swift in Sources */,
 				2B40B2AB1CB9B252009EBD54 /* CollectionExtension.swift in Sources */,
-				2B3695D91D0B3D7400304A9B /* CLTokenView.swift in Sources */,
 				2BAAE84D1C8A9D8A0004D067 /* LoginViewController.swift in Sources */,
 				2BAAE8241C8A9CAE0004D067 /* fignest.xcdatamodeld in Sources */,
 				2B8BA95B1CA2495A003C1250 /* Event.swift in Sources */,
 				2BAAE81C1C8A9CAE0004D067 /* AppDelegate.swift in Sources */,
+				2BCEBBFA1D3247D500A75B95 /* CLTokenView.swift in Sources */,
 				2BAAE8591C8B9FE50004D067 /* NewEventViewController.swift in Sources */,
+				2BCEBBF71D3247D500A75B95 /* CLToken.swift in Sources */,
 				2B4512D11C8FEF3000F14099 /* FoodCell.swift in Sources */,
 				2B591AB51CAF6A0300F307D3 /* StyleManager.swift in Sources */,
 				2BAAE8551C8AA7100004D067 /* EventsTableViewCell.swift in Sources */,
@@ -653,12 +653,12 @@
 				2B4F027A1CA4DD1700ACE165 /* ResultsViewController.swift in Sources */,
 				2BAAE84E1C8A9D8A0004D067 /* LoginViewController.swift in Sources */,
 				2B3EA2E81C95DBD400079C1A /* PreWaitingViewController.swift in Sources */,
-				2B3695D11D0B3D7400304A9B /* CLBackspaceDetectingTextField.swift in Sources */,
+				2BCEBC001D32492B00A75B95 /* CLTokenInputView.swift in Sources */,
 				2B3EA3461C95F07400079C1A /* SocketIOManager.swift in Sources */,
 				2BAAE85A1C8B9FE50004D067 /* NewEventViewController.swift in Sources */,
+				2BCEBBF51D3247D500A75B95 /* CLBackspaceDetectingTextField.swift in Sources */,
 				2BAAE8561C8AA7100004D067 /* EventsTableViewCell.swift in Sources */,
 				2B4512CE1C8FB02200F14099 /* GameViewController.swift in Sources */,
-				2B3695D71D0B3D7400304A9B /* CLTokenInputView.swift in Sources */,
 				2B4512F61C92564700F14099 /* PlayerProgressCell.swift in Sources */,
 				2BF4EDC21CC4322900CECDD3 /* AppDelegate.swift in Sources */,
 				2B3EA34A1C9DE09900079C1A /* APIRequestHandler.swift in Sources */,
@@ -666,12 +666,12 @@
 				2BBE48B21CCB203800618B5C /* NavigationUtil.swift in Sources */,
 				2B3EA3521C9DF7C000079C1A /* PostWaitingViewController.swift in Sources */,
 				2B3EA2D81C94D1C500079C1A /* UserImageCell.swift in Sources */,
-				2B3695D41D0B3D7400304A9B /* CLToken.swift in Sources */,
-				2B3695DA1D0B3D7400304A9B /* CLTokenView.swift in Sources */,
 				2B40B2AC1CB9B252009EBD54 /* CollectionExtension.swift in Sources */,
 				2B4512D21C8FEF3000F14099 /* FoodCell.swift in Sources */,
 				2BAAE8341C8A9CAE0004D067 /* fignestTests.swift in Sources */,
+				2BCEBBFB1D3247D500A75B95 /* CLTokenView.swift in Sources */,
 				2BDC73F61CB7E31700C77218 /* ImageUtil.swift in Sources */,
+				2BCEBBF81D3247D500A75B95 /* CLToken.swift in Sources */,
 				2B3EA3561C9DF91700079C1A /* PostWaitingCell.swift in Sources */,
 				2B3EA2EC1C95DD2800079C1A /* PreWaitingCell.swift in Sources */,
 				2B591AB61CAF6A0300F307D3 /* StyleManager.swift in Sources */,
@@ -688,12 +688,12 @@
 				2B4F027B1CA4DD1700ACE165 /* ResultsViewController.swift in Sources */,
 				2BAAE84F1C8A9D8A0004D067 /* LoginViewController.swift in Sources */,
 				2B3EA2E91C95DBD400079C1A /* PreWaitingViewController.swift in Sources */,
-				2B3695D21D0B3D7400304A9B /* CLBackspaceDetectingTextField.swift in Sources */,
+				2BCEBC011D32492B00A75B95 /* CLTokenInputView.swift in Sources */,
 				2B3EA3471C95F07400079C1A /* SocketIOManager.swift in Sources */,
 				2BAAE85B1C8B9FE50004D067 /* NewEventViewController.swift in Sources */,
+				2BCEBBF61D3247D500A75B95 /* CLBackspaceDetectingTextField.swift in Sources */,
 				2BAAE8571C8AA7100004D067 /* EventsTableViewCell.swift in Sources */,
 				2B4512CF1C8FB02200F14099 /* GameViewController.swift in Sources */,
-				2B3695D81D0B3D7400304A9B /* CLTokenInputView.swift in Sources */,
 				2B4512F71C92564700F14099 /* PlayerProgressCell.swift in Sources */,
 				2BF4EDC31CC4322A00CECDD3 /* AppDelegate.swift in Sources */,
 				2B3EA34B1C9DE09900079C1A /* APIRequestHandler.swift in Sources */,
@@ -701,12 +701,12 @@
 				2BBE48B31CCB203800618B5C /* NavigationUtil.swift in Sources */,
 				2B3EA3531C9DF7C000079C1A /* PostWaitingViewController.swift in Sources */,
 				2B3EA2D91C94D1C500079C1A /* UserImageCell.swift in Sources */,
-				2B3695D51D0B3D7400304A9B /* CLToken.swift in Sources */,
-				2B3695DB1D0B3D7400304A9B /* CLTokenView.swift in Sources */,
 				2B40B2AD1CB9B252009EBD54 /* CollectionExtension.swift in Sources */,
 				2B4512D31C8FEF3000F14099 /* FoodCell.swift in Sources */,
 				2BAAE83F1C8A9CAE0004D067 /* fignestUITests.swift in Sources */,
+				2BCEBBFC1D3247D500A75B95 /* CLTokenView.swift in Sources */,
 				2BDC73F71CB7E31700C77218 /* ImageUtil.swift in Sources */,
+				2BCEBBF91D3247D500A75B95 /* CLToken.swift in Sources */,
 				2B3EA3571C9DF91700079C1A /* PostWaitingCell.swift in Sources */,
 				2B3EA2ED1C95DD2800079C1A /* PreWaitingCell.swift in Sources */,
 				2B591AB71CAF6A0300F307D3 /* StyleManager.swift in Sources */,

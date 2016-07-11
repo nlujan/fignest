@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import SocketIOClientSwift
 
 class SocketIOManager: NSObject {
     
     static let sharedInstance = SocketIOManager()
     
-    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://192.168.7.29:3010")!)
+    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://192.168.1.2:3010")!)
 
     override private init() {
         super.init()

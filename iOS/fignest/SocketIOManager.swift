@@ -44,13 +44,11 @@ class SocketIOManager: NSObject {
         
     }
     
-    
     func setupProgressListener(completionHandler: (progressData: [AnyObject]) -> Void) {
         socket.on("progress") { (data, ack) -> Void in
             completionHandler(progressData: data)
         }
     }
-    
     
     func sendProgress(userId: String, eventId: String, level: Float) {
         
@@ -66,34 +64,5 @@ class SocketIOManager: NSObject {
         socket.emit("done", ["userId": userId, "eventId": eventId])
         
     }
-    
-//    func adduserToEvent(nickname: String, figName: String, completionHandler: (userList: [[String: AnyObject]]!) -> Void) {
-//        socket.emit("adduserToFig", nickname, figName)
-//        
-//        socket.on("userStatus") { ( dataArray, ack) -> Void in
-//            completionHandler(userList: dataArray[0] as! [[String: AnyObject]])
-//        }
-//    }
-//    
-//    
-//    func sendProgressUpdate(progress: Float, completionHandler: (progress: Float) -> Void) {
-//        socket.emit("progressMade", progress)
-//        
-//        socket.on("updateProgress") { ( dataArray, ack) -> Void in
-//            completionHandler(progress: dataArray[0] as! Float)
-//        }
-//    }
-}
 
-//socket.on('progress', (data) => {
-//    var userId = data.userId;
-//    var eventId = data.eventId;
-//    var level = data.level;
-//    var user = _.find(rooms[eventId], (user) => user._id.toString() === userId);
-//    
-//    // Broadcast to room (except client)
-//    socket.broadcast.to(eventId).emit('progress', {
-//        user: user,
-//        level: level
-//    });
-//    });
+}

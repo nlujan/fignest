@@ -19,7 +19,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     var selectedEventData: Event!
     var userIDMapping: NSDictionary = [:]
     
-    @IBOutlet var figTableView: UITableView!
+    @IBOutlet var eventsTableView: UITableView!
     @IBOutlet var activityView: UIView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
@@ -65,7 +65,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
                 self.activityIndicator.hidden = true
                 self.activityView.hidden = true
                 
-                self.figTableView.reloadData()
+                self.eventsTableView.reloadData()
             })
         })
     }
@@ -81,7 +81,13 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         })
     }
 
-    // MARK: - figTable DataSource
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        
+        print("refreshing happened!")
+        refreshControl.endRefreshing()
+    }
+
+    // MARK: - eventsTable DataSource
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -94,8 +100,6 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! EventsTableViewCell
-
-        // Configure the cell...
         
         cell.figLabel.text = events[indexPath.row].name
         cell.searchLabel.text = events[indexPath.row].searchText
@@ -111,7 +115,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         return cell
     }
     
-    // MARK: - figTable Delegate
+    // MARK: - eventsTable Delegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
@@ -201,6 +205,9 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         let userID = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
         
         getUserInvitations(userID)
+        
+        self.refreshControl?.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+
 
     }
     

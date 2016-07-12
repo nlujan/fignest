@@ -66,7 +66,7 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
                 userIDList.append(nameDict[name]!)
             }
             
-            createNewFig(titleTextField.text!, address: locationTextField.text!, users: userIDList, search: foodTypeTextField.text!)
+            createNewEvent(titleTextField.text!, address: locationTextField.text!, users: userIDList, search: foodTypeTextField.text!)
             
         }
         
@@ -85,14 +85,13 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
     
     //MARK: API Functions
     
-    private func createNewFig(title: String, address: String, users: [String], search: String) {
-        APIRequestHandler().createNewFig(title, address: address, users: users, search: search, callback: { ( dataDict: NSDictionary) -> Void in
+    private func createNewEvent(title: String, address: String, users: [String], search: String) {
+        APIRequestHandler().createNewEvent(title, address: address, users: users, search: search, callback: { ( dataDict: NSDictionary) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
                 self.eventData = Event(data: dataDict)
                 
                 self.performSegueWithIdentifier("showPreWaiting", sender: nil)
-                
             })
         })
     }

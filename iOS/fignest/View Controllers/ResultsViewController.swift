@@ -48,7 +48,7 @@ class ResultsViewController: UIViewController {
     //MARK: Generic functions
     
     private func getFinalResult()  {
-        APIRequestHandler().getSolution(eventData.id, callback: { ( dataDict: NSDictionary) -> Void in
+        APIRequestHandler().getEventSolution(eventData.id, callback: { ( dataDict: NSDictionary) -> Void in
             
             dispatch_async(dispatch_get_main_queue(), {
                 

@@ -10,7 +10,7 @@ import UIKit
 
 struct APIRequestHandler {
     
-    private let apiURL: String = "https://eb8c1ae0.ngrok.io"
+    private let apiURL: String = "https://d747cc20.ngrok.io"
     
     
     /**
@@ -167,7 +167,7 @@ struct APIRequestHandler {
         
     }
     
-    func createNewFig(name: String, address: String, users: [String], search: String, callback: (dataDict: NSDictionary) -> Void) {
+    func createNewEvent(name: String, address: String, users: [String], search: String, callback: (dataDict: NSDictionary) -> Void) {
         
         let jsonObject: [String: AnyObject] = [
             "name": name,
@@ -196,7 +196,7 @@ struct APIRequestHandler {
         })
     }
     
-    func getFigEventPlaces(eventID: String, callback: (dataArray: NSArray) -> Void) {
+    func getEventPlaces(eventID: String, callback: (dataArray: NSArray) -> Void) {
         
         get("\(apiURL)/events/\(eventID)/places", successHandler: {
         (response) in
@@ -217,7 +217,7 @@ struct APIRequestHandler {
     
     
     
-    func getSolution(eventID: String, callback: (dataDict: NSDictionary) -> Void) {
+    func getEventSolution(eventID: String, callback: (dataDict: NSDictionary) -> Void) {
     
         get("\(apiURL)/events/\(eventID)/solution", successHandler: {
         (response) in
@@ -235,7 +235,7 @@ struct APIRequestHandler {
         
     }
     
-    func postAction(userID: String, eventID: String, selections: [NSDictionary],  callback: (jsonDict: NSDictionary) -> Void) {
+    func postEventAction(userID: String, eventID: String, selections: [NSDictionary],  callback: (jsonDict: NSDictionary) -> Void) {
         
         let jsonObject: [String: AnyObject] = [
             "user": userID,

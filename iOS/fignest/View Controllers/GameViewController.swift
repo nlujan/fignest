@@ -35,7 +35,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     //MARK: API Functions
     
     func getPlacesImages(eventID: String) {
-        APIRequestHandler().getFigEventPlaces(eventID, callback: { ( dataArray: NSArray) -> Void in
+        APIRequestHandler().getEventPlaces(eventID, callback: { ( dataArray: NSArray) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
                 self.numPlaces = dataArray.count
@@ -54,7 +54,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     }
     
     func postAction(userID: String, eventID: String, selections: [NSDictionary]) {
-        APIRequestHandler().postAction(userID, eventID: eventID, selections: selections, callback: { ( dataDict: NSDictionary) -> Void in
+        APIRequestHandler().postEventAction(userID, eventID: eventID, selections: selections, callback: { ( dataDict: NSDictionary) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 //print(dataDict)
                 //print("Action Posted!")

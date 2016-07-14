@@ -8,6 +8,7 @@
 
 import UIKit
 import SocketIOClientSwift
+import SwiftyJSON
 
 class SocketIOManager: NSObject {
     
@@ -30,39 +31,36 @@ class SocketIOManager: NSObject {
     }
     
     
-    func joinRoom(userId: String, eventId: String, completionHandler: (userList: [[String: AnyObject]]) -> Void) {
+    func joinRoom(userId: String, eventId: String, completionHandler: (userList: JSON) -> Void) {
         
-        socket.on("status") { (dataArray, ack) -> Void in
-            completionHandler(userList: dataArray[0] as! [[String : AnyObject]])
+        socket.on("status") { (jsonArray, ack) -> Void in
+            completionHandler(userList: JSON(jsonArray[0]))
         }
         
-        socket.on("start") { (dataArray, ack) -> Void in
-            completionHandler(userList: [[:]])
+        socket.on("start") { (jsonArray, ack) -> Void in
+            completionHandler(userList: [])
         }
         
         socket.emit("join", ["userId": userId, "eventId": eventId])
-        
     }
     
-    func setupProgressListener(completionHandler: (progressData: [AnyObject]) -> Void) {
+    func setupProgressListener(completionHandler: (progressData: JSON) -> Void) {
         socket.on("progress") { (data, ack) -> Void in
-            completionHandler(progressData: data)
+            completionHandler(progressData: JSON(data))
         }
     }
     
     func sendProgress(userId: String, eventId: String, level: Float) {
-        
         socket.emit("progress", ["userId": userId, "eventId": eventId, "level": level])
     }
     
-    func gameDone(userId: String, eventId: String, completionHandler: (userList: [[String: AnyObject]]) -> Void) {
+    func gameDone(userId: String, eventId: String, completionHandler: (userList: JSON) -> Void) {
         
-        socket.on("status") { (dataArray, ack) -> Void in
-            completionHandler(userList: dataArray[0] as! [[String : AnyObject]])
+        socket.on("status") { (jsonArray, ack) -> Void in
+            completionHandler(userList: JSON(jsonArray[0]))
         }
         
         socket.emit("done", ["userId": userId, "eventId": eventId])
-        
     }
 
 }

@@ -77,7 +77,6 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
             
                 self.events = dataArray.map({key,subJson in Event(data: subJson)})
                 self.getUserPics()
-                
             })
         })
     }
@@ -127,7 +126,6 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
         
         let border = CALayer()
         let width = CGFloat(0.5)
@@ -179,12 +177,9 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         if (indexPath.row == 3 && numUsers > 4){
             cell.imageLabel.text = "+\(numUsers - 3)"
             cell.imageOverlay.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-            
         }
         
         return cell
-        
-        
     }
     
      //MARK: picCollectionView Delegate
@@ -205,8 +200,6 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         getUserInvitations(userID)
         
         self.refreshControl?.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
-
-
     }
     
     override func didReceiveMemoryWarning() {

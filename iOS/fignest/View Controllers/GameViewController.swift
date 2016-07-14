@@ -65,11 +65,11 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     //MARK: Additional Functions
     
     func setupProgressListener() {
-        SocketIOManager.sharedInstance.setupProgressListener({ (progressData: [AnyObject]) -> Void in
+        SocketIOManager.sharedInstance.setupProgressListener({ (progressData: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
-                let fbID = progressData[0]["user"]!!["facebook"]!!["id"] as! String
-                let progress = progressData[0]["level"] as! Float
+                let fbID = progressData[0]["user"]["facebook"]["id"].stringValue
+                let progress = progressData[0]["level"].floatValue 
                 
                 print("level: \(progress)")
                 print("fbID: \(fbID)")
@@ -80,9 +80,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
                     self.userTableData[1] = ["id":fbID, "progress": progress]
                 }
                 
-                
                 self.playerProgressTable.reloadData()
-                
             })
         })
     }
@@ -94,6 +92,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     func getFoodImages(places: JSON) -> [String] {
         
         var tempPlaceArray: [[String]] = []
+        print(places)
         for (_,place):(String, JSON) in places {
             for i in 0 ..< 6 {
                 tempPlaceArray.append([place["images"].arrayValue[i].stringValue, place["_id"].stringValue])

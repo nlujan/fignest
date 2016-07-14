@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 struct APIRequestHandler {
     
@@ -24,22 +25,23 @@ struct APIRequestHandler {
      - Throws: error lists
      */
     
-    func getAllUsers(callback: (dataArray: NSArray) -> Void) {
+    func getAllUsers(callback: (jsonArray: JSON) -> Void) {
         
         Alamofire.request(.GET, "\(apiURL)/users")
             .validate()
             .responseJSON { response in
                 switch response.result {
-                case .Success(let JSON):
+                case .Success(let data):
                     //print("JSON: \(JSON)")
-                    callback(dataArray: JSON as! NSArray)
+                    let json = JSON(data)
+                    callback(jsonArray: json)
                 case .Failure(let error):
                     print("Request failed with error: \(error)")
                 }
         }
     }
     
-    func addUserToDatabase(name: String, fbID: String, email: String,  callback: (dataDict: NSDictionary) -> Void) {
+    func addUser(name: String, fbID: String, email: String,  callback: (jsonDict: JSON) -> Void) {
         
         let parameters = [
             "facebook": [
@@ -53,46 +55,49 @@ struct APIRequestHandler {
             .validate()
             .responseJSON { response in
                 switch response.result {
-                case .Success(let JSON):
+                case .Success(let data):
                     //print("JSON: \(JSON)")
-                    callback(dataDict: JSON as! NSDictionary)
+                    let json = JSON(data)
+                    callback(jsonDict: json)
                 case .Failure(let error):
                     print("Request failed with error: \(error)")
                 }
         }
     }
     
-    func getUserInvitations(userID: String,  callback: (dataArray: NSArray) -> Void) {
+    func getUserInvitations(userID: String,  callback: (jsonArray: JSON) -> Void) {
         
         Alamofire.request(.GET, "\(apiURL)/users/\(userID)/invitations")
             .validate()
             .responseJSON { response in
             switch response.result {
-                case .Success(let JSON):
+                case .Success(let data):
                     //print("JSON: \(JSON)")
-                    callback(dataArray: JSON as! NSArray)
+                    let json = JSON(data)
+                    callback(jsonArray: json)
                 case .Failure(let error):
                     print("Request failed with error: \(error)")
             }
         }
     }
     
-    func getEvent(eventID: String, callback: (dataDict: NSDictionary) -> Void) {
+    func getEvent(eventID: String, callback: (jsonDict: JSON) -> Void) {
         
         Alamofire.request(.GET, "\(apiURL)/events/\(eventID)/")
             .validate()
             .responseJSON { response in
                 switch response.result {
-                case .Success(let JSON):
+                case .Success(let data):
                     //print("JSON: \(JSON)")
-                    callback(dataDict: JSON as! NSDictionary)
+                    let json = JSON(data)
+                    callback(jsonDict: json)
                 case .Failure(let error):
                     print("Request failed with error: \(error)")
                 }
         }
     }
     
-    func createNewEvent(name: String, address: String, users: [String], search: String, callback: (dataDict: NSDictionary) -> Void) {
+    func createEvent(name: String, address: String, users: [String], search: String, callback: (jsonDict: JSON) -> Void) {
         
         let parameters: [String : AnyObject] = [
             "name": name,
@@ -108,39 +113,42 @@ struct APIRequestHandler {
             .validate()
             .responseJSON { response in
                 switch response.result {
-                case .Success(let JSON):
+                case .Success(let data):
                     //print("JSON: \(JSON)")
-                    callback(dataDict: JSON as! NSDictionary)
+                    let json = JSON(data)
+                    callback(jsonDict: json)
                 case .Failure(let error):
                     print("Request failed with error: \(error)")
                 }
         }
     }
     
-    func getEventPlaces(eventID: String, callback: (dataArray: NSArray) -> Void) {
+    func getEventPlaces(eventID: String, callback: (jsonArray: JSON) -> Void) {
         
         Alamofire.request(.GET, "\(apiURL)/events/\(eventID)/places")
             .validate()
             .responseJSON { response in
                 switch response.result {
-                case .Success(let JSON):
+                case .Success(let data):
                     //print("JSON: \(JSON)")
-                    callback(dataArray: JSON as! NSArray)
+                    let json = JSON(data)
+                    callback(jsonArray: json)
                 case .Failure(let error):
                     print("Request failed with error: \(error)")
                 }
         }
     }
     
-    func getEventSolution(eventID: String, callback: (dataDict: NSDictionary) -> Void) {
+    func getEventSolution(eventID: String, callback: (jsonDict: JSON) -> Void) {
         
         Alamofire.request(.GET, "\(apiURL)/events/\(eventID)/solution")
             .validate()
             .responseJSON { response in
                 switch response.result {
-                case .Success(let JSON):
+                case .Success(let data):
                     //print("JSON: \(JSON)")
-                    callback(dataDict: JSON as! NSDictionary)
+                    let json = JSON(data)
+                    callback(jsonDict: json)
                 case .Failure(let error):
                     print("Request failed with error: \(error)")
                 }
@@ -168,15 +176,17 @@ struct APIRequestHandler {
         }
     }
     
-    func getUsersMapById(callback: (jsonDict: NSDictionary) -> Void) {
+    func getUsersMapById(callback: (jsonDict: JSON) -> Void) {
         
         Alamofire.request(.GET, "\(apiURL)/usersMapById")
             .validate()
             .responseJSON { response in
                 switch response.result {
-                case .Success(let JSON):
+                case .Success(let value):
                     //print("JSON: \(JSON)")
-                    callback(jsonDict: JSON as! NSDictionary)
+                    let json = JSON(value)
+                    callback(jsonDict: json)
+                    //callback(jsonDict: JSON as! NSDictionary)
                 case .Failure(let error):
                     print("Request failed with error: \(error)")
                 }

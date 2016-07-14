@@ -9,6 +9,7 @@
 import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
+import SwiftyJSON
 
 class EventsTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -17,7 +18,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     
     var events: [Event] = []
     var selectedEventData: Event!
-    var userIDMapping: NSDictionary = [:]
+    var userIDMapping: JSON = []
     
     @IBOutlet var eventsTableView: UITableView!
     @IBOutlet var activityView: UIView!
@@ -57,7 +58,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     //MARK: Functions
     
     private func getUserPics() {
-        APIRequestHandler().getUsersMapById({ ( dataDict: NSDictionary) -> Void in
+        APIRequestHandler().getUsersMapById({ ( dataDict: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 self.userIDMapping = dataDict
                 
@@ -71,10 +72,10 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     }
     
     private func getUserInvitations(userID: String) {
-        APIRequestHandler().getUserInvitations(userID, callback: { ( dataArray: NSArray) -> Void in
+        APIRequestHandler().getUserInvitations(userID, callback: { ( dataArray: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
             
-                self.events = dataArray.map({data in Event(data: data as! NSDictionary)})
+                self.events = dataArray.map({key,subJson in Event(data: subJson)})
                 self.getUserPics()
                 
             })
@@ -169,14 +170,11 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         let numUsers = events[collectionIndex].users.count
         
         let cell: UserImageCell = collectionView.dequeueReusableCellWithReuseIdentifier("UserImageCell", forIndexPath: indexPath) as! UserImageCell
-        let userId = events[collectionIndex].users[indexPath.row]
+        let userId = events[collectionIndex].users[indexPath.row].stringValue
         
-
-        let userInfoDict = userIDMapping[userId] as! NSDictionary
-        let fbDict = userInfoDict["facebook"] as! NSDictionary
-        let userFBId = fbDict["id"] as! String
+        let fBId = userIDMapping[userId]["facebook"]["id"].stringValue
         
-        cell.userImage.image = ImageUtil().getFBImageFromID(userFBId)
+        cell.userImage.image = ImageUtil().getFBImageFromID(fBId)
         
         if (indexPath.row == 3 && numUsers > 4){
             cell.imageLabel.text = "+\(numUsers - 3)"

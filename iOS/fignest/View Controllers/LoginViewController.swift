@@ -9,6 +9,7 @@
 import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
+import SwiftyJSON
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
@@ -19,10 +20,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     // MARK: Functions
     
     func addUser(name: String, fbID: String, email: String) {
-        APIRequestHandler().addUserToDatabase(name, fbID: fbID, email: email, callback: { ( dataDict: NSDictionary) -> Void in
+        APIRequestHandler().addUser(name, fbID: fbID, email: email, callback: { ( jsonDict: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
-                let userID = dataDict["_id"] as! String
+                let userID = jsonDict["_id"].stringValue
                 print(userID)
                 
                 //save value of ID

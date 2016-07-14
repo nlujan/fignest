@@ -7,12 +7,12 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     //MARK: Properties
     
-    var testIds: [String] = ["584566895045734", "10208530090233237"]
     var colors: [UIColor] = StyleManager().progressViewColors
     
     let userId = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
@@ -35,13 +35,13 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     //MARK: API Functions
     
     func getPlacesImages(eventID: String) {
-        APIRequestHandler().getEventPlaces(eventID, callback: { ( dataArray: NSArray) -> Void in
+        APIRequestHandler().getEventPlaces(eventID, callback: { ( jsonArray: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
-                self.numPlaces = dataArray.count
+                self.numPlaces = jsonArray.count
 
                 do {
-                    let foodImageStrings = self.getFoodImages(dataArray)
+                    let foodImageStrings = self.getFoodImages(jsonArray)
                     self.foodImages = try ImageUtil().getImagesFromUrlStringArray(foodImageStrings)
                 } catch let error {
                     print(error)
@@ -71,9 +71,6 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
                 let fbID = progressData[0]["user"]!!["facebook"]!!["id"] as! String
                 let progress = progressData[0]["level"] as! Float
                 
-                
-                
-                
                 print("level: \(progress)")
                 print("fbID: \(fbID)")
                 
@@ -86,21 +83,6 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
                 
                 self.playerProgressTable.reloadData()
                 
-                
-                
-                //                [{
-                //                    level = "0.1666667";
-                //                    user =     {
-                //                        "_id" = 56f33ad84da9dbb50bae6b9d;
-                //                        displayName = "Kiera Johnson";
-                //                        facebook =         {
-                //                            email = "kiera@colorhill.com";
-                //                            id = 10208530090233237;
-                //                            name = "Kiera Johnson";
-                //                        };
-                //                        status = ready;
-                //                    };
-                //                    }]
             })
         })
     }
@@ -109,12 +91,12 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         SocketIOManager.sharedInstance.sendProgress(userId, eventId: eventId, level: level)
     }
     
-    func getFoodImages(places: NSArray) -> [String] {
+    func getFoodImages(places: JSON) -> [String] {
         
         var tempPlaceArray: [[String]] = []
-        for place in places {
+        for (_,place):(String, JSON) in places {
             for i in 0 ..< 6 {
-                tempPlaceArray.append([(place["images"] as! [String])[i], place["_id"] as! String])
+                tempPlaceArray.append([place["images"].arrayValue[i].stringValue, place["_id"].stringValue])
             }
         }
         

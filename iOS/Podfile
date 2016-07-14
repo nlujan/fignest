@@ -10,6 +10,7 @@ target 'fignest' do
   pod 'FBSDKCoreKit', '~> 4.13'
   pod 'Socket.IO-Client-Swift', '~> 6.1'
   pod 'Alamofire', '~> 3.4'
+  pod 'SwiftyJSON', '~> 2.3'
 
   target 'fignestTests' do
     inherit! :search_paths

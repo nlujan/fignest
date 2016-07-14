@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -217,10 +217,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Mih-Oq-sVH">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                     <connections>
                         <outlet property="activityIndicator" destination="Mjw-xR-3zH" id="Ti6-SA-dtP"/>
                         <outlet property="activityView" destination="DDp-kC-RyQ" id="MlU-5j-JLf"/>
-                        <outlet property="figTableView" destination="Qc0-5X-JHN" id="V5P-fU-jPB"/>
+                        <outlet property="eventsTableView" destination="Qc0-5X-JHN" id="VUJ-Rb-yVy"/>
                         <segue destination="gUA-mk-oRj" kind="show" identifier="showPreWaiting" animates="NO" id="XKK-f7-fDz"/>
                     </connections>
                 </tableViewController>
@@ -497,15 +500,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="1" sectionFooterHeight="26" translatesAutoresizingMaskIntoConstraints="NO" id="FS9-y3-Mry">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="60" sectionHeaderHeight="1" sectionFooterHeight="26" translatesAutoresizingMaskIntoConstraints="NO" id="FS9-y3-Mry">
                                 <rect key="frame" x="0.0" y="15" width="375" height="455"/>
                                 <color key="backgroundColor" red="0.38823529410000002" green="0.047058823530000002" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PreWaitingCell" id="wjV-JZ-pdU" customClass="PreWaitingCell" customModule="fignest" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="65" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="65" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wjV-JZ-pdU" id="wp8-l4-gT1">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NnP-6s-C81">
@@ -515,10 +518,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eo2-hM-P4Q">
-                                                    <rect key="frame" x="46" y="5" width="40" height="40"/>
+                                                    <rect key="frame" x="22" y="0.0" width="50" height="50"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OxS-Ir-fF5">
-                                                    <rect key="frame" x="311" y="10" width="30" height="30"/>
+                                                    <rect key="frame" x="303" y="0.0" width="50" height="50"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </view>
                                             </subviews>
@@ -558,6 +561,10 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.38823529410000002" green="0.047058823530000002" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="FS9-y3-Mry" secondAttribute="trailing" constant="-20" id="Fve-Wx-OJN"/>
+                            <constraint firstItem="FS9-y3-Mry" firstAttribute="leading" secondItem="UZl-sF-fID" secondAttribute="leadingMargin" constant="-20" id="GUi-6a-Iqt"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="JOINING " id="SMI-5k-BEm">
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="iHE-Ly-0xO">
@@ -589,23 +596,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IqF-pz-chf">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IqF-pz-chf">
                                 <rect key="frame" x="0.0" y="15" width="375" height="337"/>
                                 <color key="backgroundColor" red="0.29019607843137257" green="0.0" blue="0.011764705882352941" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostWaitingCell" id="8XS-8j-hsQ" customClass="PostWaitingCell" customModule="fignest" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="92" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8XS-8j-hsQ" id="ukj-Yi-a9l">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j7h-jb-UEW">
-                                                    <rect key="frame" x="25" y="5" width="40" height="40"/>
-                                                </imageView>
                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="u47-TG-bPK">
-                                                    <rect key="frame" x="73" y="24" width="269" height="2"/>
+                                                    <rect key="frame" x="91" y="24" width="269" height="2"/>
                                                 </progressView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j7h-jb-UEW">
+                                                    <rect key="frame" x="21" y="0.0" width="50" height="50"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.29411764705882354" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -732,6 +739,10 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.36602564102564106" green="0.0035707223265410348" blue="0.0069975306676373864" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="IqF-pz-chf" secondAttribute="trailing" constant="-20" id="1ot-Kg-t4k"/>
+                            <constraint firstItem="IqF-pz-chf" firstAttribute="leading" secondItem="BPM-OB-fjO" secondAttribute="leadingMargin" constant="-20" id="krG-L0-e3b"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Waiting" id="iQa-YL-kwf">
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="u8E-uk-BQ4">

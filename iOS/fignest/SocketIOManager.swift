@@ -8,12 +8,13 @@
 
 import UIKit
 import SocketIOClientSwift
+import SwiftyJSON
 
 class SocketIOManager: NSObject {
     
     static let sharedInstance = SocketIOManager()
     
-    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://192.168.1.2:3010")!)
+    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://192.168.1.8:3010")!)
 
     override private init() {
         super.init()
@@ -30,70 +31,36 @@ class SocketIOManager: NSObject {
     }
     
     
-    func joinRoom(userId: String, eventId: String, completionHandler: (userList: [[String: AnyObject]]) -> Void) {
+    func joinRoom(userId: String, eventId: String, completionHandler: (userList: JSON) -> Void) {
         
-        socket.on("status") { (dataArray, ack) -> Void in
-            completionHandler(userList: dataArray[0] as! [[String : AnyObject]])
+        socket.on("status") { (jsonArray, ack) -> Void in
+            completionHandler(userList: JSON(jsonArray[0]))
         }
         
-        socket.on("start") { (dataArray, ack) -> Void in
-            completionHandler(userList: [[:]])
+        socket.on("start") { (jsonArray, ack) -> Void in
+            completionHandler(userList: [])
         }
         
         socket.emit("join", ["userId": userId, "eventId": eventId])
-        
     }
     
-    
-    func setupProgressListener(completionHandler: (progressData: [AnyObject]) -> Void) {
+    func setupProgressListener(completionHandler: (progressData: JSON) -> Void) {
         socket.on("progress") { (data, ack) -> Void in
-            completionHandler(progressData: data)
+            completionHandler(progressData: JSON(data))
         }
     }
     
-    
     func sendProgress(userId: String, eventId: String, level: Float) {
-        
         socket.emit("progress", ["userId": userId, "eventId": eventId, "level": level])
     }
     
-    func gameDone(userId: String, eventId: String, completionHandler: (userList: [[String: AnyObject]]) -> Void) {
+    func gameDone(userId: String, eventId: String, completionHandler: (userList: JSON) -> Void) {
         
-        socket.on("status") { (dataArray, ack) -> Void in
-            completionHandler(userList: dataArray[0] as! [[String : AnyObject]])
+        socket.on("status") { (jsonArray, ack) -> Void in
+            completionHandler(userList: JSON(jsonArray[0]))
         }
         
         socket.emit("done", ["userId": userId, "eventId": eventId])
-        
     }
-    
-//    func adduserToEvent(nickname: String, figName: String, completionHandler: (userList: [[String: AnyObject]]!) -> Void) {
-//        socket.emit("adduserToFig", nickname, figName)
-//        
-//        socket.on("userStatus") { ( dataArray, ack) -> Void in
-//            completionHandler(userList: dataArray[0] as! [[String: AnyObject]])
-//        }
-//    }
-//    
-//    
-//    func sendProgressUpdate(progress: Float, completionHandler: (progress: Float) -> Void) {
-//        socket.emit("progressMade", progress)
-//        
-//        socket.on("updateProgress") { ( dataArray, ack) -> Void in
-//            completionHandler(progress: dataArray[0] as! Float)
-//        }
-//    }
-}
 
-//socket.on('progress', (data) => {
-//    var userId = data.userId;
-//    var eventId = data.eventId;
-//    var level = data.level;
-//    var user = _.find(rooms[eventId], (user) => user._id.toString() === userId);
-//    
-//    // Broadcast to room (except client)
-//    socket.broadcast.to(eventId).emit('progress', {
-//        user: user,
-//        level: level
-//    });
-//    });
+}

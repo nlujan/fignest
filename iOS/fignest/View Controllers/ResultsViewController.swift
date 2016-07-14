@@ -7,20 +7,21 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class ResultsViewController: UIViewController {
     
     //MARK: Properties
     
     var eventData: Event!
-    var resultData: NSDictionary!
+    var resultData: JSON = []
     @IBOutlet var resultName: UILabel!
     
     
     //MARK: Actions
     
     @IBAction func goToYelpPage(sender: AnyObject) {
-        if let url = NSURL(string: resultData["urls"]!["mobile"] as! String){
+        if let url = NSURL(string: resultData["urls"]["mobile"].stringValue){
             UIApplication.sharedApplication().openURL(url)
         }
     }
@@ -48,14 +49,14 @@ class ResultsViewController: UIViewController {
     //MARK: Generic functions
     
     private func getFinalResult()  {
-        APIRequestHandler().getSolution(eventData.id, callback: { ( dataDict: NSDictionary) -> Void in
+        APIRequestHandler().getEventSolution(eventData.id, callback: { ( jsonDict: JSON) -> Void in
             
             dispatch_async(dispatch_get_main_queue(), {
                 
-                print(dataDict)
-                self.resultData = dataDict
+                print(jsonDict)
+                self.resultData = jsonDict
                 print("We did it!!")
-                self.resultName.text = dataDict["name"] as? String
+                self.resultName.text = jsonDict["name"].stringValue
                 
             })
             

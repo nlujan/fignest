@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class PostWaitingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -48,7 +49,7 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     //MARK: Functions
     
     func gameDone(userId: String, eventId: String) {
-        SocketIOManager.sharedInstance.gameDone(userId, eventId: eventId, completionHandler: { (userList: [[String:AnyObject]]) -> Void in
+        SocketIOManager.sharedInstance.gameDone(userId, eventId: eventId, completionHandler: { (userList: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 print("User has finished game!!");
                 print(userList)

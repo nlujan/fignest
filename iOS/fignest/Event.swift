@@ -7,20 +7,21 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 struct Event {
     
     var id: String
     var name: String
-    var users: [String]
+    var users: [JSON]
     var searchText: String
     
-    init(data: NSDictionary) {
+    init(data: JSON) {
         
-        self.id = data["_id"] as! String
-        self.name = data["name"] as! String
-        self.users = data["users"] as! [String]
-        self.searchText = data["search"] as! String
+        self.id = data["_id"].stringValue
+        self.name = data["name"].stringValue
+        self.users = data["users"].arrayValue
+        self.searchText = data["search"].stringValue
     }
     
 }

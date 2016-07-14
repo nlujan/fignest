@@ -9,6 +9,7 @@
 import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
+import SwiftyJSON
 
 class EventsTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -17,9 +18,9 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     
     var events: [Event] = []
     var selectedEventData: Event!
-    var userIDMapping: NSDictionary = [:]
+    var userIDMapping: JSON = []
     
-    @IBOutlet var figTableView: UITableView!
+    @IBOutlet var eventsTableView: UITableView!
     @IBOutlet var activityView: UIView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
@@ -57,7 +58,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     //MARK: Functions
     
     private func getUserPics() {
-        APIRequestHandler().getUsersMapById({ ( dataDict: NSDictionary) -> Void in
+        APIRequestHandler().getUsersMapById({ ( dataDict: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 self.userIDMapping = dataDict
                 
@@ -65,23 +66,28 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
                 self.activityIndicator.hidden = true
                 self.activityView.hidden = true
                 
-                self.figTableView.reloadData()
+                self.eventsTableView.reloadData()
             })
         })
     }
     
     private func getUserInvitations(userID: String) {
-        APIRequestHandler().getUserInvitations(userID, callback: { ( dataArray: NSArray) -> Void in
+        APIRequestHandler().getUserInvitations(userID, callback: { ( dataArray: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
             
-                self.events = dataArray.map({data in Event(data: data as! NSDictionary)})
+                self.events = dataArray.map({key,subJson in Event(data: subJson)})
                 self.getUserPics()
-                
             })
         })
     }
 
-    // MARK: - figTable DataSource
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        
+        print("refreshing happened!")
+        refreshControl.endRefreshing()
+    }
+
+    // MARK: - eventsTable DataSource
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -94,8 +100,6 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! EventsTableViewCell
-
-        // Configure the cell...
         
         cell.figLabel.text = events[indexPath.row].name
         cell.searchLabel.text = events[indexPath.row].searchText
@@ -111,7 +115,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         return cell
     }
     
-    // MARK: - figTable Delegate
+    // MARK: - eventsTable Delegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
@@ -122,7 +126,6 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
         
         let border = CALayer()
         let width = CGFloat(0.5)
@@ -165,24 +168,18 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         let numUsers = events[collectionIndex].users.count
         
         let cell: UserImageCell = collectionView.dequeueReusableCellWithReuseIdentifier("UserImageCell", forIndexPath: indexPath) as! UserImageCell
-        let userId = events[collectionIndex].users[indexPath.row]
+        let userId = events[collectionIndex].users[indexPath.row].stringValue
         
-
-        let userInfoDict = userIDMapping[userId] as! NSDictionary
-        let fbDict = userInfoDict["facebook"] as! NSDictionary
-        let userFBId = fbDict["id"] as! String
+        let fBId = userIDMapping[userId]["facebook"]["id"].stringValue
         
-        cell.userImage.image = ImageUtil().getFBImageFromID(userFBId)
+        cell.userImage.image = ImageUtil().getFBImageFromID(fBId)
         
         if (indexPath.row == 3 && numUsers > 4){
             cell.imageLabel.text = "+\(numUsers - 3)"
             cell.imageOverlay.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-            
         }
         
         return cell
-        
-        
     }
     
      //MARK: picCollectionView Delegate
@@ -201,7 +198,8 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         let userID = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
         
         getUserInvitations(userID)
-
+        
+        self.refreshControl?.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
     }
     
     override func didReceiveMemoryWarning() {

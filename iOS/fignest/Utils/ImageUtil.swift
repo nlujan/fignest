@@ -40,7 +40,7 @@ struct ImageUtil {
     
     
     func getFBImageFromID(fbID: String) -> UIImage {
-        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(fbID)/picture?type=square&height=60&width=60")
+        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(fbID)/picture?width=1000&height=1000")
         
         if let data = NSData(contentsOfURL: facebookProfileUrl!) {
             return UIImage(data: data)!

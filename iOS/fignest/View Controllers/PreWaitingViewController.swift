@@ -7,16 +7,13 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class PreWaitingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     //MARK: Properties
     
-//    let testIds: [String] = ["584566895045734", "10208530090233237"]
-//    
-//    let users: [String] = ["Naim Lujan", "Kiera Johnson"]
-    var users = []
-    
+    var users: JSON = []
     var eventData: Event!
     
     @IBOutlet var waitingTable: UITableView!
@@ -54,10 +51,10 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     //MARK: Functions
     
     func joinRoom(userId: String, eventId: String) {
-        SocketIOManager.sharedInstance.joinRoom(userId, eventId: eventData.id, completionHandler: { (userList: [[String: AnyObject]]) -> Void in
+        SocketIOManager.sharedInstance.joinRoom(userId, eventId: eventData.id, completionHandler: { (userList: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
-                if (userList.count == 1) && (userList[0].count == 0) {
+                if userList.count == 0 {
                     print("done!")
                     
                     self.performSegueWithIdentifier("showGameView", sender: nil)
@@ -91,13 +88,13 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PreWaitingCell", forIndexPath: indexPath) as! PreWaitingCell
         
-        let userInfo = users[indexPath.row] as! [String:AnyObject]
+        let userInfo = users[indexPath.row]
         
-        cell.playerImage.image = ImageUtil().getFBImageFromID((userInfo["facebook"] as! [String:String])["id"]!)
+        cell.playerImage.image = ImageUtil().getFBImageFromID(userInfo["facebook"]["id"].stringValue)
                 
-        cell.nameLabel.text = (userInfo["displayName"] as! String)
+        cell.nameLabel.text = userInfo["displayName"].stringValue
         
-        let status = userInfo["status"] as! String
+        let status = userInfo["status"].stringValue
         
         if status == "ready" {
             cell.statusView.backgroundColor = UIColor.greenColor()

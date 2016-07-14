@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import SwiftyJSON
 
 class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTokenInputViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
@@ -66,7 +67,7 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
                 userIDList.append(nameDict[name]!)
             }
             
-            createNewFig(titleTextField.text!, address: locationTextField.text!, users: userIDList, search: foodTypeTextField.text!)
+            createEvent(titleTextField.text!, address: locationTextField.text!, users: userIDList, search: foodTypeTextField.text!)
             
         }
         
@@ -85,27 +86,26 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
     
     //MARK: API Functions
     
-    private func createNewFig(title: String, address: String, users: [String], search: String) {
-        APIRequestHandler().createNewFig(title, address: address, users: users, search: search, callback: { ( dataDict: NSDictionary) -> Void in
+    private func createEvent(title: String, address: String, users: [String], search: String) {
+        APIRequestHandler().createEvent(title, address: address, users: users, search: search, callback: { ( jsonDict: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
-                self.eventData = Event(data: dataDict)
+                self.eventData = Event(data: jsonDict)
                 
                 self.performSegueWithIdentifier("showPreWaiting", sender: nil)
-                
             })
         })
     }
     
     private func getAllUsers() {
-        APIRequestHandler().getAllUsers({ ( dataArray: NSArray) -> Void in
+        APIRequestHandler().getAllUsers({ ( jsonArray: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
-                var nameList: [String] = []
-                var nameDict: [String: String] = [:]
-                for user in dataArray {
-                    let name = user["displayName"] as! String
-                    let id = user["_id"] as! String
+                var nameList = [String]()
+                var nameDict = [String:String]()
+                for (_,user):(String, JSON) in jsonArray {
+                    let name = user["displayName"].stringValue
+                    let id = user["_id"].stringValue
                     
                     if id != self.userID {
                         nameList.append(name)

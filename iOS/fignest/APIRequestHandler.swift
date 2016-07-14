@@ -7,95 +7,13 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 struct APIRequestHandler {
     
-    private let apiURL: String = "https://eb8c1ae0.ngrok.io"
+    private let apiURL: String = "https://22efece1.ngrok.io"
     
-    
-    /**
-     GET Request
-     - returns: Bool
-     - parameter postEndpoint: endpoint for request
-     - parameter successHandler: String
-     */
-    private func get(postEndpoint : String, successHandler: (response: NSData?) -> Void) {
-        
-        // Setup the session to make REST GET call.  Notice the URL is https NOT http!!
-        let session = NSURLSession.sharedSession()
-        let url = NSURL(string: postEndpoint)!
-        
-        // Make the GET call and handle it in a completion handler
-        session.dataTaskWithURL(url, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-            // Make sure we get an OK response
-            guard let realResponse = response as? NSHTTPURLResponse where
-                realResponse.statusCode == 200 else {
-                    print("Not a 200 response")
-                    return
-            }
-            
-            //calls successHandler func
-            successHandler(response: data as NSData?)
-
-        }).resume()
-    }
-    
-    /**
-     POST Request
-     - returns: Void
-     - parameter postParams: Name of the user
-     - parameter postEndpoint: String
-     - parameter successHandler: asd
-     */
-    private func post(postParams : [String: AnyObject], postEndpoint : String, successHandler: (response: NSData?) -> Void) {
-        
-        let session = NSURLSession.sharedSession()
-        let url = NSURL(string: postEndpoint)!
-        
-        // Create the request
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(postParams, options: NSJSONWritingOptions())
-            //print(postParams)
-        } catch {
-            print("bad things happened")
-        }
-        
-        // Make the POST call and handle it in a completion handler
-        session.dataTaskWithRequest(request, completionHandler: { ( data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-            // Make sure we get an OK response
-            guard let realResponse = response as? NSHTTPURLResponse where
-                realResponse.statusCode == 200 else {
-                    print("Not a 200 response")
-                    print(error)
-                    return
-            }
-            
-            //calls successHandler func
-            successHandler(response: data as NSData?)
-            
-        }).resume()
-    }
-    
-    func getAllUsers(callback: (dataArray: NSArray) -> Void) {
-        
-        get("\(apiURL)/users", successHandler: {
-            (response) in
-            
-            do {
-                let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
-                print("Getting Users Success!")
-                
-                callback(dataArray: jsonArray)
-                
-            } catch {
-                print("getAllUsers failed!")
-            }
-            
-        })
-    }
     
     /**
      Just testing documentation using Markdown
@@ -106,9 +24,26 @@ struct APIRequestHandler {
      - parameter callback: function to be called after success
      - Throws: error lists
      */
-    func addUserToDatabase(name: String, fbID: String, email: String,  callback: (dataDict: NSDictionary) -> Void) {
+    
+    func getAllUsers(callback: (jsonArray: JSON) -> Void) {
         
-        let jsonObject: [String: AnyObject] = [
+        Alamofire.request(.GET, "\(apiURL)/users")
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .Success(let data):
+                    //print("JSON: \(JSON)")
+                    let json = JSON(data)
+                    callback(jsonArray: json)
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
+    }
+    
+    func addUser(name: String, fbID: String, email: String,  callback: (jsonDict: JSON) -> Void) {
+        
+        let parameters = [
             "facebook": [
                 "name": name,
                 "id": fbID,
@@ -116,60 +51,55 @@ struct APIRequestHandler {
             ]
         ]
         
-        post(jsonObject, postEndpoint: "\(apiURL)/users", successHandler: {
-            (response) in
-            
-            do {
-                let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                print("addUserToDatabase Success!")
-                
-                callback(dataDict: jsonDictionary)
-                
-            } catch {
-                print("addUserToDatabase failed!")
-            }
-        })
+        Alamofire.request(.POST,  "\(apiURL)/users", parameters: parameters, encoding: .JSON)
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .Success(let data):
+                    //print("JSON: \(JSON)")
+                    let json = JSON(data)
+                    callback(jsonDict: json)
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
     }
     
-    func getUserInvitations(userID: String,  callback: (dataArray: NSArray) -> Void) {
+    func getUserInvitations(userID: String,  callback: (jsonArray: JSON) -> Void) {
         
-        get("\(apiURL)/users/\(userID)/invitations", successHandler: {
-        (response) in
-        
-            do {
-                let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
-                print("Getting Invitations Success!")
-                
-                callback(dataArray: jsonArray)
-            
-            } catch {
-                print("Getting Invitations failed!")
+        Alamofire.request(.GET, "\(apiURL)/users/\(userID)/invitations")
+            .validate()
+            .responseJSON { response in
+            switch response.result {
+                case .Success(let data):
+                    //print("JSON: \(JSON)")
+                    let json = JSON(data)
+                    callback(jsonArray: json)
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
             }
-        
-        })
+        }
     }
     
-    func getEvent(eventID: String, callback: (dataDict: NSDictionary) -> Void) {
+    func getEvent(eventID: String, callback: (jsonDict: JSON) -> Void) {
         
-        get("\(apiURL)/events/\(eventID)/", successHandler: {
-            (response) in
-            
-            do {
-                let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                print("Getting Single Event Success!")
-                
-                callback(dataDict: jsonDict)
-                
-            } catch {
-                print("Getting Single Event failed!")
-            }
-        })
-        
+        Alamofire.request(.GET, "\(apiURL)/events/\(eventID)/")
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .Success(let data):
+                    //print("JSON: \(JSON)")
+                    let json = JSON(data)
+                    callback(jsonDict: json)
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
     }
     
-    func createNewFig(name: String, address: String, users: [String], search: String, callback: (dataDict: NSDictionary) -> Void) {
+    func createEvent(name: String, address: String, users: [String], search: String, callback: (jsonDict: JSON) -> Void) {
         
-        let jsonObject: [String: AnyObject] = [
+        let parameters: [String : AnyObject] = [
             "name": name,
             "location": [
                 "type": "address",
@@ -179,100 +109,88 @@ struct APIRequestHandler {
             "search": search
         ]
         
-        post(jsonObject, postEndpoint: "\(apiURL)/events/", successHandler: {
-            (response) in
-            
-            print("Posting Success!")
-            
-            do {
-                let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                
-                callback(dataDict: jsonDict)
-                
-            } catch {
-                print("Posting failed!")
-            }
-            
-        })
+        Alamofire.request(.POST, "\(apiURL)/events/", parameters: parameters, encoding: .JSON)
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .Success(let data):
+                    //print("JSON: \(JSON)")
+                    let json = JSON(data)
+                    callback(jsonDict: json)
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
     }
     
-    func getFigEventPlaces(eventID: String, callback: (dataArray: NSArray) -> Void) {
+    func getEventPlaces(eventID: String, callback: (jsonArray: JSON) -> Void) {
         
-        get("\(apiURL)/events/\(eventID)/places", successHandler: {
-        (response) in
-            
-            do {
-                let jsonArray = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
-                print("Getting Places Success!")
-                
-                callback(dataArray: jsonArray)
-                
-            
-            } catch {
-                print("Getting Places Failed!")
-            }
-        })
-    
+        Alamofire.request(.GET, "\(apiURL)/events/\(eventID)/places")
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .Success(let data):
+                    //print("JSON: \(JSON)")
+                    let json = JSON(data)
+                    callback(jsonArray: json)
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
     }
     
-    
-    
-    func getSolution(eventID: String, callback: (dataDict: NSDictionary) -> Void) {
-    
-        get("\(apiURL)/events/\(eventID)/solution", successHandler: {
-        (response) in
-            
-            do {
-                let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                print("Getting Final Result Success!")
-                
-                callback(dataDict: jsonDict)
-                
-            } catch {
-                print("Getting Final Result failed!")
-            }
-        })
+    func getEventSolution(eventID: String, callback: (jsonDict: JSON) -> Void) {
         
+        Alamofire.request(.GET, "\(apiURL)/events/\(eventID)/solution")
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .Success(let data):
+                    //print("JSON: \(JSON)")
+                    let json = JSON(data)
+                    callback(jsonDict: json)
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
     }
     
-    func postAction(userID: String, eventID: String, selections: [NSDictionary],  callback: (jsonDict: NSDictionary) -> Void) {
+    func postEventAction(userID: String, eventID: String, selections: [NSDictionary],  callback: (jsonDict: NSDictionary) -> Void) {
         
-        let jsonObject: [String: AnyObject] = [
+        let parameters: [String: AnyObject] = [
             "user": userID,
             "event": eventID,
             "selections": selections
         ]
         
-        post(jsonObject, postEndpoint: "\(apiURL)/events/\(eventID)/actions", successHandler: {
-            (response) in
-            
-            do {
-                let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                print("Posting Action Success!")
-                
-                callback(jsonDict: jsonDict)
-            } catch {
-                print("Posting Action failed!")
-            }
-        })
-        
+        Alamofire.request(.POST,  "\(apiURL)/events/\(eventID)/actions", parameters: parameters, encoding: .JSON)
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .Success(let JSON):
+                    //print("JSON: \(JSON)")
+                    callback(jsonDict: JSON as! NSDictionary)
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
     }
     
-    func getUsersMapById(callback: (jsonDict: NSDictionary) -> Void) {
+    func getUsersMapById(callback: (jsonDict: JSON) -> Void) {
         
-        get("\(apiURL)/usersMapById", successHandler: {
-            (response) in
-            
-            do {
-                let jsonDict = try NSJSONSerialization.JSONObjectWithData(response!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                print("Getting Users Mapping Success!")
-                
-                callback(jsonDict: jsonDict)
-                
-            } catch {
-                print("Getting Users Mapping failed!")
-            }
-        })
+        Alamofire.request(.GET, "\(apiURL)/usersMapById")
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .Success(let value):
+                    //print("JSON: \(JSON)")
+                    let json = JSON(value)
+                    callback(jsonDict: json)
+                    //callback(jsonDict: JSON as! NSDictionary)
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                }
+        }
     }
 
 }

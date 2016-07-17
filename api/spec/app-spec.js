@@ -3,6 +3,8 @@
 describe('API', () => {
   var request = require('request');
   var url = 'http://localhost:3010';
+  var Event = require('../event');
+  var Place = require('../place');
   var Mongo = require('../mongo');
   var db;
   var ObjectId = require('mongodb').ObjectID;
@@ -58,6 +60,26 @@ describe('API', () => {
 
   function _events() {
     return [_event0(), _event1()];
+  }
+
+  function _action(eventId) {
+    return {
+      user: new ObjectId(),
+      event: eventId,
+      selections: [{
+        image: 'url0',
+        place: new ObjectId(),
+        isSelected: false
+      }, {
+        image: 'url1',
+        place: new ObjectId(),
+        isSelected: true
+      }, {
+        image: 'url2',
+        place: new ObjectId(),
+        isSelected: false
+      }]
+    }
   }
 
   beforeAll((done) => {
@@ -337,27 +359,162 @@ describe('API', () => {
 
   // GET /events/:eventId/places
   // describe('GET /events/:eventId/places', () => {
-    
-  // })
+  //   beforeEach((done) => {
+  //     db.collection('events').drop(() => {
+  //       done();
+  //     });
+  //   });
+
+  //   describe('when the event does not have places yet', () => {
+  //     it('creates and returns places', (done) => {
+  //       var event = _.extend(_event0(), { limit: Event.EVENT_LIMIT_DEFAULT });
+  //       db.collection('events').insert(event, () => {
+  //         request.get(`${url}/events/${event._id}/places`, (err, res, body) => {
+  //           var response = JSON.parse(body);
+  //           expect(response.length).toBe(Event.EVENT_LIMIT_DEFAULT);
+  //           _.each(response, (r) => {
+  //             expect(r.images.length).toBe(Place.NUM_IMAGES_PER_PLACE);
+  //             expect(r.event).toBe(event._id.toString());
+  //           });
+  //           done();
+  //         });
+  //       });
+  //     });
+  //   });
+
+  //   describe('when the event already has places', () => {
+  //     it('returns the current places', (done) => {
+  //       var event = _.extend(_event0(), { limit: Event.EVENT_LIMIT_DEFAULT });
+  //       db.collection('events').insert(event, () => {
+  //         request.get(`${url}/events/${event._id}/places`, (err, res, body) => {
+  //           var response = JSON.parse(body);
+  //           var placeIds = _.map(response, '_id');
+  //           request.get(`${url}/events/${event._id}/places`, (err, res, body) => {
+  //             var placesNew = JSON.parse(body);
+  //             var placesNewIds = _.map(placesNew, '_id');
+  //             expect(_.isEqual(_.sortBy(placeIds), _.sortBy(placesNewIds))).toBeTruthy();
+  //             done();
+  //           });
+  //         });
+  //       });
+  //     });
+  //   });
+  // });
 
 
 
-  // GET /events/:eventId/places
-  // gets 5 places
-  // for each place, gets the right images
-  // 
-  // 
   // GET /events/:eventId/solution
+  describe('GET /events/:eventId/solution', () => {
+    var eventPersist;
+
+    beforeEach((done) => {
+      db.collection('events').drop(() => {
+        db.collection('actions').drop(() => {
+          done();
+        });
+      });
+    });
+
+    describe('when there are no actions', () => {
+      it('says there are no actions', (done) => {
+        var event = _event0();
+        db.collection('events').insert(event, () => {
+          request.get(`${url}/events/${event._id}/solution`, (err, res, body) => {
+            expect(body.indexOf('no actions') > -1).toBeTruthy();
+            done();
+          });
+        });
+      });
+    });
+
+    describe('when there are actions', () => {
+      beforeEach((done) => {
+        var event = _event0();
+        db.collection('events').insert(event, () => {
+          eventPersist = event;
+          var action = _action(event._id);
+          console.log(action);
+          db.collection('actions').insert(action, () => {
+            console.log(55);
+            done();
+          });
+        });
+      });
+
+      describe('when the event does not yet have a solution', () => {
+        it('returns the place with the highest selections', (done) => {
+          console.log(eventPersist);
+          request.get(`${url}/events/${eventPersist._id}/solution`, (err, res, body) => {
+            console.log(body);
+            // fix this test
+            done();
+          })
+        })
+      })
+
+
+    });
+    //   describe('when it does not have a solution')
+    //     it('returns the place with the highest selections')
+    //   describe('when it has a solution')
+    //     it('returns the current solution')
+  });
+
+
+
+  // POST /events/:eventId/actions
+  // describe('POST /events/:eventid/actions', () => {
+  //   beforeEach((done) => {
+  //     db.collection('actions').drop(() => {
+  //       db.collection('events').drop(() => {
+  //         done();
+  //       });
+  //     });
+  //   });
+
+  //   it('responds with the posted action', (done) => {
+  //     var event = _event0();
+  //     db.collection('events').insert(event, () => {
+  //       var action = _action(event._id);
+  //       request.post({
+  //         url: `${url}/events/${event._id}/actions`,
+  //         body: action,
+  //         json: true
+  //       }, (err, res, body) => {
+  //         expect(body._id).not.toBeNull();
+  //         expect(body.event).toBe(event._id.toString());
+  //         expect(body.user).not.toBeNull();
+  //         expect(body.selections.length).toBe(action.selections.length);
+  //         done();
+  //       });
+  //     });
+  //   });
+
+  //   it('adds the action to the db', (done) => {
+  //     var event = _event0();
+  //     db.collection('events').insert(event, () => {
+  //       var action = _action(event._id);
+  //       request.post({
+  //         url: `${url}/events/${event._id}/actions`,
+  //         body: action,
+  //         json: true
+  //       }, (err, res, body) => {
+  //         db.collection('actions').findOne({ _id: ObjectId(body._id) }, (err, res) => {
+  //           expect(res).not.toBeNull();
+  //           expect(res.event.toString()).toBe(event._id.toString());
+  //           done();
+  //         });
+  //       });
+  //     });
+  //   });
+  // });
+
+
+  // GET /events/:eventId/solution
+  // when it already has a solution
   // when there are no actions
   // gets the right action
   // when there's a tie?
-  // 
-  // 
-  // POST /events/:eventId/actions
-  // can send actions
-  // can receive same action
-  
-
 
 
   

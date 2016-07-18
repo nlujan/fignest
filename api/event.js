@@ -167,10 +167,8 @@ class Event {
   generateSolution() {
     var _solutionId;
     return new Promise((resolve, reject) => {
-      // console.log(33, this._id);
       Action.actionsFromEventId(this._id).then((actions) => {
         if (actions == null || actions.length === 0) {
-          console.log(`The event ${this._id} has no actions.`);
           throw 'This event has no actions.';
         }
         _solutionId = this.constructor.solutionIdFromActions(actions);

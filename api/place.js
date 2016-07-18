@@ -97,6 +97,11 @@ class Place {
         if (err) {
           console.log(`Error finding place with _id:${_id}`, err);
           reject(err);
+          return;
+        }
+        if (res == null) {
+          reject(`No place found with _id: ${_id}`);
+          return;
         }
         resolve(new this(res));
       });

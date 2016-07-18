@@ -6,7 +6,7 @@ var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
 var _ = require('underscore');
 
-const numImagesPerPlace = 6;
+const NUM_IMAGES_PER_PLACE = 6;
 
 class Place {
   constructor(params) {
@@ -43,7 +43,7 @@ class Place {
   }
 
   addImages(urls) {
-    this.images = _.sample(urls, numImagesPerPlace);
+    this.images = _.sample(urls, NUM_IMAGES_PER_PLACE);
   }
 
   save() {
@@ -68,10 +68,14 @@ class Place {
   	params.rating = data.rating;
   	params.urls = {
   		web: data.url,
-  		mobile: data.mobile_url,
-  		reservation: data.reservation_url,
-  		delivery: data.eat24_url
+  		mobile: data.mobile_url
   	};
+    if (data.reservation_url) {
+      params.urls.reservation = data.reservation_url;
+    }
+    if (data.eat24_url) {
+      params.urls.delivery = data.eat24_url;
+    }
   	params.images = data.images || [];
   	params.phone = data.phone;
   	params.location = data.location;
@@ -80,7 +84,7 @@ class Place {
 
   static fromYelpJson(data, eventId) {
     // Add eventId to data
-    data = _.extend(data, { eventId: eventId});
+    data = _.extend(data, { eventId: eventId });
 
     return this.fromJson(data);
   }
@@ -93,6 +97,11 @@ class Place {
         if (err) {
           console.log(`Error finding place with _id:${_id}`, err);
           reject(err);
+          return;
+        }
+        if (res == null) {
+          reject(`No place found with _id: ${_id}`);
+          return;
         }
         resolve(new this(res));
       });
@@ -101,4 +110,6 @@ class Place {
 
 }
 
-module.exports = Place;
+module.exports = _.extend(Place, {
+  NUM_IMAGES_PER_PLACE: NUM_IMAGES_PER_PLACE
+});

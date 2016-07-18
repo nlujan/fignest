@@ -10,17 +10,15 @@ var YelpApi = require('./yelp-api');
 var Util = require('./util');
 var _ = require('underscore');
 
-const search = {
-  category: 'food',
-  // Number of results to return from Yelp search, not to be confused with the
-  // number of places to consider as a solution.
-  limit: 20,
-  // For sort, 0 = best matched, 1 = distance, 2 = highest rated
-  sort: 2,
-  shouldIncludeActionLinks: true
-};
-const eventRadiusDefault = 3;
-const eventLimitDefault = 6;
+const SEARCH_CATEGORY = 'food';
+// Number of results to return from Yelp search, not to be confused with the
+// number of places to consider as a solution.
+const SEARCH_LIMIT = 20;
+// For sort, 0 = best matched, 1 = distance, 2 = highest rated
+const SEARCH_SORT = 2;
+const SEARCH_SHOULD_INCLUDE_ACTION_LINKS = true;
+const EVENT_RADIUS_DEFAULT = 3;
+const EVENT_LIMIT_DEFAULT = 6;
 
 class Event {
 	constructor(params) {
@@ -62,23 +60,23 @@ class Event {
   getSearchParams() {
     var result = {};
     result.term = this.search;
-    result.limit = search.limit;
-    result.sort = search.sort;
-    result.category_filter = search.category;
-    result.radius_filter = Util.milesToMeters(this.location.radius);
+    result.limit = SEARCH_LIMIT;
+    result.sort = SEARCH_SORT;
+    result.category_filter = SEARCH_CATEGORY;
+    result.radius_filter = Util.milesToMeters(this.location.radius || EVENT_RADIUS_DEFAULT);
     if (this.location.type === 'address') {
       result.location = this.location.address;
     } else if (this.location.type === 'coord') {
       result.ll = `${this.location.lat},${this.location.long}`;
     }
-    result.actionlinks = search.shouldIncludeActionLinks;
+    result.actionlinks = SEARCH_SHOULD_INCLUDE_ACTION_LINKS;
     return result;
   }
 
   getUsers() {
     return new Promise((resolve, reject) => {
       // $in query instead
-      Promise.all(this.users.map((user) => User.fromId(user))).then((users) => {
+      Promise.all(_.map(this.users, (user) => User.fromId(user))).then((users) => {
         resolve(users);
       }).catch((err) => {
         reject(err);
@@ -92,7 +90,7 @@ class Event {
         // Just get current places; no need to generate new places.
         // Use $in query instead of Promise.all, or single query of places using
         // eventId.
-        Promise.all(this.places.map((id) => {
+        Promise.all(_.map(this.places, (id) => {
           return Place.fromId(id);
         })).then((places) => {
           resolve(places);
@@ -117,13 +115,13 @@ class Event {
         // pick this.limit businesses at random
         yelpBusinesses = _.sample(yelpBusinesses, this.limit);
 
-        var places = yelpBusinesses.map((biz) => Place.fromYelpJson(biz, this._id));
-        return Promise.all(places.map((place) => place.getImages()));
+        var places = _.map(yelpBusinesses, (biz) => Place.fromYelpJson(biz, this._id));
+        return Promise.all(_.map(places, (place) => place.getImages()));
       }).then((places) => {
         // Save places
         // Hanlde in Place.getImages() instead?
         // Bulk save instead?
-        return Promise.all(places.map((place) => place.save() ));
+        return Promise.all(_.map(places, (place) => place.save() ));
       }).then((places) => {
         _places = places;
 
@@ -141,7 +139,7 @@ class Event {
   }
 
   addPlaces(places) {
-    this.places = places.map((place) => place._id);
+    this.places = _.map(places, (place) => place._id);
   }
 
   hasPlaces() {
@@ -170,6 +168,9 @@ class Event {
     var _solutionId;
     return new Promise((resolve, reject) => {
       Action.actionsFromEventId(this._id).then((actions) => {
+        if (actions == null || actions.length === 0) {
+          throw 'This event has no actions.';
+        }
         _solutionId = this.constructor.solutionIdFromActions(actions);
         this.addSolution(_solutionId);
         this.addIsOver();
@@ -228,7 +229,7 @@ class Event {
 
   static solutionIdFromActions(actions) {
     if (actions == null || actions.length === 0) {
-      console.log(`Error in solutionIdFromActions: no actions provided`);
+      console.log(`Error in Event.solutionIdFromActions: no actions provided`);
       return;
     }
     var selections = _.reduce(actions, (memo, action) => {
@@ -247,11 +248,11 @@ class Event {
     }
     params.name = data.name;
     params.location = data.location;
-    params.location.radius = data.location.radius || eventRadiusDefault;
-    params.users = data.users.map((user) => ObjectId(user));
+    params.location.radius = data.location.radius || EVENT_RADIUS_DEFAULT;
+    params.users = _.map(data.users, (user) => ObjectId(user));
     params.search = data.search || '';
     params.isOver = data.isOver == null ? false : data.isOver;
-    params.limit = data.limit || eventLimitDefault;
+    params.limit = data.limit || EVENT_LIMIT_DEFAULT;
     return new this(params);
   }
 
@@ -274,7 +275,14 @@ class Event {
   }
 }
 
-module.exports = Event;
+module.exports = _.extend(Event, {
+  EVENT_LIMIT_DEFAULT: EVENT_LIMIT_DEFAULT,
+  EVENT_RADIUS_DEFAULT: EVENT_RADIUS_DEFAULT,
+  SEARCH_CATEGORY: SEARCH_CATEGORY,
+  SEARCH_LIMIT: SEARCH_LIMIT,
+  SEARCH_SORT: SEARCH_SORT,
+  SEARCH_SHOULD_INCLUDE_ACTION_LINKS: SEARCH_SHOULD_INCLUDE_ACTION_LINKS
+});
 
 // var sampleEvent = {
 //   "name": "Sample3",

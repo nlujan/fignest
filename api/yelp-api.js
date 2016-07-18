@@ -26,7 +26,7 @@ class YelpApi {
   static getImages(id) {
     return new Promise((resolve, reject) => {
       // clean requests
-      let requestUrl = `${yelpUrl.base}/${yelpUrl.photos}/${id}${yelpUrl.food}`
+      let requestUrl = `${yelpUrl.base}/${yelpUrl.photos}/${id}${yelpUrl.food}`;
       request(requestUrl, (err, httpMsg, body) => {
         if (err) {
           console.log(`Error requesting the URL:${requestUrl}`);

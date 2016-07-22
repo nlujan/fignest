@@ -50,12 +50,11 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
             nilInputs.append("location")
         }
         
-        if (selectedNames == []) {
+        if (selectedNames.count == 0) {
             nilInputs.append("friends")
         }
         
         if (nilInputs.count > 0) {
-            
             presentErrorView(nilInputs)
             
         } else {
@@ -68,10 +67,7 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
             }
             
             createEvent(titleTextField.text!, address: locationTextField.text!, users: userIDList, search: foodTypeTextField.text!)
-            
         }
-        
-
     }
     
     @IBAction func getUserLocation(sender: AnyObject) {

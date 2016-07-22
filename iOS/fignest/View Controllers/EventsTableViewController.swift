@@ -59,7 +59,6 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     
     //MARK: Functions
     
-    
     func initTable(userID: String) {
         
         let group = dispatch_group_create()
@@ -110,14 +109,9 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         cell.figLabel.text = events[indexPath.row].name
         cell.searchLabel.text = events[indexPath.row].searchText
         cell.userCountLabel.text = "\(events[indexPath.row].users.count)"
-
-        //cell.userCountLabel.text = events[indexPath.row].users.count
         
         cell.contentView.tag = indexPath.row
         
-        
-        //cell.userImageCollectionView.reloadData()
-
         return cell
     }
     
@@ -128,7 +122,6 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         
         self.selectedEventData = events[indexPath.row]
         self.performSegueWithIdentifier("showPreWaiting", sender: nil)
-        
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -178,7 +171,6 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         
         let fBId = userIDMapping[userId]["facebook"]["id"].stringValue
         
-        //cell.userImage.image = ImageUtil().getFBImageFromID(fBId)
         cell.userImage.kf_setImageWithURL(NSURL(string: "http://graph.facebook.com/\(fBId)/picture?width=1000&height=1000")!, placeholderImage: nil)
         
         if (indexPath.row == 3 && numUsers > 4){

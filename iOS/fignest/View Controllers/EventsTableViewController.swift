@@ -19,6 +19,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     var events: [Event] = []
     var selectedEventData: Event!
     var userIDMapping: JSON = []
+    let userID = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
     
     @IBOutlet var eventsTableView: UITableView!
     @IBOutlet var activityView: UIView!
@@ -57,33 +58,37 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     
     //MARK: Functions
     
-    private func getUserPics() {
-        APIRequestHandler().getUsersMapById({ ( dataDict: JSON) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.userIDMapping = dataDict
-                
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.hidden = true
-                self.activityView.hidden = true
-                
-                self.eventsTableView.reloadData()
-            })
-        })
-    }
     
-    private func getUserInvitations(userID: String) {
-        APIRequestHandler().getUserInvitations(userID, callback: { ( dataArray: JSON) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-            
-                self.events = dataArray.map({key,subJson in Event(data: subJson)})
-                self.getUserPics()
-            })
-        })
+    func initTable(userID: String) {
+        
+        let group = dispatch_group_create()
+        
+        dispatch_group_enter(group)
+        APIRequestHandler().getUserInvitations(userID) { eventArray in
+            self.events = eventArray.map({key,subJson in Event(data: subJson)})
+            dispatch_group_leave(group)
+        }
+        
+        dispatch_group_enter(group)
+        APIRequestHandler().getUsersMapById() { userIDMappingDict in
+            self.userIDMapping = userIDMappingDict
+            dispatch_group_leave(group)
+        }
+        
+        dispatch_group_notify(group, dispatch_get_main_queue()) {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.hidden = true
+            self.activityView.hidden = true
+            self.eventsTableView.reloadData()
+        }
     }
 
     func handleRefresh(refreshControl: UIRefreshControl) {
         
         print("refreshing happened!")
+        
+        initTable(userID)
+        
         refreshControl.endRefreshing()
     }
 
@@ -91,7 +96,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if self.userIDMapping.count == 0 {
+        if self.userIDMapping.count == 0 || self.userIDMapping.count == 0 {
             return 0
         } else {
             return events.count
@@ -195,9 +200,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         
         activityIndicator.startAnimating()
         
-        let userID = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
-        
-        getUserInvitations(userID)
+        initTable(userID)
         
         self.refreshControl?.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
     }

@@ -12,18 +12,8 @@ import SwiftyJSON
 
 struct APIRequestHandler {
     
-    private let apiURL: String = "https://22efece1.ngrok.io"
+    private let apiURL: String = "https://213ffbe5.ngrok.io"
     
-    
-    /**
-     Just testing documentation using Markdown
-     - returns: Bool
-     - parameter name: Name of the user
-     - parameter fbID: String
-     - parameter email: asd
-     - parameter callback: function to be called after success
-     - Throws: error lists
-     */
     
     func getAllUsers(callback: (jsonArray: JSON) -> Void) {
         
@@ -36,7 +26,7 @@ struct APIRequestHandler {
                     let json = JSON(data)
                     callback(jsonArray: json)
                 case .Failure(let error):
-                    print("Request failed with error: \(error)")
+                    print("getAllUsers request failed with error: \(error)")
                 }
         }
     }
@@ -60,7 +50,7 @@ struct APIRequestHandler {
                     let json = JSON(data)
                     callback(jsonDict: json)
                 case .Failure(let error):
-                    print("Request failed with error: \(error)")
+                    print("addUser request failed with error: \(error)")
                 }
         }
     }
@@ -76,7 +66,7 @@ struct APIRequestHandler {
                     let json = JSON(data)
                     callback(jsonArray: json)
                 case .Failure(let error):
-                    print("Request failed with error: \(error)")
+                    print("getUserInvitations request failed with error: \(error)")
             }
         }
     }
@@ -92,7 +82,7 @@ struct APIRequestHandler {
                     let json = JSON(data)
                     callback(jsonDict: json)
                 case .Failure(let error):
-                    print("Request failed with error: \(error)")
+                    print("getEvent request failed with error: \(error)")
                 }
         }
     }
@@ -118,7 +108,7 @@ struct APIRequestHandler {
                     let json = JSON(data)
                     callback(jsonDict: json)
                 case .Failure(let error):
-                    print("Request failed with error: \(error)")
+                    print("createEvent request failed with error: \(error)")
                 }
         }
     }
@@ -134,7 +124,7 @@ struct APIRequestHandler {
                     let json = JSON(data)
                     callback(jsonArray: json)
                 case .Failure(let error):
-                    print("Request failed with error: \(error)")
+                    print("getEventPlaces request failed with error: \(error)")
                 }
         }
     }

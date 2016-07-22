@@ -10,6 +10,7 @@ import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
 import SwiftyJSON
+import Kingfisher
 
 class EventsTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -177,7 +178,8 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         
         let fBId = userIDMapping[userId]["facebook"]["id"].stringValue
         
-        cell.userImage.image = ImageUtil().getFBImageFromID(fBId)
+        //cell.userImage.image = ImageUtil().getFBImageFromID(fBId)
+        cell.userImage.kf_setImageWithURL(NSURL(string: "http://graph.facebook.com/\(fBId)/picture?width=1000&height=1000")!, placeholderImage: nil)
         
         if (indexPath.row == 3 && numUsers > 4){
             cell.imageLabel.text = "+\(numUsers - 3)"

@@ -8,7 +8,7 @@ Mongo.connect().then((err) => {
 });
 
 // Ports are as follows - localhost: 3010, heroku local: 5000, prod: fignest.herokuapp.com
-const port = process.env.PORT || 3010;
+const PORT = process.env.PORT || 3010;
 
 function run() {
 
@@ -24,8 +24,8 @@ function run() {
   var _ = require('underscore');
 
   // Start server
-  var server = app.listen(port, () => {
-    console.log(`App server started and listening on port: ${port}...`);
+  var server = app.listen(PORT, () => {
+    console.log(`App server started and listening on port: ${PORT}...`);
   });
 
 
@@ -45,9 +45,9 @@ function run() {
     // eventId0: [user0, user1, ...],
     // eventId1: ...
   };
-  const statusReady = 'ready';
-  const statusWaiting = 'waiting';
-  const statusDone = 'done';
+  const STATUS_READY = 'ready';
+  const STATUS_WAITING = 'waiting';
+  const STATUS_DONE = 'done';
   // status start progress constants
 
   io.on('connection', (socket) => {
@@ -86,10 +86,8 @@ function run() {
       var userId = data.userId;
       var eventId = data.eventId;
       var user = _.find(rooms[eventId], (user) => user._id.toString() === userId);
-      user.status = statusDone;
+      user.status = STATUS_DONE;
       io.sockets.in(eventId).emit('status', rooms[eventId]);
-      console.log(userId)
-      console.log(eventId)
 
       // Check if we should finish event
       if (shouldFinishEvent(eventId)) {
@@ -101,11 +99,11 @@ function run() {
     });
 
     function shouldStartEvent(eventId) {
-      return _.every(rooms[eventId], (user) => user.status === statusReady);
+      return _.every(rooms[eventId], (user) => user.status === STATUS_READY);
     }
 
     function shouldFinishEvent(eventId) {
-      return _.every(rooms[eventId], (user) => user.status === statusDone);
+      return _.every(rooms[eventId], (user) => user.status === STATUS_DONE);
     }
 
     function roomExists(eventId) {
@@ -121,16 +119,16 @@ function run() {
             // Map users to include status either "ready" or "waiting"
             rooms[roomId] = users.map((user) => {
               return _.extend(user, {
-                status: (user._id.toString() === userId) ? statusReady : statusWaiting
+                status: (user._id.toString() === userId) ? STATUS_READY : STATUS_WAITING
               });
             });
-            resolve();
+            return resolve();
           });
         } else { // Room already exists
           var users = rooms[roomId];
           var currentUser = _.find(users, (user) => user._id.toString() === userId );
-          currentUser.status = statusReady;
-          resolve();
+          currentUser.status = STATUS_READY;
+          return resolve();
         }
       });
     }

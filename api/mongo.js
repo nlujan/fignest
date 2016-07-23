@@ -1,11 +1,12 @@
 'use strict';
 
 var MongoClient = require('mongodb').MongoClient;
+var _ = require('underscore');
 // var ObjectId = require('mongodb').ObjectID;
-const mongoUrlLocal = 'mongodb://localhost:27017/test';
-const mongoUrlTest = 'mongodb://localhost:27017/testing';
-// var url = process.env.MONGOLAB_URI || mongoUrlTest;
-var url = process.env.MONGOLAB_URI || mongoUrlLocal;
+const MONGO_URL_LOCAL = 'mongodb://localhost:27017/test';
+const MONGO_URL_TEST = 'mongodb://localhost:27017/testing';
+// var url = process.env.MONGOLAB_URI || MONGO_URL_TEST;
+var url = process.env.MONGOLAB_URI || MONGO_URL_LOCAL;
 var _db;
 
 class Mongo {
@@ -15,10 +16,10 @@ class Mongo {
         _db = db;
         if (err) {
           console.log('Error connecting to mongo');
-          reject(err);
+          return reject(err);
         }
         console.log(`Connected to mongo at ${url}`);
-        resolve();
+        return resolve();
       });
     });
   }
@@ -32,4 +33,7 @@ class Mongo {
   }
 }
 
-module.exports = Mongo;
+module.exports = _.extend(Mongo, {
+  MONGO_URL_LOCAL: MONGO_URL_LOCAL,
+  MONGO_URL_TEST: MONGO_URL_TEST
+});

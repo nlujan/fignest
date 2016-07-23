@@ -1,8 +1,9 @@
 'use strict';
 
 var cheerio = require('cheerio');
+var _ = require('underscore');
 
-const defaultProtocol = 'https';
+const DEFAULT_PROTOCOL = 'https';
 
 class HtmlParser {
   static attrFromSelector(html, selector, attribute) {
@@ -15,9 +16,11 @@ class HtmlParser {
   }
 
   static addProtocol(str, protocol) {
-    protocol = protocol || defaultProtocol;
+    protocol = protocol || DEFAULT_PROTOCOL;
     return `${protocol}:${str}`;
   }
 }
 
-module.exports = HtmlParser;
+module.exports = _.extend(HtmlParser, {
+  DEFAULT_PROTOCOL: DEFAULT_PROTOCOL
+});

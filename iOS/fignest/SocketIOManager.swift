@@ -14,22 +14,19 @@ class SocketIOManager: NSObject {
     
     static let sharedInstance = SocketIOManager()
     
-    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://192.168.1.8:3010")!)
+    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://127.0.0.1:3010")!)
 
     override private init() {
         super.init()
     }
     
-    
     func establishConnection() {
         socket.connect()
     }
     
-    
     func closeConnection() {
         socket.disconnect()
     }
-    
     
     func joinRoom(userId: String, eventId: String, completionHandler: (userList: JSON) -> Void) {
         
@@ -62,5 +59,4 @@ class SocketIOManager: NSObject {
         
         socket.emit("done", ["userId": userId, "eventId": eventId])
     }
-
 }

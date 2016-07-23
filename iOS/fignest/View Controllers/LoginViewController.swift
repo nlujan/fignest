@@ -20,7 +20,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     // MARK: Functions
     
     func addUser(name: String, fbID: String, email: String) {
-        APIRequestHandler().addUser(name, fbID: fbID, email: email, callback: { ( jsonDict: JSON) -> Void in
+        APIRequestHandler().addUser(name, fbID: fbID, email: email) { jsonDict in
             dispatch_async(dispatch_get_main_queue(), {
                 
                 let userID = jsonDict["_id"].stringValue
@@ -32,8 +32,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 NavigationUtil().takeUserToHomePage(self.storyboard)
                 
             })
-        })
-        
+        }
     }
     
     //MARK: FB Login Button Functions

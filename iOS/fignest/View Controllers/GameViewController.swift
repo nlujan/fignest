@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import Kingfisher
 
 class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
@@ -23,6 +24,8 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     var numPlaces = 0
     var eventData: Event!
     
+    var foodImageStrings = []
+    
     var userTableData = [["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": 0]]
     
     var imagePlaceArray: [[String]] = []
@@ -32,7 +35,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     @IBOutlet var picCollectionView: UICollectionView!
     @IBOutlet var playerProgressTable: UITableView!
     
-    //MARK: API Functions
+    //MARK: Functions
     
     func getPlacesImages(eventID: String) {
         APIRequestHandler().getEventPlaces(eventID, callback: { ( jsonArray: JSON) -> Void in
@@ -42,7 +45,8 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
 
                 do {
                     let foodImageStrings = self.getFoodImages(jsonArray)
-                    self.foodImages = try ImageUtil().getImagesFromUrlStringArray(foodImageStrings)
+                    self.foodImageStrings = foodImageStrings
+                    //self.foodImages = try ImageUtil().getImagesFromUrlStringArray(foodImageStrings)
                 } catch let error {
                     print(error)
                 }
@@ -53,46 +57,10 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         })
     }
     
-    func postAction(userID: String, eventID: String, selections: [NSDictionary]) {
-        APIRequestHandler().postEventAction(userID, eventID: eventID, selections: selections, callback: { ( dataDict: NSDictionary) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                //print(dataDict)
-                //print("Action Posted!")
-            })
-        })
-    }
-    
-    //MARK: Additional Functions
-    
-    func setupProgressListener() {
-        SocketIOManager.sharedInstance.setupProgressListener({ (progressData: JSON) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                
-                let fbID = progressData[0]["user"]["facebook"]["id"].stringValue
-                let progress = progressData[0]["level"].floatValue 
-                
-                print("level: \(progress)")
-                print("fbID: \(fbID)")
-                
-                if self.userTableData.count == 1 {
-                    self.userTableData.append(["id":fbID, "progress": progress])
-                } else {
-                    self.userTableData[1] = ["id":fbID, "progress": progress]
-                }
-                
-                self.playerProgressTable.reloadData()
-            })
-        })
-    }
-    
-    func sendProgress(userId: String, eventId: String, level: Float) {
-        SocketIOManager.sharedInstance.sendProgress(userId, eventId: eventId, level: level)
-    }
-    
     func getFoodImages(places: JSON) -> [String] {
         
         var tempPlaceArray: [[String]] = []
-        print(places)
+ 
         for (_,place):(String, JSON) in places {
             for i in 0 ..< 6 {
                 tempPlaceArray.append([place["images"].arrayValue[i].stringValue, place["_id"].stringValue])
@@ -119,11 +87,39 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
             } else {
                 actionDict["isSelected"] = false
             }
-            
             actionData.append(actionDict)
         }
-        
         return actionData
+    }
+    
+    func postAction(userID: String, eventID: String, selections: [NSDictionary]) {
+        APIRequestHandler().postEventAction(userID, eventID: eventID, selections: selections, callback: { ( dataDict: NSDictionary) -> Void in
+        })
+    }
+    
+    func setupProgressListener() {
+        SocketIOManager.sharedInstance.setupProgressListener({ (progressData: JSON) -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                let fbID = progressData[0]["user"]["facebook"]["id"].stringValue
+                let progress = progressData[0]["level"].floatValue 
+                
+                print("level: \(progress)")
+                print("fbID: \(fbID)")
+                
+                if self.userTableData.count == 1 {
+                    self.userTableData.append(["id":fbID, "progress": progress])
+                } else {
+                    self.userTableData[1] = ["id":fbID, "progress": progress]
+                }
+                
+                self.playerProgressTable.reloadData()
+            })
+        })
+    }
+    
+    func sendProgress(userId: String, eventId: String, level: Float) {
+        SocketIOManager.sharedInstance.sendProgress(userId, eventId: eventId, level: level)
     }
     
     func takeUserToPostWaitingPage() {
@@ -135,13 +131,12 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         postWaitingPage.eventData = eventData
         
         appDelegate.window!.rootViewController = postWaitingPageNav
-        
     }
     
     //MARK: picCollectionView DataSource
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if foodImages.isEmpty {
+        if foodImageStrings.count == 0 {
             return 0
         } else {
             return 6
@@ -153,7 +148,12 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         let cell: FoodCell = collectionView.dequeueReusableCellWithReuseIdentifier("FoodCell", forIndexPath: indexPath) as! FoodCell
         let picIndex = (picPageIndex * 6) + indexPath.row
         
-        cell.foodImageView.image = foodImages[picIndex]
+        //cell.foodImageView.image = foodImages[picIndex]
+        //cell.foodImageView.kf_setImageWithURL(NSURL(string: foodImageStrings[picIndex] as! String)!, placeholderImage: nil)
+        
+        cell.foodImageView.kf_setImageWithURL(NSURL(string: foodImageStrings[picIndex] as! String)!,
+                                     placeholderImage: nil,
+                                     optionsInfo: [.Transition(ImageTransition.Fade(1))])
 
         
         return cell
@@ -170,7 +170,6 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
             cell.alpha = 1
         }, completion: nil)
-        
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -220,11 +219,8 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         selections[(6 * picPageIndex) + indexPath.row] = true
 
         if (picPageIndex < numPlaces) {
-            
             collectionView.reloadData()
-
         } else {
-
             let actionData = getActionObject(selections)
             postAction(userId, eventID: eventData.id, selections: actionData)
             

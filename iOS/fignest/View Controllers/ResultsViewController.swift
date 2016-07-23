@@ -21,7 +21,7 @@ class ResultsViewController: UIViewController {
     //MARK: Actions
     
     @IBAction func goToYelpPage(sender: AnyObject) {
-        if let url = NSURL(string: resultData["urls"]["mobile"].stringValue){
+        if let url = NSURL(string: resultData["urls"]["mobile"].stringValue) {
             UIApplication.sharedApplication().openURL(url)
         }
     }
@@ -29,7 +29,6 @@ class ResultsViewController: UIViewController {
     @IBAction func homeButtonPressed(sender: AnyObject) {
         NavigationUtil().takeUserToHomePage(self.storyboard)
     }
-    
     
     //MARK: Override functions
     
@@ -44,26 +43,16 @@ class ResultsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
     //MARK: Generic functions
     
     private func getFinalResult()  {
         APIRequestHandler().getEventSolution(eventData.id, callback: { ( jsonDict: JSON) -> Void in
-            
             dispatch_async(dispatch_get_main_queue(), {
-                
-                print(jsonDict)
                 self.resultData = jsonDict
-                print("We did it!!")
                 self.resultName.text = jsonDict["name"].stringValue
-                
             })
-            
         })
-        
     }
-    
     
     /*
     // MARK: - Navigation

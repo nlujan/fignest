@@ -11,6 +11,7 @@ target 'fignest' do
   pod 'Socket.IO-Client-Swift', '~> 6.1'
   pod 'Alamofire', '~> 3.4'
   pod 'SwiftyJSON', '~> 2.3'
+  pod 'Kingfisher', '~> 2.4'
 
   target 'fignestTests' do
     inherit! :search_paths

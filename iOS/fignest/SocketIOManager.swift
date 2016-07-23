@@ -20,16 +20,13 @@ class SocketIOManager: NSObject {
         super.init()
     }
     
-    
     func establishConnection() {
         socket.connect()
     }
     
-    
     func closeConnection() {
         socket.disconnect()
     }
-    
     
     func joinRoom(userId: String, eventId: String, completionHandler: (userList: JSON) -> Void) {
         
@@ -62,5 +59,4 @@ class SocketIOManager: NSObject {
         
         socket.emit("done", ["userId": userId, "eventId": eventId])
     }
-
 }

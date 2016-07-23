@@ -93,9 +93,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     }
     
     func postAction(userID: String, eventID: String, selections: [NSDictionary]) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            APIRequestHandler().postEventAction(userID, eventID: eventID, selections: selections, callback: { ( dataDict: NSDictionary) -> Void in
-            })
+        APIRequestHandler().postEventAction(userID, eventID: eventID, selections: selections, callback: { ( dataDict: NSDictionary) -> Void in
         })
     }
     

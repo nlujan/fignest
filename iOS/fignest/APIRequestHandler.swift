@@ -182,5 +182,4 @@ struct APIRequestHandler {
                 }
         }
     }
-
 }

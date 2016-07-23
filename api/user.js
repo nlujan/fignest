@@ -29,9 +29,9 @@ class User {
       db.collection('users').save(this.asDocument(), null, (err, res) => {
         if (err) {
           console.log(`Error saving user to db: ${this}`, err);
-          reject(err);
+          return reject(err);
         }
-        resolve(this.constructor.fromJson(this));
+        return resolve(this.constructor.fromJson(this));
       });
     });
   }
@@ -46,11 +46,11 @@ class User {
       cursor.toArray((err, invitations) => {
         if (err) {
           console.log(`Error getting invitations for user: ${this}`, err);
-          reject(err);
+          return reject(err);
         }
         // Todo: circular dependency here, since Event requires User.
         var Event = require('./event');
-        resolve(invitations.map((inv) => Event.fromJson(inv) ));
+        return resolve(invitations.map((inv) => Event.fromJson(inv) ));
       });
     });
   }
@@ -68,9 +68,9 @@ class User {
           return this.save();
         }
       }).then((user) => {
-        resolve(this.constructor.fromJson(user));
+        return resolve(this.constructor.fromJson(user));
       }).catch((err) => {
-        reject(err);
+        return reject(err);
       });
     });
   }
@@ -81,9 +81,9 @@ class User {
       cursor.toArray((err, users) => {
         if (err) {
           console.log(`Error getting all users`, err);
-          reject(err);
+          return reject(err);
         }
-        resolve(users.map((user) => this.fromJson(user) ));
+        return resolve(users.map((user) => this.fromJson(user) ));
       });
     });
   }
@@ -92,9 +92,9 @@ class User {
     return new Promise((resolve, reject) => {
       this.allUsers().then((users) => {
         var map = _.map(users, (user) => [user._id, user] );
-        resolve(_.object(map));
+        return resolve(_.object(map));
       }).catch((err) => {
-        reject(err);
+        return reject(err);
       });
     });
   }
@@ -104,9 +104,9 @@ class User {
       db.collection('users').findOne({ _id: ObjectId(_id) }, (err, res) => {
         if (err) {
           console.log(`Error finding user with _id: ${_id}`, err);
-          reject(err);
+          return reject(err);
         }
-        resolve(this.fromJson(res));
+        return resolve(this.fromJson(res));
       });
     });
   }
@@ -118,12 +118,12 @@ class User {
       }, (err, res) => {
         if (err) {
           console.log(`Error finding user from facebook id: ${id}`, err);
-          reject(err);
+          return reject(err);
         }
         if (!res) {
-          resolve();
+          return resolve();
         } else {
-          resolve(this.fromJson(res));
+          return resolve(this.fromJson(res));
         }
       });
     });

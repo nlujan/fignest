@@ -35,9 +35,9 @@ class Place {
   		YelpApi.getImages(this.yelpId).then((imageUrls) => {
         this.addImages(imageUrls);
         // resolve(this.images);
-        resolve(this);
+        return resolve(this);
       }).catch((err) => {
-        reject(err);
+        return reject(err);
       });
   	});
   }
@@ -51,10 +51,9 @@ class Place {
       db.collection('places').save(this.asDocument(), null, (err, res) => {
         if (err) {
           console.log(`Error saving place to db: ${this}`, err);
-          reject(err);
+          return reject(err);
         }
-        // resolve(this.constructor.fromJson(this))?
-        resolve(this);
+        return resolve(this);
       });
     });
   }
@@ -96,14 +95,12 @@ class Place {
       }, (err, res) => {
         if (err) {
           console.log(`Error finding place with _id:${_id}`, err);
-          reject(err);
-          return;
+          return reject(err);
         }
         if (res == null) {
-          reject(`No place found with _id: ${_id}`);
-          return;
+          return reject(`No place found with _id: ${_id}`);
         }
-        resolve(new this(res));
+        return resolve(new this(res));
       });
     });
   }

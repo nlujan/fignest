@@ -22,9 +22,9 @@ class Action {
       db.collection('actions').save(this.asDocument(), null, (err, res) => {
         if (err) {
           console.log(`Error saving action to db: ${this}`, err);
-          reject(err);
+          return reject(err);
         }
-        resolve(this.constructor.fromJson(this));
+        return resolve(this.constructor.fromJson(this));
       });
     });
   }
@@ -51,9 +51,9 @@ class Action {
       cursor.toArray((err, actions) => {
         if (err) {
           console.log(`Error getting actions from event ID: ${eventId}`, err);
-          reject(err);
+          return reject(err);
         }
-        resolve(actions.map((action) => this.fromJson(action) ));
+        return resolve(actions.map((action) => this.fromJson(action) ));
       });
     });
   }

@@ -16,10 +16,10 @@ class Mongo {
         _db = db;
         if (err) {
           console.log('Error connecting to mongo');
-          reject(err);
+          return reject(err);
         }
         console.log(`Connected to mongo at ${url}`);
-        resolve();
+        return resolve();
       });
     });
   }

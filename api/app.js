@@ -88,8 +88,6 @@ function run() {
       var user = _.find(rooms[eventId], (user) => user._id.toString() === userId);
       user.status = STATUS_DONE;
       io.sockets.in(eventId).emit('status', rooms[eventId]);
-      console.log(userId)
-      console.log(eventId)
 
       // Check if we should finish event
       if (shouldFinishEvent(eventId)) {
@@ -124,13 +122,13 @@ function run() {
                 status: (user._id.toString() === userId) ? STATUS_READY : STATUS_WAITING
               });
             });
-            resolve();
+            return resolve();
           });
         } else { // Room already exists
           var users = rooms[roomId];
           var currentUser = _.find(users, (user) => user._id.toString() === userId );
           currentUser.status = STATUS_READY;
-          resolve();
+          return resolve();
         }
       });
     }

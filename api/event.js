@@ -41,9 +41,9 @@ class Event {
       db.collection('events').save(this.asDocument(), null, (err, res) => {
         if (err) {
           console.log(`Error saving event to db: ${this}`, err);
-          reject(err);
+          return reject(err);
         }
-        resolve(this.constructor.fromJson(this));
+        return resolve(this.constructor.fromJson(this));
       });
     });
 	}
@@ -77,9 +77,9 @@ class Event {
     return new Promise((resolve, reject) => {
       // $in query instead
       Promise.all(_.map(this.users, (user) => User.fromId(user))).then((users) => {
-        resolve(users);
+        return resolve(users);
       }).catch((err) => {
-        reject(err);
+        return reject(err);
       });
     });
   }
@@ -93,15 +93,15 @@ class Event {
         Promise.all(_.map(this.places, (id) => {
           return Place.fromId(id);
         })).then((places) => {
-          resolve(places);
+          return resolve(places);
         }).catch((err) => {
-          reject(err);
+          return reject(err);
         });
       } else { // Event doesn't already have places
         this.generatePlaces().then((places) => {
-          resolve(places);
+          return resolve(places);
         }).catch((err) => {
-          reject(err);
+          return reject(err);
         });
       }
     });
@@ -131,9 +131,9 @@ class Event {
         // Save event
         return this.save();
       }).then((event) => {
-        resolve(_places);
+        return resolve(_places);
       }).catch((err) => {
-        reject(err);
+        return reject(err);
       });
     });
   }
@@ -150,15 +150,15 @@ class Event {
     return new Promise((resolve, reject) => {
       if (this.hasSolution()) {
         Place.fromId(this.solution).then((solution) => {
-          resolve(solution);
+          return resolve(solution);
         }).catch((err) => {
-          reject(err);
+          return reject(err);
         });
       } else { // Event doesn't already have solution
         this.generateSolution().then((solution) => {
-          resolve(solution);
+          return resolve(solution);
         }).catch((err) => {
-          reject(err);
+          return reject(err);
         });
       }
     });
@@ -178,9 +178,9 @@ class Event {
       }).then((event) => {
         return Place.fromId(_solutionId);
       }).then((solution) => {
-        resolve(solution);
+        return resolve(solution);
       }).catch((err) => {
-        reject(err);
+        return reject(err);
       });
     });
   }
@@ -212,9 +212,9 @@ class Event {
         // Save event
         return this.save();
       }).then((event) => {
-        resolve(_action);
+        return resolve(_action);
       }).catch((err) => {
-        reject(err);
+        return reject(err);
       });
     });
   }
@@ -263,7 +263,7 @@ class Event {
       }, (err, res) => {
         if (err) {
           console.log(`error finding document with _id:${_id}`);
-          reject(err);
+          return reject(err);
         }
         if (!res) {
           var errorMsg = `Can't find event with id: ${_id}`;

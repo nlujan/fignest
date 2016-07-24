@@ -150,6 +150,17 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
 //        })
     }
     
+//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        let height = tableView.bounds.size.height * 0.2
+//        return height
+//    }
+//    
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+//        let cellWidth = collectionView.bounds.size.width * 0.22
+//        return CGSizeMake(cellWidth, cellWidth)
+//    }
+    
+    
     
 //        override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 //            return UITableViewAutomaticDimension

@@ -38,7 +38,6 @@ class YelpApi {
   static search(params) {
     return new Promise((resolve, reject) => {
       yelp.search(params).then((results) => {
-        // console.log(results);
         return resolve(results.businesses);
       }).catch((err) => {
         return reject(err);

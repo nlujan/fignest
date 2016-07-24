@@ -114,6 +114,7 @@ class Event {
       YelpApi.search(this.getSearchParams()).then((yelpBusinesses) => {
         // pick this.limit businesses at random
         yelpBusinesses = _.sample(yelpBusinesses, this.limit);
+        Util.ensureLength(yelpBusinesses, this.limit);
 
         var places = _.map(yelpBusinesses, (biz) => Place.fromYelpJson(biz, this._id));
         return Promise.all(_.map(places, (place) => place.getImages()));

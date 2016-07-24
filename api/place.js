@@ -4,6 +4,7 @@ var YelpApi = require('./yelp-api');
 var Mongo = require('./mongo');
 var db = Mongo.db();
 var ObjectId = require('mongodb').ObjectID;
+var Util = require('./util');
 var _ = require('underscore');
 
 const NUM_IMAGES_PER_PLACE = 6;
@@ -43,7 +44,9 @@ class Place {
   }
 
   addImages(urls) {
-    this.images = _.sample(urls, NUM_IMAGES_PER_PLACE);
+    urls = _.sample(urls, NUM_IMAGES_PER_PLACE);
+    Util.ensureLength(urls, NUM_IMAGES_PER_PLACE);
+    this.images = urls;
   }
 
   save() {

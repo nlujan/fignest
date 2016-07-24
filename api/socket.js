@@ -20,9 +20,9 @@ class Socket {
   }
 
   addListeners() {
-    this.socket.on('join', this.joinCallback.bind(this));
-    this.socket.on('progress', this.progressCallback.bind(this));
-    this.socket.on('done', this.doneCallback.bind(this));
+    this.socket.on(ON_JOIN, this.joinCallback.bind(this));
+    this.socket.on(ON_PROGRESS, this.progressCallback.bind(this));
+    this.socket.on(ON_DONE, this.doneCallback.bind(this));
   }
 
   broadcast(message, data, roomId, includeClient) {

@@ -51,8 +51,9 @@ function run() {
     User.allUsers().then((users) => {
       res.status(200).json(users.map((user) => user.asJson() ));
     }).catch((err) => {
-      console.log(`Error in GET /users`, err);
-      res.status(500).json(err);
+      var errMsg = `Error in GET /users | ${err}`;
+      console.log(errMsg);
+      res.status(500).json(errMsg);
     });
   });
 
@@ -60,8 +61,9 @@ function run() {
     User.usersMapById().then((users) => {
       res.status(200).json(users);
     }).catch((err) => {
-      console.log(`Error in GET /usersMapById`, err);
-      res.status(500).json(err);
+      var errMsg = `Error in GET /usersMapById | ${err}`;
+      console.log(errMsg);
+      res.status(500).json(errMsg);
     });
   });
 
@@ -70,8 +72,9 @@ function run() {
     user.createOrUpdate().then((user) => {
       res.status(200).json(user.asJson());
     }).catch((err) => {
-      console.log(`Error in POST /users`, err);
-      res.status(500).json(err);
+      var errMsg = `Error in POST /users | ${err}`;
+      console.log(errMsg);
+      res.status(500).json(errMsg);
     });
   });
 
@@ -81,8 +84,9 @@ function run() {
     }).then((invitations) => {
       res.status(200).json(invitations.map((inv) => inv.asJson() ));
     }).catch((err) => {
-      console.log(`Error in GET /users/:userId/invitations`, err);
-      res.status(500).json(err);
+      var errMsg = `Error in GET /users/:userId/invitations | ${err}`;
+      console.log(errMsg);
+      res.status(500).json(errMsg);
     });
   });
 
@@ -101,8 +105,9 @@ function run() {
     event.save().then((val) => {
       res.status(200).json(val.asJson());
     }).catch((err) => {
-      console.log(`Error in POST /events`, err);
-      res.status(500).json(err);
+      var errMsg = `Error in POST /events | ${err}`;
+      console.log(errMsg);
+      res.status(500).json(errMsg);
     });
   });
 
@@ -112,8 +117,9 @@ function run() {
     }).then((places) => {
       res.status(200).json(places.map((place) => place.asJson() ));
     }).catch((err) => {
-      console.log(`Error in GET /events/:eventId/places`, err);
-      res.status(500).json(err);
+      var errMsg = `Error in GET /events/:eventId/places | ${err}`;
+      console.log(errMsg);
+      res.status(500).json(errMsg);
     });
   });
 
@@ -123,8 +129,9 @@ function run() {
     }).then((solution) => {
       res.status(200).json(solution.asJson());
     }).catch((err) => {
-      console.log(`Error in GET /events/:eventId/solution`, err);
-      res.status(500).json(err);
+      var errMsg = `Error in GET /events/:eventId/solution | ${err}`;
+      console.log(errMsg);
+      res.status(500).json(errMsg);
     });
   });
 
@@ -134,8 +141,9 @@ function run() {
     }).then((action) => {
       res.status(200).json(action.asJson());
     }).catch((err) => {
-      console.log(`Error in POST /events/:eventId/actions`, err);
-      res.status(500).json(err);
+      var errMsg = `Error in POST /events/:eventId/actions | ${err}`;
+      console.log(errMsg);
+      res.status(500).json(errMsg);
     });
   });
   

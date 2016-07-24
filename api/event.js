@@ -286,13 +286,3 @@ module.exports = _.extend(Event, {
   SEARCH_SORT: SEARCH_SORT,
   SEARCH_SHOULD_INCLUDE_ACTION_LINKS: SEARCH_SHOULD_INCLUDE_ACTION_LINKS
 });
-
-// var sampleEvent = {
-//   "name": "Sample3",
-//   "location": {
-//     "type": "address",
-//     "address": "1600 Pennsylvania Ave NW, Washington, DC 20500"
-//   },
-//   "users": [],
-//   "search": "sushi"
-// };

@@ -34,9 +34,12 @@ class SocketRoom {
   addUserData(userId, data) {
     var user = this.getUserFromId(userId);
     if (data.message != null) {
-      user.message = message;
+      user.message = data.message;
+      user.hasMessage = true;
     } else {
-      user.level = level;
+      user.level = data.level;
+      user.hasMessage = false;
+      delete user.message;
     }
   }
 

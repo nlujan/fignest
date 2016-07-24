@@ -209,11 +209,13 @@ describe('sockets', () => {
       });
 
       describe('when the first user progresses', () => {
+
         beforeEach((done) => {
           client1.emit('progress', {
             userId: user0._id,
             eventId: event._id,
-            level: level
+            level: level,
+            message: null
           });
           done();
         });
@@ -235,6 +237,8 @@ describe('sockets', () => {
           client2.on('progress', (res) => {
             expect(res._id).toBe(user0._id.toString());
             expect(res.level).toBe(level);
+            expect(res.message).toBeUndefined();
+            expect(res.hasMessage).toBeFalsy();
             done();
           });
         });
@@ -246,6 +250,8 @@ describe('sockets', () => {
             expect(usersInRoom).toContain(user1._id.toString());
             var userProgressed = _.find(res, (r) => r._id === user0._id.toString() );
             expect(userProgressed.level).toBe(level);
+            expect(userProgressed.message).toBeUndefined();
+            expect(userProgressed.hasMessage).toBeFalsy();
             done();
           });
         });
@@ -257,10 +263,61 @@ describe('sockets', () => {
             expect(usersInRoom).toContain(user1._id.toString());
             var userProgressed = _.find(res, (r) => r._id === user0._id.toString() );
             expect(userProgressed.level).toBe(level);
+            expect(userProgressed.message).toBeUndefined();
+            expect(userProgressed.hasMessage).toBeFalsy();
             done();
           });
         });
       });
+
+      describe('when the first user progresses and there is a message', () => {
+        var message = "Hurry up! Me hungry nom nom nom";
+
+        beforeEach((done) => {
+          client1.emit('progress', {
+            userId: user0._id,
+            eventId: event._id,
+            level: level,
+            message: message
+          });
+          done();
+        });
+        
+        it('notifies the second user (progress)', (done) => {
+          client2.on('progress', (res) => {
+            expect(res._id).toBe(user0._id.toString());
+            expect(res.message).toBe(message);
+            expect(res.hasMessage).toBeTruthy();
+            done();
+          })
+        })
+
+        it('notifies the first user (progressAll)', (done) => {
+          client1.on('progressAll', (res) => {
+            var usersInRoom = _.map(res, '_id');
+            expect(usersInRoom).toContain(user0._id.toString());
+            expect(usersInRoom).toContain(user1._id.toString());
+            var userProgressed = _.find(res, (r) => r._id === user0._id.toString() );
+            expect(userProgressed.message).toBe(message);
+            expect(userProgressed.hasMessage).toBeTruthy();
+            done();
+          });
+        });
+
+        it('notifies the second user (progressAll)', (done) => {
+          client2.on('progressAll', (res) => {
+            var usersInRoom = _.map(res, '_id');
+            expect(usersInRoom).toContain(user0._id.toString());
+            expect(usersInRoom).toContain(user1._id.toString());
+            var userProgressed = _.find(res, (r) => r._id === user0._id.toString() );
+            expect(userProgressed.message).toBe(message);
+            expect(userProgressed.hasMessage).toBeTruthy();
+            done();
+          });
+        });
+      });
+
+
     });
   });
 

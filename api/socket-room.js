@@ -31,9 +31,13 @@ class SocketRoom {
     user.status = STATUS_DONE;
   }
 
-  addUserData(userId, level) {
+  addUserData(userId, data) {
     var user = this.getUserFromId(userId);
-    user.level = level;
+    if (data.message != null) {
+      user.message = message;
+    } else {
+      user.level = level;
+    }
   }
 
   getUserFromId(userId) {

@@ -50,8 +50,9 @@ class Socket {
     var userId = data.userId;
     var eventId = data.eventId;
     var level = data.level;
+    var message = data.message;
     var room = this.rooms[eventId];
-    room.addUserData(userId, level);
+    room.addUserData(userId, { level: level, message: message });
     var user = room.getUserFromId(userId);
     this.broadcast(EMIT_PROGRESS, user, room.roomId);
     this.broadcastAll(EMIT_PROGRESS_ALL, room.users, room.roomId);
@@ -62,7 +63,7 @@ class Socket {
     var eventId = data.eventId;
     var room = this.rooms[eventId];
     room.markUserDone(userId);
-    this.broadcastAll(EMIT_STATUS, room.users, room.roomId);
+    this.broadcastAll(EMIT_PROGRESS_ALL, room.users, room.roomId);
     if (room.allUsersDone()) {
       this.broadcastAll(EMIT_FINISH, null, room.roomId);
       delete this.rooms[room.roomId];

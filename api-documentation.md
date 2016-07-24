@@ -162,8 +162,26 @@ ___
 * For simplcity, one representation is used for both `GET` and `POST` requests. However, you can omit certain optional properties, such as `_id` when creating a new resource (since it won't exist yet). The response to the creation will be the same resource, with the newly created `id` included.
 
 # Websockets
+Each event is represented as a "room" of users. User data is similar to the API model, with a few additional properties:
 
-rooms, users
+###### User Representation
+```js
+{
+  "_id": (String) Id of user,
+  "displayName": (String, optional) Display name,
+  "email": (String, optional) Email,
+  "facebook": {
+    "name": (String) Name from facebook,
+    "id": (String) Id from facebook,
+    "email": (String) Email from facebook
+  },
+  "createdAt": (Date) Creation date,
+  "status": (String) One of ["waiting", "ready", "done"],
+  "level": (Number) Current user progression,
+  "message": (String) Last message sent by user,
+  "hasMessage": (Boolean) Whether the last action from the user was a message send
+}
+```
 
 ### Emitted Events
 

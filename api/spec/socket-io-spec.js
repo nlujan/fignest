@@ -52,7 +52,19 @@ describe('sockets', () => {
             });
           });
         });
+        client3.on('error', (err) => {
+          console.log(err);
+          done();
+        });
       });
+      client2.on('error', (err) => {
+        console.log(err);
+        done();
+      });
+    });
+    client1.on('error', (err) => {
+      console.log(err);
+      done();
     });
   });
 

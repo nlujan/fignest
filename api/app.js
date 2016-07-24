@@ -1,5 +1,10 @@
 'use strict';
 
+var Promise = require('bluebird');
+Promise.onPossiblyUnhandledRejection((err) => {
+  throw error;
+});
+
 var Mongo = require('./mongo');
 Mongo.connect().then((err) => {
   run();
@@ -19,6 +24,7 @@ function run() {
 
   var Event = require('./event');
   var User = require('./user');
+  var Socket = require('./socket');
   var db = Mongo.db();
 
   var _ = require('underscore');
@@ -30,120 +36,14 @@ function run() {
 
 
 
-
-
-
-
-
-
-
-  // Socket
+  // SOCKETS
   var io = require('socket.io')(server);
-
-  // should store rooms in db instead of memory
-  var rooms = {
-    // eventId0: [user0, user1, ...],
-    // eventId1: ...
-  };
-  const STATUS_READY = 'ready';
-  const STATUS_WAITING = 'waiting';
-  const STATUS_DONE = 'done';
-  // status start progress constants
-
+  var rooms = {};
   io.on('connection', (socket) => {
     console.log('Client connected to socket.io');
-
-    socket.on('join', (data) => {
-      // Race condition if 1 person joins before another is done joining
-      var userId = data.userId;
-      var eventId = data.eventId;
-      joinRoom(userId, eventId).then(() => {
-        // Add user to room and broadcast to everyone (including user)
-        socket.join(eventId);
-        io.sockets.in(eventId).emit('status', rooms[eventId]);
-
-        // Check if we should start event
-        if (shouldStartEvent(eventId)) {
-          io.sockets.in(eventId).emit('start');
-        }
-      });
-    });
-
-    socket.on('progress', (data) => {
-      var userId = data.userId;
-      var eventId = data.eventId;
-      var level = data.level;
-      var user = _.find(rooms[eventId], (user) => user._id.toString() === userId);
-      user.level = level;
-
-      // Broadcast to room (except client)
-      socket.broadcast.to(eventId).emit('progress', user);
-
-      // Broadcast to everyone
-      io.sockets.in(eventId).emit('progressAll', rooms[eventId]);
-    });
-
-    socket.on('done', (data) => {
-      var userId = data.userId;
-      var eventId = data.eventId;
-      var user = _.find(rooms[eventId], (user) => user._id.toString() === userId);
-      user.status = STATUS_DONE;
-      io.sockets.in(eventId).emit('status', rooms[eventId]);
-
-      // Check if we should finish event
-      if (shouldFinishEvent(eventId)) {
-        io.sockets.in(eventId).emit('finish');
-
-        // And clean the room
-        delete rooms[eventId];
-      }
-    });
-
-    function shouldStartEvent(eventId) {
-      return _.every(rooms[eventId], (user) => user.status === STATUS_READY);
-    }
-
-    function shouldFinishEvent(eventId) {
-      return _.every(rooms[eventId], (user) => user.status === STATUS_DONE);
-    }
-
-    function roomExists(eventId) {
-      return rooms[eventId] && rooms[eventId].length > 0;
-    }
-
-    function joinRoom(userId, roomId) {
-      return new Promise((resolve, reject) => {
-        if (!roomExists(roomId)) { // Room doesn't exist
-          Event.fromId(roomId).then((event) => {
-            return event.getUsers();
-          }).then((users) => {
-            // Map users to include status either "ready" or "waiting"
-            rooms[roomId] = users.map((user) => {
-              return _.extend(user, {
-                status: (user._id.toString() === userId) ? STATUS_READY : STATUS_WAITING
-              });
-            });
-            return resolve();
-          });
-        } else { // Room already exists
-          var users = rooms[roomId];
-          var currentUser = _.find(users, (user) => user._id.toString() === userId );
-          currentUser.status = STATUS_READY;
-          return resolve();
-        }
-      });
-    }
-
+    var s = new Socket(socket, io, rooms);
+    s.addListeners();
   });
-
-
-
-
-
-
-
-
-
 
 
   // API

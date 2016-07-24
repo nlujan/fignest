@@ -1,3 +1,5 @@
+# API
+
 ### Users/Auth
 
 Users (currently only supporting facebook auth).
@@ -159,3 +161,68 @@ ___
 ### Notes
 * For simplcity, one representation is used for both `GET` and `POST` requests. However, you can omit certain optional properties, such as `_id` when creating a new resource (since it won't exist yet). The response to the creation will be the same resource, with the newly created `id` included.
 
+# Websockets
+
+rooms, users
+
+### Emitted Events
+
+```js
+// Emitted to everyone when a user joins a room.
+name: "status"
+data: (Array) <User>
+```
+
+```js
+// Emitted to everyone when all users have joined the room.
+name: "start"
+data: null
+```
+
+```js
+// Emitted to everyone (except current user) when a user submits progress.
+name: "progress"
+data: <User>
+```
+
+```js
+// Emitted to everyone when a user submits progress or has finished the event.
+name: "progressAll"
+data: (Array) <User>
+```
+
+```js
+// Emitted to everyone when all users have finished the event.
+name: "finish"
+data: (Array) <User>
+```
+
+### Listening Events
+```js
+// Listening for when a user joins a room.
+name: "join"
+data: {
+  "userId": (String) Id of user,
+  "eventId": (String) Id of event
+}
+```
+
+```js
+// Listening for any user activity (level or message).
+name: "progress"
+data: {
+  "userId": (String) Id of user,
+  "eventId": (String) Id of event,
+  "level": (Number, optional) New level progression of user,
+  "message": (String, optional) Message sent by user
+}
+```
+
+```js
+// Listening for when a user finishes an event.
+name: "done"
+data: {
+  "userId": (String) Id of user,
+  "eventId": (String) Id of event
+}
+```

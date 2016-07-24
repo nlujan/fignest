@@ -26,7 +26,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     var foodImageStrings = []
     
-    var userTableData = [["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": 0]]
+    var userTableData = [["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": 0], ["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": 0]]
     
     var imagePlaceArray: [[String]] = []
     var foodImages: [UIImage] = []
@@ -214,6 +214,25 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         })
     }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let cellWidth = collectionView.bounds.size.width * 0.48
+        return CGSizeMake(cellWidth, cellWidth)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        let gap = collectionView.bounds.size.width * 0.013
+        return UIEdgeInsetsMake(gap, gap, gap, gap)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        let gap = collectionView.bounds.size.width * 0.013
+        return gap;
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        let gap = collectionView.bounds.size.width * 0.013
+        return gap;
+    }
     
     func picSelectedHandler(collectionView: UICollectionView, indexPath: NSIndexPath) {
         selections[(6 * picPageIndex) + indexPath.row] = true
@@ -259,13 +278,25 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         let user = userTableData[indexPath.row]
         
         cell.playerImage.image = ImageUtil().getFBImageFromID(user["id"] as! String)
-
         
         cell.playerProgressBar.progress = user["progress"] as! Float
         cell.playerProgressBar.tintColor = colors[indexPath.row]
         cell.playerProgressBar.trackTintColor = colors[indexPath.row].colorWithAlphaComponent(0.2)
         
         return cell
+    }
+    
+//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        return UITableViewAutomaticDimension
+//    }
+//    
+//    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        return 44.0
+//    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let height = tableView.bounds.size.height * 0.5
+        return height
     }
     
     //MARK: Override Functions

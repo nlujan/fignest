@@ -14,6 +14,8 @@ class PlayerProgressCell: UITableViewCell {
     @IBOutlet var playerProgressBar: UIProgressView!
     @IBOutlet var playerImage: UIImageView!
     
+    @IBOutlet var messageLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

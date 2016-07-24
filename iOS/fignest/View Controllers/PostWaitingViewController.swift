@@ -45,6 +45,7 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     @IBAction func sendPostWaitingMessage(sender: UIButton) {
+        sendMessage(userId, eventId: eventData!.id, message: sender.currentTitle!)
         print(sender.currentTitle!)
     }
     
@@ -54,16 +55,25 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
         SocketIOManager.sharedInstance.emitDone(userId, eventId: eventId)
     }
     
+    func sendMessage(userId: String, eventId: String, message: String) {
+        SocketIOManager.sharedInstance.sendMessage(userId, eventId: eventId, message: message)
+    }
+    
     func setupProgressAllListener() {
         SocketIOManager.sharedInstance.setupProgressAllListener() { userList in
             dispatch_async(dispatch_get_main_queue(), {
                 print("User has finished game!!");
+                print(userList)
                 
                 var tempData: [[AnyObject]] = []
                 
                 for (_,user) in userList {
                     if user["level"].float != nil {
-                        tempData.append([user["facebook"]["id"].stringValue, user["level"].floatValue])
+                        if user["level"]["hasMessage"].boolValue {
+                            tempData.append([user["facebook"]["id"].stringValue, user["message"].stringValue])
+                        } else {
+                            tempData.append([user["facebook"]["id"].stringValue, user["level"].floatValue])
+                        }
                         // now val is not nil and the Optional has been unwrapped, so use it
                     } else {
                         tempData.append([user["facebook"]["id"].stringValue, 0.0])

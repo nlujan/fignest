@@ -97,7 +97,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if self.userIDMapping.count == 0 || self.userIDMapping.count == 0 {
+        if self.events.count == 0 || self.userIDMapping.count == 0 {
             return 0
         } else {
             return events.count
@@ -106,6 +106,8 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! EventsTableViewCell
+        
+        print(events[indexPath.row])
         
         cell.figLabel.text = events[indexPath.row].name
         cell.searchLabel.text = events[indexPath.row].searchText

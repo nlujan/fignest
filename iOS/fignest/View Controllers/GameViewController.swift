@@ -26,7 +26,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     var foodImageStrings = []
     
-    var userTableData = [["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": 0]]
+    var userTableData = [["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": 0], [:]]
     
     var imagePlaceArray: [[String]] = []
     var foodImages: [UIImage] = []
@@ -100,15 +100,19 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         SocketIOManager.sharedInstance.setupProgressListener({ (progressData: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
+                print(progressData)
+                
                 let fbID = progressData[0]["facebook"]["id"].stringValue
                 let progress = progressData[0]["level"].floatValue
                 
-                if self.userTableData.count == 1 {
-                    self.userTableData.append(["id":fbID, "progress": progress])
+
+                if progressData[0]["hasMessage"].boolValue {
+                    //do something different here
+                    let message = progressData[0]["message"].stringValue
+                    self.userTableData[1] = ["id":fbID, "message": message]
                 } else {
                     self.userTableData[1] = ["id":fbID, "progress": progress]
                 }
-                
                 self.playerProgressTable.reloadData()
             })
         })
@@ -262,7 +266,11 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     //MARK: playerProgressTable DataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userTableData.count
+        if userTableData[1].count == 0 {
+            return 1
+        } else {
+            return 2
+        }
     }
     
     
@@ -278,9 +286,18 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         cell.playerImage.kf_setImageWithURL(NSURL(string: ImageUtil().getFBImageURL(user["id"] as! String))!, placeholderImage: nil)
         
-        cell.playerProgressBar.progress = user["progress"] as! Float
-        cell.playerProgressBar.tintColor = colors[indexPath.row]
-        cell.playerProgressBar.trackTintColor = colors[indexPath.row].colorWithAlphaComponent(0.2)
+        if let message = user["message"] {
+            cell.playerProgressBar.hidden = true
+            cell.messageLabel.hidden = false
+            cell.messageLabel.text = (message as! String)
+        } else {
+            cell.playerProgressBar.hidden = false
+            cell.messageLabel.hidden = true
+            
+            cell.playerProgressBar.progress = user["progress"] as! Float
+            cell.playerProgressBar.tintColor = colors[indexPath.row]
+            cell.playerProgressBar.trackTintColor = colors[indexPath.row].colorWithAlphaComponent(0.2)
+        }
         
         return cell
     }

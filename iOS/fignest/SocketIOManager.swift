@@ -14,7 +14,7 @@ class SocketIOManager: NSObject {
     
     static let sharedInstance = SocketIOManager()
     
-    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://192.168.7.29:3010")!)
+    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://192.168.1.3:3010")!)
 
     override private init() {
         super.init()
@@ -52,6 +52,10 @@ class SocketIOManager: NSObject {
     
     func sendProgress(userId: String, eventId: String, level: Float) {
         socket.emit("progress", ["userId": userId, "eventId": eventId, "level": level])
+    }
+    
+    func sendMessage(userId: String, eventId: String, message: String) {
+        socket.emit("progress", ["userId": userId, "eventId": eventId, "message": message])
     }
     
     func emitDone(userId: String, eventId: String) {

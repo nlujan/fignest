@@ -12,7 +12,8 @@ Users (currently only supporting facebook auth).
     "name": (String) Name from facebook,
     "id": (String) Id from facebook,
     "email": (String) Email from facebook
-  }
+  },
+  "createdAt": (Date) Creation date
 }
 ```
 
@@ -20,21 +21,21 @@ Users (currently only supporting facebook auth).
 ```js
 GET /users
 
-response: (Array) <User Object>s
+response: (Array) <User>
 ```
 
 ```js
 POST /users
 
-request: <User Object>
+request: <User>
 
-response: <User Object>
+response: <User>
 ```
 
 ```js
 GET /usersMapById
 
-response: Object mapping user IDs to <User Object>s
+response: Hash mapping user IDs to <User>
 ```
 ___
 
@@ -55,8 +56,9 @@ An event is a fig, created by a single user who is able to invite others. Events
     "radius": (Number, optional) Radius of requested places in miles. Defaults to 1
   },
   "users": (Array) ids (String) of users invited to event. The id of the event creator should come first in the array,
-  "search" (String, optional) Additional search terms e.g. sushi, brunch,
-  "limit": (Number, optional) Number of places considered for the solution to this event. Defaults to 5
+  "search" (String, optional) Additional search terms e.g. "sushi", "brunch",
+  "limit": (Number, optional) Number of places considered for the solution to this event. Defaults to 6,
+  "createdAt": (Date) Creation date
 }
 ```
 
@@ -64,27 +66,27 @@ An event is a fig, created by a single user who is able to invite others. Events
 ```js
 GET /users/:userId/invitations
 
-response: (Array) <Event Object>s
+response: (Array) <Event>
 ```
 
 ```js
 GET /events/:eventId
 
-response: <Event Object>
+response: <Event>
 ```
 
 ```js
 POST /events
 
-request: <Event Object>
+request: <Event>
 
-response: <Event Object>
+response: <Event>
 ```
 ___
 
 ### Places
 
-A place is a restaurant. Several (default 5) places belong to a single event.
+A place is a restaurant. Several (default 6) places belong to a single event.
 
 ###### Representation
 ```js
@@ -95,14 +97,15 @@ A place is a restaurant. Several (default 5) places belong to a single event.
   "name": (String) Name of place,
   "rating": (Number) Yelp rating. One of [1, 1.5, ... 5],
   "urls": {
-    "reservation": (String) Reservation URL (SeatMe),
-    "delivery": (String) Delivery URL (Eat24),
+    "reservation": (String, optional) Reservation URL (SeatMe),
+    "delivery": (String, optional) Delivery URL (Eat24),
     "web": (String) Yelp web URL,
     "mobile": (String) Yelp mobile URL,
   },
   "phone": (String) Phone number of place,
   "location": (Object) Detailed yelp location data for address (see yelp documentation),
-  "images": (Array) 30 Image links (String)
+  "images": (Array) 6 Image links (String),
+  "createdAt": (Date) Creation date
 }
 ```
 
@@ -110,19 +113,19 @@ A place is a restaurant. Several (default 5) places belong to a single event.
 ```js
 GET /events/:eventId/places
 
-response: (Array) <Place Object>s
+response: (Array) <Place>
 ```
 
 ```js
 GET /events/:eventId/solution
 
-response: <Place Object>
+response: <Place>
 ```
 ___
 
 ### Actions
 
-Actions are performed on events. Each user performs a single action on an event, encompassing all their selection decisions. Thus, an event with 3 users involved will have 3 actions - one for each user.
+Actions are performed on events. Each user performs multiple actions on an event, encompassing all their selection decisions.
 
 ###### Representation
 
@@ -131,7 +134,8 @@ Actions are performed on events. Each user performs a single action on an event,
   "_id": (String) Id of action,
   "user": (String) Id of user performing action,
   "event": (String) Id of event that action belongs to,        
-  "selections": (Array) Selection info. The array should include an image item (see below) for every image shown to the user
+  "selections": (Array) Selection info. The array should include an image item (see below) for every image shown to the user,
+  "createdAt": (Date) Creation date
 }
 
 imageItem: {
@@ -146,15 +150,12 @@ imageItem: {
 ```js
 POST /events/:eventId/actions
 
-request: <Action Object>
+request: <Action>
 
-response: <Action Object>
+response: <Action>
 ```
 ___
 
 ### Notes
-* For simplcity, one representation is used for both `GET` and `POST` requests. However, you can omit `_id` when creating a new resource (since it won't exist yet). The response to the creation will be the same resource, with the newly created `id` included.
-* Likewise, an optional parameter may be omitted when creating resources. They will always be returned when reading a resource, with a value of `null` if it doesn't exist (and has no default value).
-* An action should be submitted for each user.
-* If a user quits an event midway (or never starts), an action should not be submitted for the user. I.e. they should not affect the solution to the event.
+* For simplcity, one representation is used for both `GET` and `POST` requests. However, you can omit certain optional properties, such as `_id` when creating a new resource (since it won't exist yet). The response to the creation will be the same resource, with the newly created `id` included.
 

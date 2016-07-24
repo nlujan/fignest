@@ -95,8 +95,7 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         
         let userInfo = users[indexPath.row]
         
-        cell.playerImage.image = ImageUtil().getFBImageFromID(userInfo["facebook"]["id"].stringValue)
-                
+        cell.playerImage.kf_setImageWithURL(NSURL(string: ImageUtil().getFBImageURL(userInfo["facebook"]["id"].stringValue))!, placeholderImage: nil)
         cell.nameLabel.text = userInfo["displayName"].stringValue
         
         let status = userInfo["status"].stringValue

@@ -94,7 +94,7 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostWaitingCell", forIndexPath: indexPath) as! PostWaitingCell
         
-        cell.playerImg.image = ImageUtil().getFBImageFromID(progressData[indexPath.row][0] as! String)
+        cell.playerImg.kf_setImageWithURL(NSURL(string: ImageUtil().getFBImageURL(progressData[indexPath.row][0] as! String))!, placeholderImage: nil)
         cell.playerProgress.progress = progressData[indexPath.row][1] as! Float
         cell.playerProgress.tintColor = colors[indexPath.row]
         

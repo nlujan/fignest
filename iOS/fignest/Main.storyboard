@@ -890,6 +890,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="postWaitingTable" destination="IqF-pz-chf" id="mop-hk-mRA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ZL-AJ-Dxi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

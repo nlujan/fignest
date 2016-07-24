@@ -51,21 +51,26 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     //MARK: Functions
     
     func joinRoom(userId: String, eventId: String) {
-        SocketIOManager.sharedInstance.joinRoom(userId, eventId: eventData.id, completionHandler: { (userList: JSON) -> Void in
+        SocketIOManager.sharedInstance.joinRoom(userId, eventId: eventData.id)
+    }
+    
+    func setupStatusListener() {
+        SocketIOManager.sharedInstance.setupStatusListener() { userList in
             dispatch_async(dispatch_get_main_queue(), {
-                
-                if userList.count == 0 {
-                    print("done!")
-                    
-                    self.performSegueWithIdentifier("showGameView", sender: nil)
-                    
-                } else {
-                    print("Status update received")
-                    self.users = userList
-                    self.waitingTable.reloadData()
-                }
+                print("Status update received")
+                self.users = userList
+                self.waitingTable.reloadData()
             })
-        })
+        }
+    }
+    
+    func setupStartListener() {
+        SocketIOManager.sharedInstance.setupStartListener() {
+            dispatch_async(dispatch_get_main_queue(), {
+                print("done!")
+                self.performSegueWithIdentifier("showGameView", sender: nil)
+            })
+        }
     }
     
     
@@ -114,9 +119,9 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         
         let userId = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
         
+        setupStatusListener()
+        setupStartListener()
         joinRoom(userId, eventId: eventData.id)
-
-        
     }
     
     override func didReceiveMemoryWarning() {

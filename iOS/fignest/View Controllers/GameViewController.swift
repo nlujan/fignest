@@ -26,7 +26,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     var foodImageStrings = []
     
-    var userTableData = [["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": 0], ["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": 0]]
+    var userTableData = [["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": 0]]
     
     var imagePlaceArray: [[String]] = []
     var foodImages: [UIImage] = []
@@ -101,7 +101,9 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         SocketIOManager.sharedInstance.setupProgressListener({ (progressData: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
-                let fbID = progressData[0]["user"]["facebook"]["id"].stringValue
+                print("ProgressData: \(progressData)")
+                
+                let fbID = progressData[0]["facebook"]["id"].stringValue
                 let progress = progressData[0]["level"].floatValue 
                 
                 print("level: \(progress)")
@@ -277,7 +279,12 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         let user = userTableData[indexPath.row]
         
-        cell.playerImage.image = ImageUtil().getFBImageFromID(user["id"] as! String)
+        print(user["id"])
+        
+        //cell.playerImage.image = ImageUtil().getFBImageFromID(user["id"] as! String)
+
+        
+        cell.playerImage.kf_setImageWithURL(NSURL(string: "http://graph.facebook.com/\(user["id"] as! String)/picture?width=1000&height=1000")!, placeholderImage: nil)
         
         cell.playerProgressBar.progress = user["progress"] as! Float
         cell.playerProgressBar.tintColor = colors[indexPath.row]

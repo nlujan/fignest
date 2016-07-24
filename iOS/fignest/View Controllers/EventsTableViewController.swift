@@ -59,7 +59,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     
     //MARK: Functions
     
-    func initTable(userID: String) {
+    func initTable(userID: String, completionHandler: () -> Void) {
         
         let group = dispatch_group_create()
         
@@ -80,6 +80,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
             self.activityIndicator.hidden = true
             self.activityView.hidden = true
             self.eventsTableView.reloadData()
+            completionHandler()
         }
     }
 
@@ -87,9 +88,9 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         
         print("refreshing happened!")
         
-        initTable(userID)
-        
-        refreshControl.endRefreshing()
+        initTable(userID) {
+            refreshControl.endRefreshing()
+        }
     }
 
     // MARK: - eventsTable DataSource
@@ -214,7 +215,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         
         activityIndicator.startAnimating()
         
-        initTable(userID)
+        initTable(userID) {}
         
         self.refreshControl?.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
     }

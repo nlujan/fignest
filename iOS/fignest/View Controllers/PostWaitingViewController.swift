@@ -13,10 +13,12 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     
     //MARK: Properties
     
-    var progressData: [[AnyObject]] = [["584566895045734", 1.0], ["10208530090233237", 0.5], ["584566895045734", 0.3]]
+    var progressData: [[AnyObject]] = []
     var eventData: Event?
     var colors: [UIColor] = StyleManager().progressViewColors
     let userId = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
+    
+    @IBOutlet var postWaitingTable: UITableView!
     
     //MARK: Actions
     
@@ -48,13 +50,37 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     
     //MARK: Functions
     
-    func gameDone(userId: String, eventId: String) {
-        SocketIOManager.sharedInstance.gameDone(userId, eventId: eventId, completionHandler: { (userList: JSON) -> Void in
+    func emitDone(userId: String, eventId: String) {
+        SocketIOManager.sharedInstance.emitDone(userId, eventId: eventId)
+    }
+    
+    func setupProgressAllListener() {
+        SocketIOManager.sharedInstance.setupProgressAllListener() { userList in
             dispatch_async(dispatch_get_main_queue(), {
                 print("User has finished game!!");
-                print(userList)
+                
+                var tempData: [[AnyObject]] = []
+                
+                for (_,user) in userList {
+                    if user["level"].float != nil {
+                        tempData.append([user["facebook"]["id"].stringValue, user["level"].floatValue])
+                        // now val is not nil and the Optional has been unwrapped, so use it
+                    } else {
+                        tempData.append([user["facebook"]["id"].stringValue, 0.0])
+                    }
+                }
+                self.progressData = tempData
+                self.postWaitingTable.reloadData()
             })
-        })
+        }
+    }
+    
+    func setupFinishListener() {
+        SocketIOManager.sharedInstance.setupFinishListener() {
+            dispatch_async(dispatch_get_main_queue(), {
+                self.performSegueWithIdentifier("ShowResults", sender: nil)
+            })
+        }
     }
     
     //MARK: Table DataSource
@@ -85,7 +111,10 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        gameDone(userId, eventId: eventData!.id)
+        setupProgressAllListener()
+        setupFinishListener()
+        emitDone(userId, eventId: eventData!.id)
+        
     }
     
     override func didReceiveMemoryWarning() {

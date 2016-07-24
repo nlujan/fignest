@@ -14,7 +14,7 @@ class SocketIOManager: NSObject {
     
     static let sharedInstance = SocketIOManager()
     
-    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://127.0.0.1:3010")!)
+    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://192.168.7.29:3010")!)
 
     override private init() {
         super.init()
@@ -28,16 +28,19 @@ class SocketIOManager: NSObject {
         socket.disconnect()
     }
     
-    func joinRoom(userId: String, eventId: String, completionHandler: (userList: JSON) -> Void) {
-        
+    func setupStatusListener(completionHandler: (userList: JSON) -> Void) {
         socket.on("status") { (jsonArray, ack) -> Void in
             completionHandler(userList: JSON(jsonArray[0]))
         }
-        
+    }
+    
+    func setupStartListener(completionHandler: () -> Void) {
         socket.on("start") { (jsonArray, ack) -> Void in
-            completionHandler(userList: [])
+            completionHandler()
         }
-        
+    }
+    
+    func joinRoom(userId: String, eventId: String) {
         socket.emit("join", ["userId": userId, "eventId": eventId])
     }
     
@@ -51,12 +54,19 @@ class SocketIOManager: NSObject {
         socket.emit("progress", ["userId": userId, "eventId": eventId, "level": level])
     }
     
-    func gameDone(userId: String, eventId: String, completionHandler: (userList: JSON) -> Void) {
-        
-        socket.on("status") { (jsonArray, ack) -> Void in
+    func emitDone(userId: String, eventId: String) {
+        socket.emit("done", ["userId": userId, "eventId": eventId])
+    }
+    
+    func setupProgressAllListener(completionHandler: (userList: JSON) -> Void) {
+        socket.on("progressAll") { (jsonArray, ack) -> Void in
             completionHandler(userList: JSON(jsonArray[0]))
         }
-        
-        socket.emit("done", ["userId": userId, "eventId": eventId])
+    }
+    
+    func setupFinishListener(completionHandler: () -> Void) {
+        socket.on("finish") { (jsonArray, ack) -> Void in
+            completionHandler()
+        }
     }
 }

@@ -88,7 +88,7 @@ function run() {
       var eventId = data.eventId;
       var user = _.find(rooms[eventId], (user) => user._id.toString() === userId);
       user.status = STATUS_DONE;
-      io.sockets.in(eventId).emit('status', rooms[eventId]);
+      io.sockets.in(eventId).emit('progressAll', rooms[eventId]);
 
       // Check if we should finish event
       if (shouldFinishEvent(eventId)) {

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var Mongo = require('./mongo');
 Mongo.connect().then((err) => {
@@ -51,7 +51,7 @@ function run() {
   // status start progress constants
 
   io.on('connection', (socket) => {
-    console.log('Client connected to socket');
+    console.log('Client connected to socket.io');
 
     socket.on('join', (data) => {
       // Race condition if 1 person joins before another is done joining
@@ -74,12 +74,13 @@ function run() {
       var eventId = data.eventId;
       var level = data.level;
       var user = _.find(rooms[eventId], (user) => user._id.toString() === userId);
+      user.level = level;
 
       // Broadcast to room (except client)
-      socket.broadcast.to(eventId).emit('progress', {
-        user: user,
-        level: level
-      });
+      socket.broadcast.to(eventId).emit('progress', user);
+
+      // Broadcast to everyone
+      io.sockets.in(eventId).emit('progressAll', rooms[eventId]);
     });
 
     socket.on('done', (data) => {

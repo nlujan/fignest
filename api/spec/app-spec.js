@@ -111,6 +111,7 @@ describe('API', () => {
         expect(body._id).not.toBeNull();
         expect(body.displayName).toBe(user0.facebook.name);
         expect(body.facebook.id).toBe(user0.facebook.id);
+        expect(body.createdAt != null).toBeTruthy();
         done();
       });
     });
@@ -211,7 +212,6 @@ describe('API', () => {
 
   // GET /events/:eventId
   describe('GET /events/:eventId', () => {
-
     describe('when the event exists', () => {
       it('returns the event', (done) => {
         var event = helper.getEvent();
@@ -253,6 +253,7 @@ describe('API', () => {
         expect(body._id).not.toBeNull();
         expect(body.name).toBe(event.name);
         expect(body.search).toBe(event.search);
+        expect(body.createdAt != null).toBeTruthy();
         expect(_.isNumber(body.location.radius)).toBeTruthy();
         done();
       });
@@ -288,6 +289,7 @@ describe('API', () => {
             _.each(response, (r) => {
               expect(r.images.length).toBe(Place.NUM_IMAGES_PER_PLACE);
               expect(r.event).toBe(event._id.toString());
+              expect(r.createdAt != null).toBeTruthy();
             });
             done();
           });
@@ -396,6 +398,7 @@ describe('API', () => {
           expect(body._id).not.toBeNull();
           expect(body.event).toBe(event._id.toString());
           expect(body.user).not.toBeNull();
+          expect(body.createdAt != null).toBeTruthy();
           expect(body.selections.length).toBe(action.selections.length);
           done();
         });

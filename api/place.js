@@ -20,6 +20,7 @@ class Place {
     this.images = params.images;
     this.phone = params.phone;
     this.location = params.location;
+    this.createdAt = params.createdAt;
   }
 
   asJson() {
@@ -81,6 +82,7 @@ class Place {
   	params.images = data.images || [];
   	params.phone = data.phone;
   	params.location = data.location;
+    params.createdAt = data.createdAt || new Date();
   	return new this(params);
   }
 

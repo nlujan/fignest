@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
-    "jasmine": "^2.4.1"
+    "jasmine": "^2.4.1",
+    "socket.io-client": "^1.4.8"
   }
 }

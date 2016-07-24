@@ -34,6 +34,7 @@ class Event {
     this.places = params.places;
     this.actions = params.actions;
     this.solution = params.solution;
+    this.createdAt = params.createdAt;
 	}
 
 	save() {
@@ -254,6 +255,7 @@ class Event {
     params.search = data.search || '';
     params.isOver = data.isOver == null ? false : data.isOver;
     params.limit = data.limit || EVENT_LIMIT_DEFAULT;
+    params.createdAt = data.createdAt || new Date();
     return new this(params);
   }
 

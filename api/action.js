@@ -11,6 +11,7 @@ class Action {
     this.user = params.user;
     this.event = params.event;
     this.selections = params.selections;
+    this.createdAt = params.createdAt;
 	}
 
 	asJson() {
@@ -42,6 +43,7 @@ class Action {
     params.selections = data.selections.map((selection) => {
       return _.extend(selection, { place: ObjectId(selection.place) });
     });
+    params.createdAt = data.createdAt || new Date();
     return new this(params);
 	}
 

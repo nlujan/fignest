@@ -14,6 +14,7 @@ class User {
     }
     this.displayName = params.displayName;
     this.facebook = params.facebook;
+    this.createdAt = params.createdAt;
 	}
 
 	asJson() {
@@ -136,6 +137,7 @@ class User {
     }
     params.displayName = this.getDisplayName(data);
     params.facebook = data.facebook;
+    params.createdAt = data.createdAt || new Date();
     return new this(params);
 	}
 

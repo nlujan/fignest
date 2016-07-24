@@ -52,7 +52,19 @@ describe('sockets', () => {
             });
           });
         });
+        client3.on('error', (err) => {
+          console.log(err);
+          done();
+        });
       });
+      client2.on('error', (err) => {
+        console.log(err);
+        done();
+      });
+    });
+    client1.on('error', (err) => {
+      console.log(err);
+      done();
     });
   });
 
@@ -272,8 +284,8 @@ describe('sockets', () => {
             done();  
           });
 
-          it('broadcasts everyone\'s status to the finished user', (done) => {
-            client1.on('status', (res) => {
+          it('broadcasts everyone\'s progressAll to the finished user', (done) => {
+            client1.on('progressAll', (res) => {
               var usersInRoom = _.map(res, '_id');
               var statusesInRoom = _.map(res, 'status');
               expect(usersInRoom).toContain(user0._id.toString());
@@ -284,8 +296,8 @@ describe('sockets', () => {
             });
           });
 
-          it('broadcasts everyone\'s status to the other user', (done) => {
-            client2.on('status', (res) => {
+          it('broadcasts everyone\'s progressAll to the other user', (done) => {
+            client2.on('progressAll', (res) => {
               var usersInRoom = _.map(res, '_id');
               var statusesInRoom = _.map(res, 'status');
               expect(usersInRoom).toContain(user0._id.toString());
@@ -311,8 +323,8 @@ describe('sockets', () => {
             done();  
           });
 
-          it('broadcasts everyone\'s status to the first user', (done) => {
-            client1.on('status', (res) => {
+          it('broadcasts everyone\'s progressAll to the first user', (done) => {
+            client1.on('progressAll', (res) => {
               var usersInRoom = _.map(res, '_id');
               var statusesInRoom = _.map(res, 'status');
               expect(usersInRoom).toContain(user0._id.toString());
@@ -324,8 +336,8 @@ describe('sockets', () => {
             });
           });
 
-          it('broadcasts everyone\'s status to the second user', (done) => {
-            client2.on('status', (res) => {
+          it('broadcasts everyone\'s progressAll to the second user', (done) => {
+            client2.on('progressAll', (res) => {
               var usersInRoom = _.map(res, '_id');
               var statusesInRoom = _.map(res, 'status');
               expect(usersInRoom).toContain(user0._id.toString());

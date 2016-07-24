@@ -20,7 +20,11 @@ class PlayerProgressCell: UITableViewCell {
         
         self.backgroundColor = UIColor.clearColor()
         
-        playerProgressBar.transform = CGAffineTransformScale(playerProgressBar.transform, 1, 10)
+        let height = self.bounds.height
+        let barHeight = playerProgressBar.bounds.height
+        let scale = (barHeight / 2.0) * (height * (1.0 / 5.0))
+        
+        playerProgressBar.transform = CGAffineTransformScale(playerProgressBar.transform, 1, scale)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

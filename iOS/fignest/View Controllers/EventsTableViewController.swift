@@ -150,6 +150,15 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
 //        })
     }
     
+    
+//        override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//            return UITableViewAutomaticDimension
+//        }
+//    
+//        override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//            return 100.0
+//        }
+    
     //MARK: picCollectionView DataSource
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

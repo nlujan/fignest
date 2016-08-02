@@ -22,7 +22,7 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
     
     var names = []
     var isSearching = false
-    var contacts: [NWSTokenContact]!
+    var contacts = [NWSTokenContact]()
     var selectedContacts = [NWSTokenContact]()
     var filteredContacts = [NWSTokenContact]()
     
@@ -33,16 +33,18 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddFriendsViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddFriendsViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
-        // Create list of contacts to test
-        var unsortedContacts: [NWSTokenContact] = [
-        ]
         
-        for name in names {
-            unsortedContacts.append(NWSTokenContact(name: name as! String, andImage: UIImage(named: "person")!))
+        if contacts.count == 0 {
+            // Create list of contacts to test
+            var unsortedContacts: [NWSTokenContact] = [
+            ]
+            
+            for name in names {
+                unsortedContacts.append(NWSTokenContact(name: name as! String, andImage: UIImage(named: "person")!))
+            }
+            
+            contacts = NWSTokenContact.sortedContacts(unsortedContacts)
         }
-        
-        contacts = NWSTokenContact.sortedContacts(unsortedContacts)
-        
     }
 
     override func viewWillAppear(animated: Bool)
@@ -157,12 +159,9 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
         let currentContacts: [NWSTokenContact]!
         
         // Check if searching
-        if isSearching
-        {
+        if isSearching {
             currentContacts = filteredContacts
-        }
-        else
-        {
+        } else {
             currentContacts = contacts
         }
         
@@ -173,14 +172,12 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
-    {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! NWSTokenViewExampleCell
         cell.selected = false
         
         // Check if already selected
-        if !selectedContacts.contains(cell.contact)
-        {
+        if !selectedContacts.contains(cell.contact) {
             cell.contact.isSelected = true
             selectedContacts.append(cell.contact)
             isSearching = false
@@ -193,14 +190,12 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: DZNEmptyDataSetSource
     func customViewForEmptyDataSet(scrollView: UIScrollView!) -> UIView! {
         
-        if let view = UINib(nibName: "EmptyDataSet", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as? UIView
-        {
+        if let view = UINib(nibName: "EmptyDataSet", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as? UIView {
             view.frame = scrollView.bounds
             view.translatesAutoresizingMaskIntoConstraints = false
             view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
             return view
         }
-
         return nil
     }
     

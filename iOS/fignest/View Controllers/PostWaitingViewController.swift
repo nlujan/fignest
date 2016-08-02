@@ -69,12 +69,11 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
                 
                 for (_,user) in userList {
                     if user["level"].float != nil {
-                        if user["level"]["hasMessage"].boolValue {
+                        if user["hasMessage"].boolValue {
                             tempData.append([user["facebook"]["id"].stringValue, user["message"].stringValue])
                         } else {
                             tempData.append([user["facebook"]["id"].stringValue, user["level"].floatValue])
                         }
-                        // now val is not nil and the Optional has been unwrapped, so use it
                     } else {
                         tempData.append([user["facebook"]["id"].stringValue, 0.0])
                     }
@@ -96,7 +95,6 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     //MARK: Table DataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return progressData.count
     }
     
@@ -105,13 +103,23 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
         let cell = tableView.dequeueReusableCellWithIdentifier("PostWaitingCell", forIndexPath: indexPath) as! PostWaitingCell
         
         cell.playerImg.kf_setImageWithURL(NSURL(string: ImageUtil().getFBImageURL(progressData[indexPath.row][0] as! String))!, placeholderImage: nil)
-        cell.playerProgress.progress = progressData[indexPath.row][1] as! Float
-        cell.playerProgress.tintColor = colors[indexPath.row]
         
-        cell.playerProgress.trackTintColor = colors[indexPath.row].colorWithAlphaComponent(0.5)
+        let data = progressData[indexPath.row][1]
         
-        cell.playerProgress.backgroundColor = UIColor.blackColor()
         
+        if data is Float {
+            cell.playerProgress.hidden = false
+            cell.messageLabel.hidden = true
+            
+            cell.playerProgress.progress = data as! Float
+            cell.playerProgress.tintColor = colors[indexPath.row]
+            cell.playerProgress.trackTintColor = colors[indexPath.row].colorWithAlphaComponent(0.5)
+            cell.playerProgress.backgroundColor = UIColor.blackColor()
+        } else {
+            cell.playerProgress.hidden = true
+            cell.messageLabel.hidden = false
+            cell.messageLabel.text = data as! String
+        }
         
         return cell
     }

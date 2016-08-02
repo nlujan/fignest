@@ -24,6 +24,8 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate {
     
     var names:[String] = []
     var selectedNames:[String] = []
+    
+    var contacts = [NWSTokenContact]()
     var selectedContacts = [NWSTokenContact]()
     
     var eventData: Event!
@@ -52,23 +54,24 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate {
             let view: AddFriendsViewController = unwindSegue.sourceViewController as! AddFriendsViewController
             
             selectedContacts = view.selectedContacts
+            contacts = view.contacts
             
             if selectedContacts.count == 0 {
-                friendsIcon.image = UIImage(named: "ic_add_circle_outline")
-                friendsIcon.image = friendsIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-                friendsIcon.tintColor = StyleManager().primaryColor
+                friendsIcon.image = UIImage(named: "ic_add_circle_outline_white")
+                //friendsIcon.image = friendsIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                //friendsIcon.tintColor = StyleManager().primaryColor
                 
                 friendsLabel.text = "Add friends"
                 
-                friendsLabel.textColor = UIColor(red:0.784, green:0.78, blue:0.8, alpha:1)
+                //friendsLabel.textColor = UIColor(red:0.784, green:0.78, blue:0.8, alpha:1)
             } else {
-                friendsIcon.image = UIImage(named: "ic_mode_edit")
-                friendsIcon.image = friendsIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-                friendsIcon.tintColor = StyleManager().primaryColor
+                friendsIcon.image = UIImage(named: "ic_mode_edit_white")
+                //friendsIcon.image = friendsIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                //friendsIcon.tintColor = StyleManager().primaryColor
                 
                 friendsLabel.text = "\(selectedContacts.count) Friend(s) Added"
                 
-                friendsLabel.textColor = UIColor.blackColor()
+                //friendsLabel.textColor = UIColor.blackColor()
             }
         }
     }
@@ -220,6 +223,8 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //IQKeyboardManager.sharedManager().enable = true
+        
         getAllUsers()
         
         locationActivityIndicator.hidden = true
@@ -241,23 +246,14 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate {
         locationBtn.tintColor = UIColor.blueColor()
         
 
-        friendsIcon.image = UIImage(named: "ic_add_circle_outline")
-
-        
-        friendsIcon.image = friendsIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        friendsIcon.tintColor = StyleManager().primaryColor
-        
+        friendsIcon.image = UIImage(named: "ic_add_circle_outline_white")
         
         addFriendsView.layer.borderWidth = 0.5
         addFriendsView.layer.borderColor = UIColor(red:0.784, green:0.78, blue:0.8, alpha:1).CGColor
         
         addFriendsView.layer.cornerRadius = 5
-        
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -283,8 +279,14 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate {
             
             let viewController = navController.topViewController as! AddFriendsViewController
             
-            viewController.names = self.names
+            if self.contacts.count == 0 {
+                viewController.names = self.names
+            }
+            
+            viewController.contacts = self.contacts
+            
             viewController.selectedContacts = self.selectedContacts
+            
             
         }
         

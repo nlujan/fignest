@@ -12,6 +12,7 @@ class PostWaitingCell: UITableViewCell {
     
     @IBOutlet var playerImg: UIImageView!
     @IBOutlet var playerProgress: UIProgressView!
+    @IBOutlet var messageLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

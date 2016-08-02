@@ -11,8 +11,9 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import SwiftyJSON
 import Kingfisher
+import DZNEmptyDataSet
 
-class EventsTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class EventsTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     
     //MARK: Properties
@@ -21,6 +22,8 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     var selectedEventData: Event!
     var userIDMapping: JSON = []
     let userID = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
+    
+    var userHasNoEvents = false
     
     @IBOutlet var eventsTableView: UITableView!
     @IBOutlet var activityView: UIView!
@@ -79,6 +82,13 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
             self.activityIndicator.stopAnimating()
             self.activityIndicator.hidden = true
             self.activityView.hidden = true
+            
+            if self.events.count == 0 {
+                self.userHasNoEvents = true
+            } else {
+                self.userHasNoEvents = false
+            }
+            
             self.eventsTableView.reloadData()
             completionHandler()
         }
@@ -106,8 +116,6 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! EventsTableViewCell
-        
-        print(events[indexPath.row])
         
         cell.figLabel.text = events[indexPath.row].name
         cell.searchLabel.text = events[indexPath.row].searchText
@@ -209,6 +217,23 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("cell \(indexPath.row) selected")
     }
+    
+    
+    // MARK: DZNEmptyDataSetSource
+    func customViewForEmptyDataSet(scrollView: UIScrollView!) -> UIView! {
+        print(userHasNoEvents)
+        
+        if userHasNoEvents == true {
+            if let view = UINib(nibName: "EmptyEvents", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as? UIView {
+                view.frame = scrollView.bounds
+                view.translatesAutoresizingMaskIntoConstraints = false
+                view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+                return view
+            }
+        }
+        return nil
+    }
+    
     
     //MARK: Override Functions
     

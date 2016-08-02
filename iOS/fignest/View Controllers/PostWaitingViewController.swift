@@ -33,7 +33,7 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
             (alert: UIAlertAction!) -> Void in
-            print("Cancelled")
+            //print("Cancelled")
         })
         
         optionMenu.addAction(logoutAction)
@@ -46,7 +46,6 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     
     @IBAction func sendPostWaitingMessage(sender: UIButton) {
         sendMessage(userId, eventId: eventData!.id, message: sender.currentTitle!)
-        print(sender.currentTitle!)
     }
     
     //MARK: Functions
@@ -62,8 +61,7 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     func setupProgressAllListener() {
         SocketIOManager.sharedInstance.setupProgressAllListener() { userList in
             dispatch_async(dispatch_get_main_queue(), {
-                print("User has finished game!!");
-                print(userList)
+                //print("User has finished game!!");
                 
                 var tempData: [[AnyObject]] = []
                 

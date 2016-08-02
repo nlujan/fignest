@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1A8FC296FB2F28C5E6D005C1 /* Pods_fignest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67A56EB2959AD0BA62C6F18C /* Pods_fignest.framework */; };
+		2B3AF0501D4AF4950018885A /* AddFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AF04F1D4AF4950018885A /* AddFriendsViewController.swift */; };
 		2B3EA2D71C94D1C500079C1A /* UserImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */; };
 		2B3EA2D81C94D1C500079C1A /* UserImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */; };
 		2B3EA2D91C94D1C500079C1A /* UserImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */; };
@@ -32,6 +33,15 @@
 		2B40B2AB1CB9B252009EBD54 /* CollectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B40B2AA1CB9B252009EBD54 /* CollectionExtension.swift */; };
 		2B40B2AC1CB9B252009EBD54 /* CollectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B40B2AA1CB9B252009EBD54 /* CollectionExtension.swift */; };
 		2B40B2AD1CB9B252009EBD54 /* CollectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B40B2AA1CB9B252009EBD54 /* CollectionExtension.swift */; };
+		2B40DBA91D49D1BC00F2C2CF /* EmptyDataSet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B40DBA51D49D1BC00F2C2CF /* EmptyDataSet.xib */; };
+		2B40DBAA1D49D1BD00F2C2CF /* EmptyDataSet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B40DBA51D49D1BC00F2C2CF /* EmptyDataSet.xib */; };
+		2B40DBAB1D49D1BD00F2C2CF /* EmptyDataSet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B40DBA51D49D1BC00F2C2CF /* EmptyDataSet.xib */; };
+		2B40DBAC1D49D1BD00F2C2CF /* NWSImageToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B40DBA71D49D1BC00F2C2CF /* NWSImageToken.swift */; };
+		2B40DBAD1D49D1BD00F2C2CF /* NWSImageToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B40DBA71D49D1BC00F2C2CF /* NWSImageToken.swift */; };
+		2B40DBAE1D49D1BD00F2C2CF /* NWSImageToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B40DBA71D49D1BC00F2C2CF /* NWSImageToken.swift */; };
+		2B40DBAF1D49D1BD00F2C2CF /* NWSImageToken.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B40DBA81D49D1BC00F2C2CF /* NWSImageToken.xib */; };
+		2B40DBB01D49D1BD00F2C2CF /* NWSImageToken.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B40DBA81D49D1BC00F2C2CF /* NWSImageToken.xib */; };
+		2B40DBB11D49D1BD00F2C2CF /* NWSImageToken.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B40DBA81D49D1BC00F2C2CF /* NWSImageToken.xib */; };
 		2B4512CD1C8FB02200F14099 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512CC1C8FB02200F14099 /* GameViewController.swift */; };
 		2B4512CE1C8FB02200F14099 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512CC1C8FB02200F14099 /* GameViewController.swift */; };
 		2B4512CF1C8FB02200F14099 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4512CC1C8FB02200F14099 /* GameViewController.swift */; };
@@ -75,18 +85,6 @@
 		2BBE48B11CCB203800618B5C /* NavigationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE48B01CCB203800618B5C /* NavigationUtil.swift */; };
 		2BBE48B21CCB203800618B5C /* NavigationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE48B01CCB203800618B5C /* NavigationUtil.swift */; };
 		2BBE48B31CCB203800618B5C /* NavigationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE48B01CCB203800618B5C /* NavigationUtil.swift */; };
-		2BCEBBF41D3247D500A75B95 /* CLBackspaceDetectingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF11D3247D500A75B95 /* CLBackspaceDetectingTextField.swift */; };
-		2BCEBBF51D3247D500A75B95 /* CLBackspaceDetectingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF11D3247D500A75B95 /* CLBackspaceDetectingTextField.swift */; };
-		2BCEBBF61D3247D500A75B95 /* CLBackspaceDetectingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF11D3247D500A75B95 /* CLBackspaceDetectingTextField.swift */; };
-		2BCEBBF71D3247D500A75B95 /* CLToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF21D3247D500A75B95 /* CLToken.swift */; };
-		2BCEBBF81D3247D500A75B95 /* CLToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF21D3247D500A75B95 /* CLToken.swift */; };
-		2BCEBBF91D3247D500A75B95 /* CLToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF21D3247D500A75B95 /* CLToken.swift */; };
-		2BCEBBFA1D3247D500A75B95 /* CLTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF31D3247D500A75B95 /* CLTokenView.swift */; };
-		2BCEBBFB1D3247D500A75B95 /* CLTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF31D3247D500A75B95 /* CLTokenView.swift */; };
-		2BCEBBFC1D3247D500A75B95 /* CLTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBF31D3247D500A75B95 /* CLTokenView.swift */; };
-		2BCEBBFF1D32492B00A75B95 /* CLTokenInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBFE1D32492B00A75B95 /* CLTokenInputView.swift */; };
-		2BCEBC001D32492B00A75B95 /* CLTokenInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBFE1D32492B00A75B95 /* CLTokenInputView.swift */; };
-		2BCEBC011D32492B00A75B95 /* CLTokenInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCEBBFE1D32492B00A75B95 /* CLTokenInputView.swift */; };
 		2BDC73F51CB7E31700C77218 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC73F41CB7E31700C77218 /* ImageUtil.swift */; };
 		2BDC73F61CB7E31700C77218 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC73F41CB7E31700C77218 /* ImageUtil.swift */; };
 		2BDC73F71CB7E31700C77218 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC73F41CB7E31700C77218 /* ImageUtil.swift */; };
@@ -121,6 +119,7 @@
 /* Begin PBXFileReference section */
 		19BC61A4318FBC85003149B5 /* Pods-fignestUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fignestUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fignestUITests/Pods-fignestUITests.release.xcconfig"; sourceTree = "<group>"; };
 		288F4D3554E27184EE5C7A62 /* Pods-fignestUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fignestUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-fignestUITests/Pods-fignestUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		2B3AF04F1D4AF4950018885A /* AddFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendsViewController.swift; sourceTree = "<group>"; };
 		2B3EA2D61C94D1C500079C1A /* UserImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserImageCell.swift; sourceTree = "<group>"; };
 		2B3EA2E61C95DBD400079C1A /* PreWaitingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreWaitingViewController.swift; sourceTree = "<group>"; };
 		2B3EA2EA1C95DD2800079C1A /* PreWaitingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreWaitingCell.swift; sourceTree = "<group>"; };
@@ -129,6 +128,9 @@
 		2B3EA3501C9DF7C000079C1A /* PostWaitingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostWaitingViewController.swift; sourceTree = "<group>"; };
 		2B3EA3541C9DF91700079C1A /* PostWaitingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostWaitingCell.swift; sourceTree = "<group>"; };
 		2B40B2AA1CB9B252009EBD54 /* CollectionExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionExtension.swift; sourceTree = "<group>"; };
+		2B40DBA51D49D1BC00F2C2CF /* EmptyDataSet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyDataSet.xib; sourceTree = "<group>"; };
+		2B40DBA71D49D1BC00F2C2CF /* NWSImageToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWSImageToken.swift; sourceTree = "<group>"; };
+		2B40DBA81D49D1BC00F2C2CF /* NWSImageToken.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NWSImageToken.xib; sourceTree = "<group>"; };
 		2B4512CC1C8FB02200F14099 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		2B4512D01C8FEF3000F14099 /* FoodCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodCell.swift; sourceTree = "<group>"; };
 		2B4512F41C92564700F14099 /* PlayerProgressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerProgressCell.swift; sourceTree = "<group>"; };
@@ -154,10 +156,6 @@
 		2BAAE8541C8AA7100004D067 /* EventsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsTableViewCell.swift; sourceTree = "<group>"; };
 		2BAAE8581C8B9FE50004D067 /* NewEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewEventViewController.swift; sourceTree = "<group>"; };
 		2BBE48B01CCB203800618B5C /* NavigationUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationUtil.swift; sourceTree = "<group>"; };
-		2BCEBBF11D3247D500A75B95 /* CLBackspaceDetectingTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLBackspaceDetectingTextField.swift; sourceTree = "<group>"; };
-		2BCEBBF21D3247D500A75B95 /* CLToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLToken.swift; sourceTree = "<group>"; };
-		2BCEBBF31D3247D500A75B95 /* CLTokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLTokenView.swift; sourceTree = "<group>"; };
-		2BCEBBFE1D32492B00A75B95 /* CLTokenInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLTokenInputView.swift; sourceTree = "<group>"; };
 		2BDC73F41CB7E31700C77218 /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
 		2BF4EDBD1CC41B6900CECDD3 /* PerformanceUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceUtil.swift; sourceTree = "<group>"; };
 		44F06D32490BEA1BDEE58698 /* Pods-fignest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fignest.release.xcconfig"; path = "Pods/Target Support Files/Pods-fignest/Pods-fignest.release.xcconfig"; sourceTree = "<group>"; };
@@ -207,6 +205,16 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		2B3AF0561D4B1B8E0018885A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2B40DBA51D49D1BC00F2C2CF /* EmptyDataSet.xib */,
+				2B3EA2D41C94BDD900079C1A /* Custom Cells */,
+				2B40DBA61D49D1BC00F2C2CF /* NWSImageToken */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		2B3EA2D31C94BD9000079C1A /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,6 +223,7 @@
 				2BAAE8581C8B9FE50004D067 /* NewEventViewController.swift */,
 				2B3EA2E61C95DBD400079C1A /* PreWaitingViewController.swift */,
 				2B4512CC1C8FB02200F14099 /* GameViewController.swift */,
+				2B3AF04F1D4AF4950018885A /* AddFriendsViewController.swift */,
 				2B3EA3501C9DF7C000079C1A /* PostWaitingViewController.swift */,
 				2B4F02781CA4DD1700ACE165 /* ResultsViewController.swift */,
 			);
@@ -232,6 +241,15 @@
 				2B3EA3541C9DF91700079C1A /* PostWaitingCell.swift */,
 			);
 			path = "Custom Cells";
+			sourceTree = "<group>";
+		};
+		2B40DBA61D49D1BC00F2C2CF /* NWSImageToken */ = {
+			isa = PBXGroup;
+			children = (
+				2B40DBA71D49D1BC00F2C2CF /* NWSImageToken.swift */,
+				2B40DBA81D49D1BC00F2C2CF /* NWSImageToken.xib */,
+			);
+			path = NWSImageToken;
 			sourceTree = "<group>";
 		};
 		2B5E0F921CBDD5B100F65BA9 /* Extensions */ = {
@@ -275,11 +293,10 @@
 		2BAAE81A1C8A9CAE0004D067 /* fignest */ = {
 			isa = PBXGroup;
 			children = (
-				2BCEBBFD1D3247E700A75B95 /* CLTokenInputView */,
+				2B3AF0561D4B1B8E0018885A /* Views */,
 				2B8404421CD2E284005A5498 /* Enums */,
 				2B0CDB751CBF1A57006C24EE /* Utils */,
 				2B5E0F921CBDD5B100F65BA9 /* Extensions */,
-				2B3EA2D41C94BDD900079C1A /* Custom Cells */,
 				2B3EA2D31C94BD9000079C1A /* View Controllers */,
 				2B3EA3441C95F07400079C1A /* SocketIOManager.swift */,
 				2B3EA3481C9DE09900079C1A /* APIRequestHandler.swift */,
@@ -311,17 +328,6 @@
 				2BAAE8401C8A9CAE0004D067 /* Info.plist */,
 			);
 			path = fignestUITests;
-			sourceTree = "<group>";
-		};
-		2BCEBBFD1D3247E700A75B95 /* CLTokenInputView */ = {
-			isa = PBXGroup;
-			children = (
-				2BCEBBFE1D32492B00A75B95 /* CLTokenInputView.swift */,
-				2BCEBBF31D3247D500A75B95 /* CLTokenView.swift */,
-				2BCEBBF11D3247D500A75B95 /* CLBackspaceDetectingTextField.swift */,
-				2BCEBBF21D3247D500A75B95 /* CLToken.swift */,
-			);
-			path = CLTokenInputView;
 			sourceTree = "<group>";
 		};
 		8140666AAF70E8EA850C604E /* Frameworks */ = {
@@ -417,7 +423,7 @@
 		2BAAE8101C8A9CAE0004D067 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = fignest;
 				TargetAttributes = {
@@ -464,6 +470,8 @@
 			files = (
 				2BAAE8291C8A9CAE0004D067 /* LaunchScreen.storyboard in Resources */,
 				2B4F02751CA3A93800ACE165 /* Main.storyboard in Resources */,
+				2B40DBAF1D49D1BD00F2C2CF /* NWSImageToken.xib in Resources */,
+				2B40DBA91D49D1BC00F2C2CF /* EmptyDataSet.xib in Resources */,
 				2BAAE8261C8A9CAE0004D067 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -472,7 +480,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B40DBAA1D49D1BD00F2C2CF /* EmptyDataSet.xib in Resources */,
 				2B4F02761CA3A93800ACE165 /* Main.storyboard in Resources */,
+				2B40DBB01D49D1BD00F2C2CF /* NWSImageToken.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,7 +490,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B40DBAB1D49D1BD00F2C2CF /* EmptyDataSet.xib in Resources */,
 				2B4F02771CA3A93800ACE165 /* Main.storyboard in Resources */,
+				2B40DBB11D49D1BD00F2C2CF /* NWSImageToken.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,10 +630,10 @@
 				2B3EA3511C9DF7C000079C1A /* PostWaitingViewController.swift in Sources */,
 				2B4F02791CA4DD1700ACE165 /* ResultsViewController.swift in Sources */,
 				2B4512CD1C8FB02200F14099 /* GameViewController.swift in Sources */,
-				2BCEBBFF1D32492B00A75B95 /* CLTokenInputView.swift in Sources */,
+				2B3AF0501D4AF4950018885A /* AddFriendsViewController.swift in Sources */,
 				2B3EA3551C9DF91700079C1A /* PostWaitingCell.swift in Sources */,
+				2B40DBAC1D49D1BD00F2C2CF /* NWSImageToken.swift in Sources */,
 				2B3EA2E71C95DBD400079C1A /* PreWaitingViewController.swift in Sources */,
-				2BCEBBF41D3247D500A75B95 /* CLBackspaceDetectingTextField.swift in Sources */,
 				2BDC73F51CB7E31700C77218 /* ImageUtil.swift in Sources */,
 				2B3EA3451C95F07400079C1A /* SocketIOManager.swift in Sources */,
 				2B3EA2D71C94D1C500079C1A /* UserImageCell.swift in Sources */,
@@ -634,9 +646,7 @@
 				2BAAE8241C8A9CAE0004D067 /* fignest.xcdatamodeld in Sources */,
 				2B8BA95B1CA2495A003C1250 /* Event.swift in Sources */,
 				2BAAE81C1C8A9CAE0004D067 /* AppDelegate.swift in Sources */,
-				2BCEBBFA1D3247D500A75B95 /* CLTokenView.swift in Sources */,
 				2BAAE8591C8B9FE50004D067 /* NewEventViewController.swift in Sources */,
-				2BCEBBF71D3247D500A75B95 /* CLToken.swift in Sources */,
 				2B4512D11C8FEF3000F14099 /* FoodCell.swift in Sources */,
 				2B591AB51CAF6A0300F307D3 /* StyleManager.swift in Sources */,
 				2BAAE8551C8AA7100004D067 /* EventsTableViewCell.swift in Sources */,
@@ -653,10 +663,9 @@
 				2B4F027A1CA4DD1700ACE165 /* ResultsViewController.swift in Sources */,
 				2BAAE84E1C8A9D8A0004D067 /* LoginViewController.swift in Sources */,
 				2B3EA2E81C95DBD400079C1A /* PreWaitingViewController.swift in Sources */,
-				2BCEBC001D32492B00A75B95 /* CLTokenInputView.swift in Sources */,
 				2B3EA3461C95F07400079C1A /* SocketIOManager.swift in Sources */,
+				2B40DBAD1D49D1BD00F2C2CF /* NWSImageToken.swift in Sources */,
 				2BAAE85A1C8B9FE50004D067 /* NewEventViewController.swift in Sources */,
-				2BCEBBF51D3247D500A75B95 /* CLBackspaceDetectingTextField.swift in Sources */,
 				2BAAE8561C8AA7100004D067 /* EventsTableViewCell.swift in Sources */,
 				2B4512CE1C8FB02200F14099 /* GameViewController.swift in Sources */,
 				2B4512F61C92564700F14099 /* PlayerProgressCell.swift in Sources */,
@@ -669,9 +678,7 @@
 				2B40B2AC1CB9B252009EBD54 /* CollectionExtension.swift in Sources */,
 				2B4512D21C8FEF3000F14099 /* FoodCell.swift in Sources */,
 				2BAAE8341C8A9CAE0004D067 /* fignestTests.swift in Sources */,
-				2BCEBBFB1D3247D500A75B95 /* CLTokenView.swift in Sources */,
 				2BDC73F61CB7E31700C77218 /* ImageUtil.swift in Sources */,
-				2BCEBBF81D3247D500A75B95 /* CLToken.swift in Sources */,
 				2B3EA3561C9DF91700079C1A /* PostWaitingCell.swift in Sources */,
 				2B3EA2EC1C95DD2800079C1A /* PreWaitingCell.swift in Sources */,
 				2B591AB61CAF6A0300F307D3 /* StyleManager.swift in Sources */,
@@ -688,10 +695,9 @@
 				2B4F027B1CA4DD1700ACE165 /* ResultsViewController.swift in Sources */,
 				2BAAE84F1C8A9D8A0004D067 /* LoginViewController.swift in Sources */,
 				2B3EA2E91C95DBD400079C1A /* PreWaitingViewController.swift in Sources */,
-				2BCEBC011D32492B00A75B95 /* CLTokenInputView.swift in Sources */,
 				2B3EA3471C95F07400079C1A /* SocketIOManager.swift in Sources */,
+				2B40DBAE1D49D1BD00F2C2CF /* NWSImageToken.swift in Sources */,
 				2BAAE85B1C8B9FE50004D067 /* NewEventViewController.swift in Sources */,
-				2BCEBBF61D3247D500A75B95 /* CLBackspaceDetectingTextField.swift in Sources */,
 				2BAAE8571C8AA7100004D067 /* EventsTableViewCell.swift in Sources */,
 				2B4512CF1C8FB02200F14099 /* GameViewController.swift in Sources */,
 				2B4512F71C92564700F14099 /* PlayerProgressCell.swift in Sources */,
@@ -704,9 +710,7 @@
 				2B40B2AD1CB9B252009EBD54 /* CollectionExtension.swift in Sources */,
 				2B4512D31C8FEF3000F14099 /* FoodCell.swift in Sources */,
 				2BAAE83F1C8A9CAE0004D067 /* fignestUITests.swift in Sources */,
-				2BCEBBFC1D3247D500A75B95 /* CLTokenView.swift in Sources */,
 				2BDC73F71CB7E31700C77218 /* ImageUtil.swift in Sources */,
-				2BCEBBF91D3247D500A75B95 /* CLToken.swift in Sources */,
 				2B3EA3571C9DF91700079C1A /* PostWaitingCell.swift in Sources */,
 				2B3EA2ED1C95DD2800079C1A /* PreWaitingCell.swift in Sources */,
 				2B591AB71CAF6A0300F307D3 /* StyleManager.swift in Sources */,
@@ -828,13 +832,14 @@
 			baseConfigurationReference = 5C6C504B9C60421FE9A4EF54 /* Pods-fignest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = fignest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fignest.fignest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -843,13 +848,13 @@
 			baseConfigurationReference = 44F06D32490BEA1BDEE58698 /* Pods-fignest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = fignest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fignest.fignest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
@@ -859,11 +864,14 @@
 			baseConfigurationReference = F652A2181EFB14AD2ED43395 /* Pods-fignestTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = fignestTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fignest.fignestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "fignest/Resources/DZNEmptyDataSet/fignestTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fignest.app/fignest";
 			};
 			name = Debug;
@@ -873,11 +881,13 @@
 			baseConfigurationReference = 8FDFED838BDBF4DD847D5B6A /* Pods-fignestTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = fignestTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fignest.fignestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "fignest/Resources/DZNEmptyDataSet/fignestTests-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fignest.app/fignest";
 			};
 			name = Release;
@@ -886,11 +896,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 288F4D3554E27184EE5C7A62 /* Pods-fignestUITests.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = fignestUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fignest.fignestUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_TARGET_NAME = fignest;
 				USES_XCTRUNNER = YES;
 			};
@@ -900,6 +912,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 19BC61A4318FBC85003149B5 /* Pods-fignestUITests.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = fignestUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

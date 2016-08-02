@@ -6,31 +6,40 @@ PODS:
   - Bolts/AppLinks (1.8.1):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.1)
+  - DZNEmptyDataSet (1.8.1)
   - FBSDKCoreKit (4.13.1):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.13.1):
     - FBSDKCoreKit
+  - IQKeyboardManagerSwift (4.0.4)
   - Kingfisher (2.4.1)
+  - NWSTokenView (1.0.1)
   - Socket.IO-Client-Swift (6.1.4)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
   - Alamofire (~> 3.4)
+  - DZNEmptyDataSet (~> 1.8)
   - FBSDKCoreKit (~> 4.13)
   - FBSDKLoginKit (~> 4.13)
+  - IQKeyboardManagerSwift (~> 4.0)
   - Kingfisher (~> 2.4)
+  - NWSTokenView (~> 1.0)
   - Socket.IO-Client-Swift (~> 6.1)
   - SwiftyJSON (~> 2.3)
 
 SPEC CHECKSUMS:
   Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
   Bolts: 89c0c6dd1b9c975a3452a62d57a6be6739e5f433
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FBSDKCoreKit: 2807fe0da2ddb49a1469da6d6ff597f99912980f
   FBSDKLoginKit: 6d350cb6a22d6956e9d078885de6ee8a0ebc51b4
+  IQKeyboardManagerSwift: e0964d04d6a29b71016fd346dca13ecb80a2823a
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
+  NWSTokenView: aa87c58c1fb6cc4ce1508ebd81228792542bf7cd
   Socket.IO-Client-Swift: 79dfbbe170d7816c84e2d3cc2baa3d227549e067
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: 46993bb7f9e028db90054182e8b2d1636c7157b2
+PODFILE CHECKSUM: a14a28e1261e84eca285ad251e619de2a4b65275
 
 COCOAPODS: 1.0.1

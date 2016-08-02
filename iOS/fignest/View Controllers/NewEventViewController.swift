@@ -10,22 +10,24 @@ import UIKit
 import CoreLocation
 import SwiftyJSON
 
-class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTokenInputViewDelegate, UITableViewDataSource, UITableViewDelegate {
+class NewEventViewController: UIViewController, CLLocationManagerDelegate {
     
     
     //MARK: Properties
     
     let userID: String = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
     
+    @IBOutlet var friendsLabel: UILabel!
+    @IBOutlet var friendsIcon: UIImageView!
+    
+    @IBOutlet var addFriendsView: UIView!
+    
     var names:[String] = []
-    var filteredNames:[String] = []
     var selectedNames:[String] = []
+    var selectedContacts = [NWSTokenContact]()
     
     var eventData: Event!
     var nameDict: [String: String] = [:]
-    
-    @IBOutlet var tableView: UITableView!
-    @IBOutlet var tokenInputView: CLTokenInputView!
     
     @IBOutlet var locationBtn: UIButton!
     @IBOutlet var locationActivityIndicator: UIActivityIndicatorView!
@@ -37,6 +39,39 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
     let locationManager = CLLocationManager()
     
     //MARK: Actions
+    @IBAction func addFriendsPressed(sender: AnyObject) {
+        
+        print("pressed!!!!!")
+        
+        performSegueWithIdentifier("addFriendsSegue", sender: nil)
+    }
+    
+    @IBAction func unwindAddFriendsView(unwindSegue: UIStoryboardSegue){
+    
+        if(unwindSegue.sourceViewController.isKindOfClass(AddFriendsViewController)) {
+            let view: AddFriendsViewController = unwindSegue.sourceViewController as! AddFriendsViewController
+            
+            selectedContacts = view.selectedContacts
+            
+            if selectedContacts.count == 0 {
+                friendsIcon.image = UIImage(named: "ic_add_circle_outline")
+                friendsIcon.image = friendsIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                friendsIcon.tintColor = StyleManager().primaryColor
+                
+                friendsLabel.text = "Add friends"
+                
+                friendsLabel.textColor = UIColor(red:0.784, green:0.78, blue:0.8, alpha:1)
+            } else {
+                friendsIcon.image = UIImage(named: "ic_mode_edit")
+                friendsIcon.image = friendsIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                friendsIcon.tintColor = StyleManager().primaryColor
+                
+                friendsLabel.text = "\(selectedContacts.count) Friend(s) Added"
+                
+                friendsLabel.textColor = UIColor.blackColor()
+            }
+        }
+    }
 
     @IBAction func createFig(sender: AnyObject) {
         
@@ -50,7 +85,7 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
             nilInputs.append("location")
         }
         
-        if (selectedNames.count == 0) {
+        if (selectedContacts.count == 0) {
             nilInputs.append("friends")
         }
         
@@ -62,8 +97,8 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
             var userIDList:[String] = []
             userIDList.append(self.userID)
             
-            for name in selectedNames {
-                userIDList.append(nameDict[name]!)
+            for contact in selectedContacts {
+                userIDList.append(nameDict[contact.name]!)
             }
             
             createEvent(titleTextField.text!, address: locationTextField.text!, users: userIDList, search: foodTypeTextField.text!)
@@ -136,7 +171,6 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
         alert.setValue(attributedString, forKey: "attributedTitle")
         alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
         self.presentViewController(alert, animated: true){}
-        alert.view.tintColor = StyleManager().primaryColor
     }
     
     //MARK: Location Manager Functions
@@ -177,102 +211,11 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
             //moved to bottom
             locationManager.stopUpdatingLocation()
         }
-
-    }
-    
-    //MARK: CLTokenInputViewDelegate
-    
-    func tokenInputView(aView: CLTokenInputView, didChangeText text: String) {
-        // print("tokenInputView(didChangeText text:\(text))")
-        if text == "" {
-            self.filteredNames = []
-            self.tableView.hidden = true
-        } else {
-            let predicate:NSPredicate = NSPredicate(format: "self contains[cd] %@", argumentArray: [text])
-            self.filteredNames = self.names.filter { predicate.evaluateWithObject($0) }
-            self.tableView.hidden = false
-        }
-        self.tableView.reloadData()
-    }
-    
-    func tokenInputView(aView:CLTokenInputView, didAddToken token:CLToken) {
-        self.selectedNames.append(token.displayText)
-    }
-    
-    func tokenInputView(aView:CLTokenInputView, didRemoveToken token:CLToken) {
-        let idx:Int? = self.selectedNames.indexOf(token.displayText)
-        self.selectedNames.removeAtIndex(idx!)
-    }
-    
-    func tokenInputView(aView: CLTokenInputView, tokenForText text: String) -> CLToken? {
-        //print("tokenInputView(tokenForText)")
-        if self.filteredNames.count > 0 {
-            let matchingName:String = self.filteredNames[0]
-            let match:CLToken = CLToken()
-            match.displayText = matchingName
-            match.context = nil
-            return match
-        }
-        return nil
-    }
-    
-    func tokenInputViewDidEndEditing(aView: CLTokenInputView) {
-        aView.accessoryView = nil
-    }
-    
-    func tokenInputViewDidBeginEditing(aView: CLTokenInputView) {
-        //aView.accessoryView = self.contactAddButton()
-        self.view.layoutIfNeeded()
-    }
-    
-    func tokenInputView(aView:CLTokenInputView, didChangeHeightTo height:CGFloat) {
-        
-    }
-    
-    //MARK: UITableViewDataSource
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //print("numberOfRowsInSection \(self.filteredNames.count)")
-        
-        return self.filteredNames.count
-    }
-    
-    
-    func tableView(aTableView: UITableView, cellForRowAtIndexPath anIndexPath: NSIndexPath) -> UITableViewCell {
-        //print("cellForRowAtIndexPath")
-        
-        let cell = aTableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: anIndexPath)
-        let name:String = self.filteredNames[anIndexPath.row]
-        cell.textLabel!.text = name
-        
-        //print("name = \(name)  cell=\(cell)")
-        if self.selectedNames.contains(name) {
-            cell.accessoryType = .Checkmark
-        } else {
-            cell.accessoryType = .None
-        }
-        return cell
-    }
-    
-    //MARK: UITableViewDelegate
-    
-    func tableView(aTableView: UITableView, didSelectRowAtIndexPath anIndexPath: NSIndexPath) {
-        aTableView.deselectRowAtIndexPath(anIndexPath, animated: true)
-        let name:String = self.filteredNames[anIndexPath.row]
-        let token:CLToken = CLToken()
-        token.displayText = name
-        token.context = nil
-        if self.tokenInputView.isEditing() {
-            self.tokenInputView.addToken(token)
-        }
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
-        view.endEditing(true)
-        super.touchesBegan(touches, withEvent: event)
     }
     
     //MARK: Override Functions
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -289,22 +232,31 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
         
         
         // tapping outside screen clear keyboard
-        //        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        //        view.addGestureRecognizer(tap)
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
         
         let origImage = UIImage(named: "CurrentLocation")
         let tintedImage = origImage?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         locationBtn.setImage(tintedImage, forState: .Normal)
         locationBtn.tintColor = UIColor.blueColor()
         
+
+        friendsIcon.image = UIImage(named: "ic_add_circle_outline")
+
+        
+        friendsIcon.image = friendsIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        friendsIcon.tintColor = StyleManager().primaryColor
         
         
-        self.tokenInputView.placeholderText = "Enter a name "
-        self.tokenInputView.drawBottomBorder = true
-        self.tokenInputView.delegate = self
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.tableView.hidden = true
+        addFriendsView.layer.borderWidth = 0.5
+        addFriendsView.layer.borderColor = UIColor(red:0.784, green:0.78, blue:0.8, alpha:1).CGColor
         
+        addFriendsView.layer.cornerRadius = 5
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func didReceiveMemoryWarning() {
@@ -319,12 +271,20 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate, CLTok
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        if (segue.identifier == "showPreWaiting") {
+        if segue.identifier == "showPreWaiting" {
             let navController = segue.destinationViewController as! UINavigationController
             
             let viewController = navController.topViewController as! PreWaitingViewController
             
             viewController.eventData = self.eventData
+            
+        } else if segue.identifier == "addFriendsSegue" {
+            let navController = segue.destinationViewController as! UINavigationController
+            
+            let viewController = navController.topViewController as! AddFriendsViewController
+            
+            viewController.names = self.names
+            viewController.selectedContacts = self.selectedContacts
             
         }
         

@@ -11,6 +11,7 @@ import CoreData
 import FBSDKCoreKit
 import FBSDKLoginKit
 import Kingfisher
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        IQKeyboardManager.sharedManager().enable = true
         
         UINavigationBar.appearance().barTintColor = StyleManager().primaryColor
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()

@@ -12,7 +12,7 @@ import SwiftyJSON
 
 struct APIRequestHandler {
     
-    private let apiURL: String = "https://213ffbe5.ngrok.io"
+    private let apiURL: String = "https://47e84d8c.ngrok.io"
     
     
     func getAllUsers(callback: (jsonArray: JSON) -> Void) {

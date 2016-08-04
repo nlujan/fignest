@@ -24,6 +24,15 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     @IBAction func preWaitingShowOptions(sender: AnyObject) {
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
+        //only put in for testing
+        
+        let gotoGameAction = UIAlertAction(title: "Start Game", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            self.performSegueWithIdentifier("showGameView", sender: nil)
+        })
+        
+        
         let logoutAction = UIAlertAction(title: "Exit Fig", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             print("User Exited to Home Page")
@@ -36,36 +45,38 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
             print("Cancelled")
         })
         
+        optionMenu.addAction(gotoGameAction)
         optionMenu.addAction(logoutAction)
         optionMenu.addAction(cancelAction)
         
         
         self.presentViewController(optionMenu, animated: true, completion: nil)
-        optionMenu.view.tintColor = StyleManager().primaryColor
-    }
-    
-    @IBAction func buttonPressed(sender: AnyObject) {
-        self.performSegueWithIdentifier("showGameView", sender: nil)
+        optionMenu.view.tintColor = StyleUtil().primaryColor
     }
     
     //MARK: Functions
     
     func joinRoom(userId: String, eventId: String) {
-        SocketIOManager.sharedInstance.joinRoom(userId, eventId: eventData.id, completionHandler: { (userList: JSON) -> Void in
+        SocketIOManager.sharedInstance.joinRoom(userId, eventId: eventData.id)
+    }
+    
+    func setupStatusListener() {
+        SocketIOManager.sharedInstance.setupStatusListener() { userList in
             dispatch_async(dispatch_get_main_queue(), {
-                
-                if userList.count == 0 {
-                    print("done!")
-                    
-                    self.performSegueWithIdentifier("showGameView", sender: nil)
-                    
-                } else {
-                    print("Status update received")
-                    self.users = userList
-                    self.waitingTable.reloadData()
-                }
+                print("Status update received")
+                self.users = userList
+                self.waitingTable.reloadData()
             })
-        })
+        }
+    }
+    
+    func setupStartListener() {
+        SocketIOManager.sharedInstance.setupStartListener() {
+            dispatch_async(dispatch_get_main_queue(), {
+                print("done!")
+                self.performSegueWithIdentifier("showGameView", sender: nil)
+            })
+        }
     }
     
     
@@ -89,14 +100,13 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         let cell = tableView.dequeueReusableCellWithIdentifier("PreWaitingCell", forIndexPath: indexPath) as! PreWaitingCell
         
         let userInfo = users[indexPath.row]
+        let URL = NSURL(string: ImageUtil().getFBImageURL(userInfo["facebook"]["id"].stringValue))!
         
-        cell.playerImage.image = ImageUtil().getFBImageFromID(userInfo["facebook"]["id"].stringValue)
-                
+        cell.playerImage.af_setImageWithURL(URL)
+        
         cell.nameLabel.text = userInfo["displayName"].stringValue
         
-        let status = userInfo["status"].stringValue
-        
-        if status == "ready" {
+        if userInfo["status"].stringValue == "ready" {
             cell.statusView.backgroundColor = UIColor.greenColor()
         }
         
@@ -114,9 +124,9 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         
         let userId = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
         
+        setupStatusListener()
+        setupStartListener()
         joinRoom(userId, eventId: eventData.id)
-
-        
     }
     
     override func didReceiveMemoryWarning() {

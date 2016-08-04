@@ -10,21 +10,24 @@ import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
 import SwiftyJSON
-import Kingfisher
+import DZNEmptyDataSet
+import AlamofireImage
 
-class EventsTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    
+class EventsTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     //MARK: Properties
     
     var events: [Event] = []
     var selectedEventData: Event!
     var userIDMapping: JSON = []
+    var userHasNoEvents = false
+    
     let userID = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
     
     @IBOutlet var eventsTableView: UITableView!
     @IBOutlet var activityView: UIView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
     
     //MARK: Actions
     
@@ -50,27 +53,27 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         optionMenu.addAction(cancelAction)
         
         self.presentViewController(optionMenu, animated: true, completion: nil)
-        optionMenu.view.tintColor = StyleManager().primaryColor
+        optionMenu.view.tintColor = StyleUtil().primaryColor
     }
     
-    @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue){
+    @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue) {
         
     }
     
     //MARK: Functions
     
-    func initTable(userID: String) {
+    func initTable(userID: String, completionHandler: () -> Void) {
         
         let group = dispatch_group_create()
         
         dispatch_group_enter(group)
-        APIRequestHandler().getUserInvitations(userID) { eventArray in
+        APIRequestManager().getUserInvitations(userID) { eventArray in
             self.events = eventArray.map({key,subJson in Event(data: subJson)})
             dispatch_group_leave(group)
         }
         
         dispatch_group_enter(group)
-        APIRequestHandler().getUsersMapById() { userIDMappingDict in
+        APIRequestManager().getUsersMapById() { userIDMappingDict in
             self.userIDMapping = userIDMappingDict
             dispatch_group_leave(group)
         }
@@ -79,24 +82,30 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
             self.activityIndicator.stopAnimating()
             self.activityIndicator.hidden = true
             self.activityView.hidden = true
+            
+            if self.events.count == 0 {
+                self.userHasNoEvents = true
+            } else {
+                self.userHasNoEvents = false
+            }
+            
             self.eventsTableView.reloadData()
+            completionHandler()
         }
     }
 
     func handleRefresh(refreshControl: UIRefreshControl) {
         
-        print("refreshing happened!")
-        
-        initTable(userID)
-        
-        refreshControl.endRefreshing()
+        initTable(userID) {
+            refreshControl.endRefreshing()
+        }
     }
 
-    // MARK: - eventsTable DataSource
+    // MARK: - UITableViewDataSource
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if self.userIDMapping.count == 0 || self.userIDMapping.count == 0 {
+        if self.events.count == 0 || self.userIDMapping.count == 0 {
             return 0
         } else {
             return events.count
@@ -115,7 +124,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         return cell
     }
     
-    // MARK: - eventsTable Delegate
+    // MARK: - UITableViewDelegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
@@ -125,7 +134,7 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
+
         let border = CALayer()
         let width = CGFloat(0.5)
         border.borderColor = UIColor(red:0.784, green:0.78, blue:0.8, alpha:1).CGColor
@@ -134,43 +143,9 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         border.borderWidth = width
         cell.layer.addSublayer(border)
         cell.layer.masksToBounds = true
-        
-//        cell.contentView.layer.borderWidth = 0.5
-//        cell.contentView.layer.borderColor = UIColor.grayColor().CGColor
-        
-        
-//        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -500, 10, 0)
-//        cell.layer.transform = rotationTransform
-//        
-//        let animationInterval = 0.3 + (0.3 * Double(indexPath.row))
-//        
-//        UIView.animateWithDuration(animationInterval, animations: { () -> Void in
-//            cell.layer.transform = CATransform3DIdentity
-//            
-//        })
     }
     
-//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        let height = tableView.bounds.size.height * 0.2
-//        return height
-//    }
-//    
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-//        let cellWidth = collectionView.bounds.size.width * 0.22
-//        return CGSizeMake(cellWidth, cellWidth)
-//    }
-    
-    
-    
-//        override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//            return UITableViewAutomaticDimension
-//        }
-//    
-//        override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//            return 100.0
-//        }
-    
-    //MARK: picCollectionView DataSource
+    //MARK: UICollectionViewDataSource
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if self.userIDMapping.count > 0 {
@@ -180,7 +155,6 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         }
     }
     
-    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let collectionIndex = collectionView.superview!.tag
@@ -188,10 +162,10 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         
         let cell: UserImageCell = collectionView.dequeueReusableCellWithReuseIdentifier("UserImageCell", forIndexPath: indexPath) as! UserImageCell
         let userId = events[collectionIndex].users[indexPath.row].stringValue
-        
         let fBId = userIDMapping[userId]["facebook"]["id"].stringValue
+        let URL = NSURL(string: "http://graph.facebook.com/\(fBId)/picture?width=1000&height=1000")!
         
-        cell.userImage.kf_setImageWithURL(NSURL(string: "http://graph.facebook.com/\(fBId)/picture?width=1000&height=1000")!, placeholderImage: nil)
+        cell.userImage.af_setImageWithURL(URL)
         
         if (indexPath.row == 3 && numUsers > 4){
             cell.imageLabel.text = "+\(numUsers - 3)"
@@ -201,10 +175,25 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         return cell
     }
     
-     //MARK: picCollectionView Delegate
+     //MARK: UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("cell \(indexPath.row) selected")
+    }
+    
+    
+    // MARK: DZNEmptyDataSetSource
+    func customViewForEmptyDataSet(scrollView: UIScrollView!) -> UIView! {
+
+        if userHasNoEvents == true {
+            if let view = UINib(nibName: "EmptyEvents", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as? UIView {
+                view.frame = scrollView.bounds
+                view.translatesAutoresizingMaskIntoConstraints = false
+                view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+                return view
+            }
+        }
+        return nil
     }
     
     //MARK: Override Functions
@@ -214,9 +203,9 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
         
         activityIndicator.startAnimating()
         
-        initTable(userID)
+        initTable(userID) {}
         
-        self.refreshControl?.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
     }
     
     override func didReceiveMemoryWarning() {
@@ -233,6 +222,4 @@ class EventsTableViewController: UITableViewController, UICollectionViewDataSour
             viewController.eventData = self.selectedEventData
         }
     }
-    
-
 }

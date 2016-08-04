@@ -10,33 +10,23 @@ import UIKit
 import CoreData
 import FBSDKCoreKit
 import FBSDKLoginKit
-import Kingfisher
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    let cache = KingfisherManager.sharedManager.cache
-    
-    func setupCache() {
-        cache.maxDiskCacheSize = 5 * 1024 * 1024
-        cache.maxCachePeriodInSecond = 60 * 60 * 24 * 1
-        cache.calculateDiskCacheSizeWithCompletionHandler { (size) -> () in
-            print("disk size in bytes: \(size)")
-        }
-    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        UINavigationBar.appearance().barTintColor = StyleManager().primaryColor
+        IQKeyboardManager.sharedManager().enable = true
+        
+        UINavigationBar.appearance().barTintColor = StyleUtil().primaryColor
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         FBSDKLoginButton.classForCoder()
-        
-        setupCache()
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }

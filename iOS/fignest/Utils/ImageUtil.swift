@@ -49,5 +49,9 @@ struct ImageUtil {
         }
     }
     
+    func getFBImageURL(fbID: String) -> String {
+        return "http://graph.facebook.com/\(fbID)/picture?width=1000&height=1000"
+    }
+    
     
 }

@@ -8,13 +8,13 @@
 
 import UIKit
 import SwiftyJSON
-import Kingfisher
+import AlamofireImage
 
 class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     //MARK: Properties
     
-    var colors: [UIColor] = StyleManager().progressViewColors
+    var colors: [UIColor] = StyleUtil().progressViewColors
     
     let userId = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
     let userFBID =  NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!
@@ -26,7 +26,7 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     var foodImageStrings = []
     
-    var userTableData = [["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": 0], ["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": 0]]
+    var userTableData = [["id": NSUserDefaults.standardUserDefaults().stringForKey("userFBID")!, "progress": 0], [:]]
     
     var imagePlaceArray: [[String]] = []
     var foodImages: [UIImage] = []
@@ -38,18 +38,11 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     //MARK: Functions
     
     func getPlacesImages(eventID: String) {
-        APIRequestHandler().getEventPlaces(eventID, callback: { ( jsonArray: JSON) -> Void in
+        APIRequestManager().getEventPlaces(eventID, callback: { ( jsonArray: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
                 self.numPlaces = jsonArray.count
-
-                do {
-                    let foodImageStrings = self.getFoodImages(jsonArray)
-                    self.foodImageStrings = foodImageStrings
-                    //self.foodImages = try ImageUtil().getImagesFromUrlStringArray(foodImageStrings)
-                } catch let error {
-                    print(error)
-                }
+                self.foodImageStrings = self.getFoodImages(jsonArray)
                 
                 //reload collection view
                 self.picCollectionView.reloadData()
@@ -93,26 +86,24 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     }
     
     func postAction(userID: String, eventID: String, selections: [NSDictionary]) {
-        APIRequestHandler().postEventAction(userID, eventID: eventID, selections: selections, callback: { ( dataDict: NSDictionary) -> Void in
-        })
+        APIRequestManager().postEventAction(userID, eventID: eventID, selections: selections) {_ in }
     }
     
     func setupProgressListener() {
         SocketIOManager.sharedInstance.setupProgressListener({ (progressData: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
-                let fbID = progressData[0]["user"]["facebook"]["id"].stringValue
-                let progress = progressData[0]["level"].floatValue 
+                let fbID = progressData[0]["facebook"]["id"].stringValue
+                let progress = progressData[0]["level"].floatValue
                 
-                print("level: \(progress)")
-                print("fbID: \(fbID)")
-                
-                if self.userTableData.count == 1 {
-                    self.userTableData.append(["id":fbID, "progress": progress])
+
+                if progressData[0]["hasMessage"].boolValue {
+                    //do something different here
+                    let message = progressData[0]["message"].stringValue
+                    self.userTableData[1] = ["id":fbID, "message": message]
                 } else {
                     self.userTableData[1] = ["id":fbID, "progress": progress]
                 }
-                
                 self.playerProgressTable.reloadData()
             })
         })
@@ -148,13 +139,9 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         let cell: FoodCell = collectionView.dequeueReusableCellWithReuseIdentifier("FoodCell", forIndexPath: indexPath) as! FoodCell
         let picIndex = (picPageIndex * 6) + indexPath.row
         
-        //cell.foodImageView.image = foodImages[picIndex]
-        //cell.foodImageView.kf_setImageWithURL(NSURL(string: foodImageStrings[picIndex] as! String)!, placeholderImage: nil)
+        let URL = NSURL(string: foodImageStrings[picIndex] as! String)!
         
-        cell.foodImageView.kf_setImageWithURL(NSURL(string: foodImageStrings[picIndex] as! String)!,
-                                     placeholderImage: nil,
-                                     optionsInfo: [.Transition(ImageTransition.Fade(1))])
-
+        cell.foodImageView.af_setImageWithURL(URL)
         
         return cell
     }
@@ -268,7 +255,11 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     //MARK: playerProgressTable DataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userTableData.count
+        if userTableData[1].count == 0 {
+            return 1
+        } else {
+            return 2
+        }
     }
     
     
@@ -277,11 +268,22 @@ class GameViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         let user = userTableData[indexPath.row]
         
-        cell.playerImage.image = ImageUtil().getFBImageFromID(user["id"] as! String)
+        let URL = NSURL(string: ImageUtil().getFBImageURL(user["id"] as! String))!
         
-        cell.playerProgressBar.progress = user["progress"] as! Float
-        cell.playerProgressBar.tintColor = colors[indexPath.row]
-        cell.playerProgressBar.trackTintColor = colors[indexPath.row].colorWithAlphaComponent(0.2)
+        cell.playerImage.af_setImageWithURL(URL)
+        
+        if let message = user["message"] {
+            cell.playerProgressBar.hidden = true
+            cell.messageLabel.hidden = false
+            cell.messageLabel.text = (message as! String)
+        } else {
+            cell.playerProgressBar.hidden = false
+            cell.messageLabel.hidden = true
+            
+            cell.playerProgressBar.progress = user["progress"] as! Float
+            cell.playerProgressBar.tintColor = colors[indexPath.row]
+            cell.playerProgressBar.trackTintColor = colors[indexPath.row].colorWithAlphaComponent(0.2)
+        }
         
         return cell
     }

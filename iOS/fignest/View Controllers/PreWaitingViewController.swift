@@ -24,6 +24,15 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
     @IBAction func preWaitingShowOptions(sender: AnyObject) {
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
+        //only put in for testing
+        
+        let gotoGameAction = UIAlertAction(title: "Start Game", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            self.performSegueWithIdentifier("showGameView", sender: nil)
+        })
+        
+        
         let logoutAction = UIAlertAction(title: "Exit Fig", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             print("User Exited to Home Page")
@@ -36,16 +45,13 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
             print("Cancelled")
         })
         
+        optionMenu.addAction(gotoGameAction)
         optionMenu.addAction(logoutAction)
         optionMenu.addAction(cancelAction)
         
         
         self.presentViewController(optionMenu, animated: true, completion: nil)
-        optionMenu.view.tintColor = StyleManager().primaryColor
-    }
-    
-    @IBAction func buttonPressed(sender: AnyObject) {
-        self.performSegueWithIdentifier("showGameView", sender: nil)
+        optionMenu.view.tintColor = StyleUtil().primaryColor
     }
     
     //MARK: Functions
@@ -94,13 +100,13 @@ class PreWaitingViewController: UIViewController, UITableViewDataSource, UITable
         let cell = tableView.dequeueReusableCellWithIdentifier("PreWaitingCell", forIndexPath: indexPath) as! PreWaitingCell
         
         let userInfo = users[indexPath.row]
+        let URL = NSURL(string: ImageUtil().getFBImageURL(userInfo["facebook"]["id"].stringValue))!
         
-        cell.playerImage.kf_setImageWithURL(NSURL(string: ImageUtil().getFBImageURL(userInfo["facebook"]["id"].stringValue))!, placeholderImage: nil)
+        cell.playerImage.af_setImageWithURL(URL)
+        
         cell.nameLabel.text = userInfo["displayName"].stringValue
         
-        let status = userInfo["status"].stringValue
-        
-        if status == "ready" {
+        if userInfo["status"].stringValue == "ready" {
             cell.statusView.backgroundColor = UIColor.greenColor()
         }
         

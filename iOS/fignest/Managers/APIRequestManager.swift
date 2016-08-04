@@ -10,9 +10,9 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-struct APIRequestHandler {
+struct APIRequestManager {
     
-    private let apiURL: String = "https://47e84d8c.ngrok.io"
+    private let apiURL: String = "https://1aaa00e4.ngrok.io"
     
     
     func getAllUsers(callback: (jsonArray: JSON) -> Void) {

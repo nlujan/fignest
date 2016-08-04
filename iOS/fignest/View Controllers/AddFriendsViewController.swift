@@ -16,6 +16,8 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tokenViewHeightConstraint: NSLayoutConstraint!
     
+    var nameFBDict = [:]
+    
     let tokenViewMinHeight: CGFloat = 40.0
     let tokenViewMaxHeight: CGFloat = 150.0
     let tokenBackgroundColor = UIColor(red: 98.0/255.0, green: 203.0/255.0, blue: 255.0/255.0, alpha: 1.0)
@@ -36,19 +38,22 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
         
         if contacts.count == 0 {
             // Create list of contacts to test
-            var unsortedContacts: [NWSTokenContact] = [
-            ]
+            var unsortedContacts: [NWSTokenContact] = []
             
-            for name in names {
-                unsortedContacts.append(NWSTokenContact(name: name as! String, andImage: UIImage(named: "person")!))
+            for (name, fbId) in nameFBDict {
+                
+                let URL = NSURL(string: ImageUtil().getFBImageURL(fbId as! String))!
+                let data = NSData(contentsOfURL: URL)!
+                let image = UIImage(data: data)!
+                
+                unsortedContacts.append(NWSTokenContact(name: name as! String, andImage: image))
             }
             
             contacts = NWSTokenContact.sortedContacts(unsortedContacts)
         }
     }
 
-    override func viewWillAppear(animated: Bool)
-    {
+    override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         // TableView
         tableView.tableFooterView = UIView(frame: CGRectZero)
@@ -79,8 +84,7 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     // MARK: Keyboard
-    func keyboardWillShow(notification: NSNotification)
-    {
+    func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
             let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
             tableView.contentInset = contentInsets
@@ -89,32 +93,27 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
         }        
     }
     
-    func keyboardWillHide(notification: NSNotificationCenter)
-    {
+    func keyboardWillHide(notification: NSNotificationCenter) {
         tableView.contentInset = UIEdgeInsetsZero
         tableView.scrollIndicatorInsets = UIEdgeInsetsZero
     }
     
-    @IBAction func didTapView(sender: UITapGestureRecognizer)
-    {
+    @IBAction func didTapView(sender: UITapGestureRecognizer) {
         dismissKeyboard()
     }
     
-    func dismissKeyboard()
-    {
+    func dismissKeyboard() {
         tokenView.resignFirstResponder()
         tokenView.endEditing(true)
     }
     
     // MARK: Search Contacts
-    func searchContacts(text: String)
-    {
+    func searchContacts(text: String) {
         // Reset filtered contacts
         filteredContacts = []
         
         // Filter contacts
-        if contacts.count > 0
-        {
+        if contacts.count > 0 {
             filteredContacts = contacts.filter({ (contact: NWSTokenContact) -> Bool in
                 return contact.name.rangeOfString(text, options: .CaseInsensitiveSearch) != nil
             })
@@ -124,8 +123,7 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    func didTypeEmailInTokenView()
-    {
+    func didTypeEmailInTokenView() {
         let email = self.tokenView.textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         let contact = NWSTokenContact(name: email, andImage: UIImage(named: "TokenPlaceholder")!)
         self.selectedContacts.append(contact)
@@ -137,23 +135,19 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     // MARK: UITableViewDataSource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int
-    {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
     // MARK: UITableViewDelegate
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        if isSearching
-        {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isSearching {
             return filteredContacts.count
         }
         return contacts.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-    {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("NWSTokenViewExampleCellIdentifier", forIndexPath: indexPath) as! NWSTokenViewExampleCell
         
         let currentContacts: [NWSTokenContact]!

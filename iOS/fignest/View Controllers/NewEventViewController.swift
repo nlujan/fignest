@@ -19,7 +19,6 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet var friendsLabel: UILabel!
     @IBOutlet var friendsIcon: UIImageView!
-    
     @IBOutlet var addFriendsView: UIView!
     
     var names:[String] = []
@@ -30,6 +29,7 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate {
     
     var eventData: Event!
     var nameDict: [String: String] = [:]
+    var nameFBDict: [String: String] = [:]
     
     @IBOutlet var locationBtn: UIButton!
     @IBOutlet var locationActivityIndicator: UIActivityIndicatorView!
@@ -121,7 +121,7 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate {
     //MARK: API Functions
     
     private func createEvent(title: String, address: String, users: [String], search: String) {
-        APIRequestHandler().createEvent(title, address: address, users: users, search: search, callback: { ( jsonDict: JSON) -> Void in
+        APIRequestManager().createEvent(title, address: address, users: users, search: search, callback: { ( jsonDict: JSON) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 
                 self.eventData = Event(data: jsonDict)
@@ -132,24 +132,30 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     private func getAllUsers() {
-        APIRequestHandler().getAllUsers({ ( jsonArray: JSON) -> Void in
+        APIRequestManager().getAllUsers() { jsonArray in
             dispatch_async(dispatch_get_main_queue(), {
+                
+                print(jsonArray)
                 
                 var nameList = [String]()
                 var nameDict = [String:String]()
+                var nameFBDict = [String:String]()
                 for (_,user):(String, JSON) in jsonArray {
                     let name = user["displayName"].stringValue
                     let id = user["_id"].stringValue
+                    let fbID = user["facebook"]["id"].stringValue
                     
                     if id != self.userID {
                         nameList.append(name)
                         nameDict[name] = id
+                        nameFBDict[name] = fbID
                     }
                 }
                 self.names = nameList
-                self.nameDict = nameDict;
+                self.nameDict = nameDict
+                self.nameFBDict = nameFBDict
             })
-        })
+        }
     }
     
     //MARK: Functions
@@ -281,6 +287,7 @@ class NewEventViewController: UIViewController, CLLocationManagerDelegate {
             
             if self.contacts.count == 0 {
                 viewController.names = self.names
+                viewController.nameFBDict = self.nameFBDict
             }
             
             viewController.contacts = self.contacts

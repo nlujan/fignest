@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct StyleManager {
+struct StyleUtil {
     
     let primaryColor = UIColor(red: 0.549, green:0.133, blue:0.165, alpha: 1.0)
     let progressViewColors = [UIColor.redColor(), UIColor.greenColor(), UIColor.blueColor()]

@@ -604,8 +604,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="60" sectionHeaderHeight="1" sectionFooterHeight="26" translatesAutoresizingMaskIntoConstraints="NO" id="FS9-y3-Mry">
-                                <rect key="frame" x="0.0" y="15" width="375" height="455"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="60" sectionHeaderHeight="1" sectionFooterHeight="26" translatesAutoresizingMaskIntoConstraints="NO" id="FS9-y3-Mry">
+                                <rect key="frame" x="0.0" y="15" width="375" height="467"/>
                                 <color key="backgroundColor" red="0.38823529410000002" green="0.047058823530000002" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PreWaitingCell" id="wjV-JZ-pdU" customClass="PreWaitingCell" customModule="fignest" customModuleProvider="target">
@@ -671,38 +671,26 @@
                             </tableView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="3Sm-km-e5M">
                                 <rect key="frame" x="169" y="525" width="37" height="37"/>
-                                <color key="color" red="0.67926682689999995" green="0.14737377290000001" blue="0.1570872536" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="waiting for all users to join" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zr9-do-osJ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="waiting for all friends to join" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zr9-do-osJ">
                                 <rect key="frame" x="68" y="570" width="239" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="0.99753605769999998" green="0.99753605769999998" blue="0.99753605769999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8r-Ld-h8w">
-                                <rect key="frame" x="122" y="599" width="116" height="30"/>
-                                <color key="backgroundColor" red="0.99753605769999998" green="0.99753605769999998" blue="0.99753605769999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Go to Game">
-                                    <color key="titleColor" red="0.38823529410000002" green="0.047058823530000002" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="buttonPressed:" destination="eux-Cr-Jmm" eventType="touchUpInside" id="I1X-Af-wuG"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.38823529410000002" green="0.047058823530000002" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="J8r-Ld-h8w" firstAttribute="leading" secondItem="UZl-sF-fID" secondAttribute="leadingMargin" constant="102" id="7OL-Zf-U1c"/>
+                            <constraint firstItem="3Sm-km-e5M" firstAttribute="top" secondItem="FS9-y3-Mry" secondAttribute="bottom" constant="43" id="0Tc-nL-Dfk"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Zr9-do-osJ" secondAttribute="trailing" constant="48" id="9Dr-iR-gcH"/>
                             <constraint firstItem="Zr9-do-osJ" firstAttribute="top" secondItem="3Sm-km-e5M" secondAttribute="bottom" constant="8" id="9rM-eS-CRt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3Sm-km-e5M" secondAttribute="trailing" constant="149" id="Btr-4O-7Hj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="FS9-y3-Mry" secondAttribute="trailing" constant="-20" id="Fve-Wx-OJN"/>
                             <constraint firstItem="FS9-y3-Mry" firstAttribute="leading" secondItem="UZl-sF-fID" secondAttribute="leadingMargin" constant="-20" id="GUi-6a-Iqt"/>
-                            <constraint firstItem="JoC-cS-bHg" firstAttribute="top" secondItem="J8r-Ld-h8w" secondAttribute="bottom" constant="38" id="X3S-Rk-SYf"/>
+                            <constraint firstItem="FS9-y3-Mry" firstAttribute="top" secondItem="pQT-0l-Tst" secondAttribute="bottom" constant="-49" id="M1i-AT-Pd1"/>
                             <constraint firstItem="JoC-cS-bHg" firstAttribute="top" secondItem="Zr9-do-osJ" secondAttribute="bottom" constant="76" id="kC8-ny-X5h"/>
                             <constraint firstItem="3Sm-km-e5M" firstAttribute="leading" secondItem="UZl-sF-fID" secondAttribute="leadingMargin" constant="149" id="lcv-zR-OUt"/>
                             <constraint firstItem="Zr9-do-osJ" firstAttribute="leading" secondItem="UZl-sF-fID" secondAttribute="leadingMargin" constant="48" id="pwd-wK-leu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="J8r-Ld-h8w" secondAttribute="trailing" constant="117" id="xpH-DP-odF"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="JOINING " id="SMI-5k-BEm">
@@ -736,8 +724,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IqF-pz-chf">
-                                <rect key="frame" x="0.0" y="15" width="375" height="337"/>
-                                <color key="backgroundColor" red="0.29019607843137257" green="0.0" blue="0.011764705882352941" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="0.0" y="15" width="375" height="372"/>
+                                <color key="backgroundColor" red="0.36602564100000001" green="0.0035707223270000001" blue="0.006997530668" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="IqF-pz-chf" secondAttribute="height" multiplier="375:337" id="01F-lI-3B6"/>
                                 </constraints>
@@ -795,7 +783,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.29411764705882354" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.36602564100000001" green="0.0035707223270000001" blue="0.006997530668" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="messageLabel" destination="PYK-qj-Gws" id="J0f-i4-AhV"/>
                                             <outlet property="playerImg" destination="j7h-jb-UEW" id="G7D-nA-MKy"/>
@@ -813,151 +801,180 @@
                                     <outlet property="delegate" destination="5uy-VJ-Tcz" id="xUB-bd-PqA"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F20-GS-lbt">
-                                <rect key="frame" x="7" y="351" width="127" height="30"/>
-                                <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="I want MEAT! 🍗">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="F7Q-qA-wcE"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="178-8f-bj4">
-                                <rect key="frame" x="142" y="351" width="108" height="30"/>
-                                <color key="backgroundColor" red="0.46666666666666667" green="0.15686274509803921" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Hurry up...">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="8fI-3k-5mp"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xY1-cx-kgh">
-                                <rect key="frame" x="258" y="351" width="110" height="30"/>
-                                <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="I'm Hungry!">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="KPC-0X-VfK"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6wD-by-n8j">
-                                <rect key="frame" x="84" y="392" width="128" height="30"/>
-                                <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Veggies Please! ">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="ryj-mF-1Ja"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wSC-ye-m3q">
-                                <rect key="frame" x="7" y="392" width="69" height="30"/>
-                                <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="🍸🍻🍾">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="fmu-xW-uY9"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Pr-qP-Ydx">
-                                <rect key="frame" x="318" y="392" width="50" height="30"/>
-                                <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Hello">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="sYe-lg-DPJ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dYY-Pm-Uh9">
-                                <rect key="frame" x="7" y="430" width="113" height="30"/>
-                                <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="🍰🎂🍧🍘">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="oza-1S-pOP"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBE-Ng-5ux">
-                                <rect key="frame" x="128" y="430" width="113" height="30"/>
-                                <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Sup, bro">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="yw8-8C-OTn"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oaX-MT-fhP">
-                                <rect key="frame" x="249" y="430" width="119" height="30"/>
-                                <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Sup, bro">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="cbP-E1-eL4"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iDi-zO-JIX">
-                                <rect key="frame" x="220" y="392" width="90" height="30"/>
-                                <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="🌮🍕🍔🍟">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="hHh-mR-hbZ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lq1-xZ-MKU">
-                                <rect key="frame" x="123" y="553" width="122" height="30"/>
-                                <color key="backgroundColor" red="0.99753605769999998" green="0.99753605769999998" blue="0.99753605769999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Get Results">
-                                    <color key="titleColor" red="0.38823529410000002" green="0.047058823530000002" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="crf-Oj-WOI" kind="presentation" identifier="ShowResults" id="C0b-hK-rAc"/>
-                                </connections>
-                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="WD6-Qg-uSg">
+                                <rect key="frame" x="169" y="569.5" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Waiting for all friends to finish" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mPb-HA-Tbe">
+                                <rect key="frame" x="56" y="607" width="263" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HHY-AQ-qAj">
+                                <rect key="frame" x="13" y="412" width="348" height="100"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F20-GS-lbt">
+                                        <rect key="frame" x="0.0" y="32" width="119" height="30"/>
+                                        <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="I want MEAT! 🍗">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="F7Q-qA-wcE"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="178-8f-bj4">
+                                        <rect key="frame" x="117" y="70" width="108" height="30"/>
+                                        <color key="backgroundColor" red="0.46666666666666667" green="0.15686274509803921" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="🍆🍅🍎🍐🍇">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="8fI-3k-5mp"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6wD-by-n8j">
+                                        <rect key="frame" x="121" y="32" width="128" height="30"/>
+                                        <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Veggies Please! ">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="ryj-mF-1Ja"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dYY-Pm-Uh9">
+                                        <rect key="frame" x="0.0" y="70" width="113" height="30"/>
+                                        <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="🍰🎂🍧🍘">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="oza-1S-pOP"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wSC-ye-m3q">
+                                        <rect key="frame" x="278" y="0.0" width="64" height="30"/>
+                                        <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="🍸🍻🍾">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="fmu-xW-uY9"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iDi-zO-JIX">
+                                        <rect key="frame" x="252" y="32" width="90" height="30"/>
+                                        <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="🌮🍕🍔🍟">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="hHh-mR-hbZ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Pr-qP-Ydx">
+                                        <rect key="frame" x="0.0" y="0.0" width="76" height="30"/>
+                                        <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Hurry Up!">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="sYe-lg-DPJ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xY1-cx-kgh">
+                                        <rect key="frame" x="79" y="0.0" width="89" height="30"/>
+                                        <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="I'm Hungry!">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="KPC-0X-VfK"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oaX-MT-fhP">
+                                        <rect key="frame" x="170" y="0.0" width="100" height="30"/>
+                                        <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Tacos Please!">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="cbP-E1-eL4"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBE-Ng-5ux">
+                                        <rect key="frame" x="233" y="70" width="109" height="30"/>
+                                        <color key="backgroundColor" red="0.46666666670000001" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="🤔🐼😴😖">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendPostWaitingMessage:" destination="5uy-VJ-Tcz" eventType="touchUpInside" id="yw8-8C-OTn"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="wSC-ye-m3q" firstAttribute="top" secondItem="HHY-AQ-qAj" secondAttribute="top" id="1WO-3v-zQS"/>
+                                    <constraint firstItem="xY1-cx-kgh" firstAttribute="leading" secondItem="0Pr-qP-Ydx" secondAttribute="trailing" constant="3" id="1am-tX-9jc"/>
+                                    <constraint firstItem="F20-GS-lbt" firstAttribute="top" secondItem="0Pr-qP-Ydx" secondAttribute="bottom" constant="3" id="411-VI-VpV"/>
+                                    <constraint firstItem="wSC-ye-m3q" firstAttribute="leading" secondItem="oaX-MT-fhP" secondAttribute="trailing" constant="3" id="AfI-5b-T0S"/>
+                                    <constraint firstItem="6wD-by-n8j" firstAttribute="top" secondItem="xY1-cx-kgh" secondAttribute="bottom" constant="3" id="Bhs-Br-0Ud"/>
+                                    <constraint firstAttribute="bottom" secondItem="178-8f-bj4" secondAttribute="bottom" id="BmU-AN-MbF"/>
+                                    <constraint firstItem="iDi-zO-JIX" firstAttribute="top" secondItem="wSC-ye-m3q" secondAttribute="bottom" constant="3" id="CY1-hp-qN5"/>
+                                    <constraint firstItem="TBE-Ng-5ux" firstAttribute="top" secondItem="iDi-zO-JIX" secondAttribute="bottom" constant="3" id="Dki-JN-iHD"/>
+                                    <constraint firstItem="oaX-MT-fhP" firstAttribute="top" secondItem="HHY-AQ-qAj" secondAttribute="top" id="Go4-rC-qJ2"/>
+                                    <constraint firstItem="TBE-Ng-5ux" firstAttribute="leading" secondItem="178-8f-bj4" secondAttribute="trailing" constant="3" id="GsD-rO-djw"/>
+                                    <constraint firstItem="6wD-by-n8j" firstAttribute="top" secondItem="oaX-MT-fhP" secondAttribute="bottom" constant="3" id="HI2-l1-iSM"/>
+                                    <constraint firstItem="178-8f-bj4" firstAttribute="leading" secondItem="dYY-Pm-Uh9" secondAttribute="trailing" constant="3" id="PYq-52-xAB"/>
+                                    <constraint firstItem="xY1-cx-kgh" firstAttribute="top" secondItem="HHY-AQ-qAj" secondAttribute="top" id="QJ4-aX-o7s"/>
+                                    <constraint firstAttribute="trailing" secondItem="iDi-zO-JIX" secondAttribute="trailing" id="Wq6-xa-dmQ"/>
+                                    <constraint firstItem="dYY-Pm-Uh9" firstAttribute="leading" secondItem="HHY-AQ-qAj" secondAttribute="leading" id="cQv-lZ-Lw9"/>
+                                    <constraint firstItem="F20-GS-lbt" firstAttribute="leading" secondItem="HHY-AQ-qAj" secondAttribute="leading" id="eJ0-FU-gyr"/>
+                                    <constraint firstItem="178-8f-bj4" firstAttribute="top" secondItem="6wD-by-n8j" secondAttribute="bottom" constant="3" id="f5b-4u-BAi"/>
+                                    <constraint firstAttribute="trailing" secondItem="TBE-Ng-5ux" secondAttribute="trailing" id="mcf-K3-T4X"/>
+                                    <constraint firstItem="6wD-by-n8j" firstAttribute="leading" secondItem="F20-GS-lbt" secondAttribute="trailing" constant="3" id="nsb-vC-Dnv"/>
+                                    <constraint firstItem="oaX-MT-fhP" firstAttribute="leading" secondItem="xY1-cx-kgh" secondAttribute="trailing" constant="3" id="rkK-VV-hEl"/>
+                                    <constraint firstItem="0Pr-qP-Ydx" firstAttribute="top" secondItem="HHY-AQ-qAj" secondAttribute="top" id="sdx-nF-GXh"/>
+                                    <constraint firstItem="iDi-zO-JIX" firstAttribute="top" secondItem="oaX-MT-fhP" secondAttribute="bottom" constant="3" id="td7-CC-Whs"/>
+                                    <constraint firstItem="iDi-zO-JIX" firstAttribute="leading" secondItem="6wD-by-n8j" secondAttribute="trailing" constant="3" id="vzF-dz-foQ"/>
+                                    <constraint firstItem="dYY-Pm-Uh9" firstAttribute="top" secondItem="F20-GS-lbt" secondAttribute="bottom" constant="3" id="w3S-Lu-GVd"/>
+                                    <constraint firstAttribute="bottom" secondItem="dYY-Pm-Uh9" secondAttribute="bottom" id="wXp-8u-giu"/>
+                                    <constraint firstItem="0Pr-qP-Ydx" firstAttribute="leading" secondItem="HHY-AQ-qAj" secondAttribute="leading" id="x4o-mj-jbC"/>
+                                    <constraint firstAttribute="bottom" secondItem="TBE-Ng-5ux" secondAttribute="bottom" id="xmA-fD-MsN"/>
+                                    <constraint firstAttribute="trailing" secondItem="wSC-ye-m3q" secondAttribute="trailing" id="xwa-Nj-Mng"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.36602564102564106" green="0.0035707223265410348" blue="0.0069975306676373864" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="HHY-AQ-qAj" secondAttribute="trailing" constant="-3" id="1Bd-qq-qaQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HHY-AQ-qAj" secondAttribute="trailing" constant="-3" id="1ES-XJ-OeP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="IqF-pz-chf" secondAttribute="trailing" constant="-20" id="1ot-Kg-t4k"/>
-                            <constraint firstItem="oaX-MT-fhP" firstAttribute="top" secondItem="0Pr-qP-Ydx" secondAttribute="bottom" constant="8" id="5Dr-d1-syX"/>
-                            <constraint firstItem="iDi-zO-JIX" firstAttribute="top" secondItem="xY1-cx-kgh" secondAttribute="bottom" constant="11" id="94z-JS-glD"/>
-                            <constraint firstItem="TBE-Ng-5ux" firstAttribute="top" secondItem="6wD-by-n8j" secondAttribute="bottom" constant="8" id="BSy-9K-49R"/>
-                            <constraint firstItem="xY1-cx-kgh" firstAttribute="top" secondItem="IqF-pz-chf" secondAttribute="bottom" constant="-1" id="G7I-s7-lFf"/>
-                            <constraint firstItem="dYY-Pm-Uh9" firstAttribute="top" secondItem="wSC-ye-m3q" secondAttribute="bottom" constant="8" id="Je1-zp-kaG"/>
-                            <constraint firstItem="6wD-by-n8j" firstAttribute="leading" secondItem="wSC-ye-m3q" secondAttribute="trailing" constant="8" id="QPz-FF-buj"/>
-                            <constraint firstItem="178-8f-bj4" firstAttribute="top" secondItem="IqF-pz-chf" secondAttribute="bottom" constant="-1" id="T61-Dl-MPy"/>
+                            <constraint firstItem="HHY-AQ-qAj" firstAttribute="centerX" secondItem="BPM-OB-fjO" secondAttribute="centerX" id="4L8-y1-omb"/>
+                            <constraint firstItem="mPb-HA-Tbe" firstAttribute="top" secondItem="WD6-Qg-uSg" secondAttribute="bottom" constant="8" id="7ZH-bs-UCq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HHY-AQ-qAj" secondAttribute="trailing" constant="-3" id="FPc-7S-9jm"/>
+                            <constraint firstItem="mPb-HA-Tbe" firstAttribute="centerX" secondItem="BPM-OB-fjO" secondAttribute="centerX" id="GzI-Zp-p15"/>
+                            <constraint firstItem="HHY-AQ-qAj" firstAttribute="centerX" secondItem="BPM-OB-fjO" secondAttribute="centerX" id="PBJ-r8-OWo"/>
+                            <constraint firstItem="WD6-Qg-uSg" firstAttribute="centerX" secondItem="BPM-OB-fjO" secondAttribute="centerX" id="QQ4-hK-oag"/>
                             <constraint firstItem="IqF-pz-chf" firstAttribute="top" secondItem="jYy-ck-o0F" secondAttribute="bottom" constant="-49" id="U5d-32-RIX"/>
-                            <constraint firstItem="0Pr-qP-Ydx" firstAttribute="leading" secondItem="iDi-zO-JIX" secondAttribute="trailing" constant="8" id="U7D-bU-4xG"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="oaX-MT-fhP" secondAttribute="trailing" constant="-13" id="UAe-Nm-gsQ"/>
-                            <constraint firstItem="TBE-Ng-5ux" firstAttribute="leading" secondItem="dYY-Pm-Uh9" secondAttribute="trailing" constant="8" id="VF4-ps-XE5"/>
-                            <constraint firstItem="oaX-MT-fhP" firstAttribute="leading" secondItem="TBE-Ng-5ux" secondAttribute="trailing" constant="8" id="Vxb-tc-sFV"/>
-                            <constraint firstItem="0Pr-qP-Ydx" firstAttribute="top" secondItem="xY1-cx-kgh" secondAttribute="bottom" constant="11" id="ayV-p3-Syw"/>
-                            <constraint firstItem="oaX-MT-fhP" firstAttribute="top" secondItem="iDi-zO-JIX" secondAttribute="bottom" constant="8" id="bht-pQ-1tq"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="xY1-cx-kgh" secondAttribute="trailing" constant="-13" id="cFh-FI-yWJ"/>
-                            <constraint firstItem="dYY-Pm-Uh9" firstAttribute="leading" secondItem="BPM-OB-fjO" secondAttribute="leadingMargin" constant="-13" id="fDd-EX-3Nr"/>
-                            <constraint firstItem="Lq1-xZ-MKU" firstAttribute="top" secondItem="TBE-Ng-5ux" secondAttribute="bottom" constant="50" id="gCy-xe-14R"/>
-                            <constraint firstItem="178-8f-bj4" firstAttribute="leading" secondItem="F20-GS-lbt" secondAttribute="trailing" constant="8" id="hHf-fC-qYg"/>
+                            <constraint firstItem="WD6-Qg-uSg" firstAttribute="top" secondItem="HHY-AQ-qAj" secondAttribute="bottom" constant="40" id="b7C-YI-5bh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HHY-AQ-qAj" secondAttribute="trailing" constant="-3" id="ehb-Wd-DXf"/>
+                            <constraint firstItem="HHY-AQ-qAj" firstAttribute="leading" secondItem="BPM-OB-fjO" secondAttribute="leadingMargin" constant="-3" id="iIL-F3-UBz"/>
                             <constraint firstItem="IqF-pz-chf" firstAttribute="leading" secondItem="BPM-OB-fjO" secondAttribute="leadingMargin" constant="-20" id="krG-L0-e3b"/>
-                            <constraint firstItem="wSC-ye-m3q" firstAttribute="top" secondItem="F20-GS-lbt" secondAttribute="bottom" constant="11" id="ldZ-4N-4yf"/>
-                            <constraint firstItem="F20-GS-lbt" firstAttribute="leading" secondItem="BPM-OB-fjO" secondAttribute="leadingMargin" constant="-13" id="o44-WM-vYL"/>
-                            <constraint firstItem="Lq1-xZ-MKU" firstAttribute="leading" secondItem="BPM-OB-fjO" secondAttribute="leadingMargin" constant="103" id="pb0-Qy-9j7"/>
-                            <constraint firstItem="xY1-cx-kgh" firstAttribute="leading" secondItem="178-8f-bj4" secondAttribute="trailing" constant="8" id="qi5-QH-UWN"/>
-                            <constraint firstItem="iDi-zO-JIX" firstAttribute="leading" secondItem="6wD-by-n8j" secondAttribute="trailing" constant="8" id="tpD-pi-sBu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Lq1-xZ-MKU" secondAttribute="trailing" constant="110" id="v0c-Rs-sWn"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="0Pr-qP-Ydx" secondAttribute="trailing" constant="-13" id="vMC-Af-kfQ"/>
-                            <constraint firstItem="6wD-by-n8j" firstAttribute="top" secondItem="178-8f-bj4" secondAttribute="bottom" constant="11" id="w7j-dY-fjv"/>
-                            <constraint firstItem="wSC-ye-m3q" firstAttribute="leading" secondItem="BPM-OB-fjO" secondAttribute="leadingMargin" constant="-13" id="wCs-4I-AGB"/>
-                            <constraint firstItem="F20-GS-lbt" firstAttribute="top" secondItem="IqF-pz-chf" secondAttribute="bottom" constant="-1" id="xum-5T-d8q"/>
-                            <constraint firstItem="Y6B-1e-ml6" firstAttribute="top" secondItem="Lq1-xZ-MKU" secondAttribute="bottom" constant="84" id="z3X-tV-8Qm"/>
+                            <constraint firstItem="HHY-AQ-qAj" firstAttribute="top" secondItem="IqF-pz-chf" secondAttribute="bottom" constant="10" id="rce-pI-d6l"/>
+                            <constraint firstItem="Y6B-1e-ml6" firstAttribute="top" secondItem="mPb-HA-Tbe" secondAttribute="bottom" constant="39" id="wyE-RF-tJX"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="1Bd-qq-qaQ"/>
+                                <exclude reference="1ES-XJ-OeP"/>
+                                <exclude reference="4L8-y1-omb"/>
+                                <exclude reference="FPc-7S-9jm"/>
+                                <exclude reference="ehb-Wd-DXf"/>
+                                <exclude reference="iIL-F3-UBz"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Waiting" id="iQa-YL-kwf">
                         <barButtonItem key="rightBarButtonItem" image="ic_more_vert_white" id="u8E-uk-BQ4">
@@ -968,7 +985,9 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="WD6-Qg-uSg" id="3w8-UE-SGg"/>
                         <outlet property="postWaitingTable" destination="IqF-pz-chf" id="mop-hk-mRA"/>
+                        <segue destination="crf-Oj-WOI" kind="presentation" identifier="ShowResults" id="q2X-f1-nyZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ZL-AJ-Dxi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -987,7 +1006,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dHe-3d-dHy">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dHe-3d-dHy">
                                 <rect key="frame" x="19" y="40" width="336" height="99"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" red="0.99753605769230769" green="0.99753605769230769" blue="0.99753605769230769" alpha="1" colorSpace="calibratedRGB"/>

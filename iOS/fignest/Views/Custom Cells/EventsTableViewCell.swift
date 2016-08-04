@@ -20,7 +20,7 @@ class EventsTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         personIcon.image = personIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        personIcon.tintColor = StyleManager().primaryColor
+        personIcon.tintColor = StyleUtil().primaryColor
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

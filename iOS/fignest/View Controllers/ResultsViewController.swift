@@ -46,12 +46,12 @@ class ResultsViewController: UIViewController {
     //MARK: Generic functions
     
     private func getFinalResult()  {
-        APIRequestHandler().getEventSolution(eventData.id, callback: { ( jsonDict: JSON) -> Void in
+        APIRequestManager().getEventSolution(eventData.id) { jsonDict in
             dispatch_async(dispatch_get_main_queue(), {
                 self.resultData = jsonDict
                 self.resultName.text = jsonDict["name"].stringValue
             })
-        })
+        }
     }
     
     /*

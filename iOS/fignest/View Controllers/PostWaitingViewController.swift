@@ -13,9 +13,11 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     
     //MARK: Properties
     
-    var progressData: [[AnyObject]] = []
+    var userTableData = [[String:AnyObject]]()
+    
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     var eventData: Event?
-    var colors: [UIColor] = StyleManager().progressViewColors
+    var colors: [UIColor] = StyleUtil().progressViewColors
     let userId = NSUserDefaults.standardUserDefaults().stringForKey("ID")!
     
     @IBOutlet var postWaitingTable: UITableView!
@@ -24,6 +26,18 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     
     @IBAction func showOptions(sender: AnyObject) {
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        
+        //for testing
+        
+        let showResultsAction = UIAlertAction(title: "Show Results", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            self.performSegueWithIdentifier("ShowResults", sender: nil)
+        })
+        
+        
+        
         
         let logoutAction = UIAlertAction(title: "Exit Fig", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
@@ -35,13 +49,13 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
             (alert: UIAlertAction!) -> Void in
             //print("Cancelled")
         })
-        
+        optionMenu.addAction(showResultsAction)
         optionMenu.addAction(logoutAction)
         optionMenu.addAction(cancelAction)
         
         
         self.presentViewController(optionMenu, animated: true, completion: nil)
-        optionMenu.view.tintColor = StyleManager().primaryColor
+        optionMenu.view.tintColor = StyleUtil().primaryColor
     }
     
     @IBAction func sendPostWaitingMessage(sender: UIButton) {
@@ -63,20 +77,20 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
             dispatch_async(dispatch_get_main_queue(), {
                 //print("User has finished game!!");
                 
-                var tempData: [[AnyObject]] = []
+                var tempData = [[String:AnyObject]]()
                 
                 for (_,user) in userList {
                     if user["level"].float != nil {
                         if user["hasMessage"].boolValue {
-                            tempData.append([user["facebook"]["id"].stringValue, user["message"].stringValue])
+                            tempData.append(["id": user["facebook"]["id"].stringValue, "message": user["message"].stringValue])
                         } else {
-                            tempData.append([user["facebook"]["id"].stringValue, user["level"].floatValue])
+                            tempData.append(["id": user["facebook"]["id"].stringValue, "progress": user["level"].floatValue])
                         }
                     } else {
-                        tempData.append([user["facebook"]["id"].stringValue, 0.0])
+                        tempData.append(["id": user["facebook"]["id"].stringValue, "progress": 0.0])
                     }
                 }
-                self.progressData = tempData
+                self.userTableData = tempData
                 self.postWaitingTable.reloadData()
             })
         }
@@ -93,39 +107,43 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
     //MARK: Table DataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return progressData.count
+        return userTableData.count
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostWaitingCell", forIndexPath: indexPath) as! PostWaitingCell
         
-        cell.playerImg.kf_setImageWithURL(NSURL(string: ImageUtil().getFBImageURL(progressData[indexPath.row][0] as! String))!, placeholderImage: nil)
+        let user = userTableData[indexPath.row]
         
-        let data = progressData[indexPath.row][1]
+        let URL = NSURL(string: ImageUtil().getFBImageURL(user["id"] as! String))!
+        
+        cell.playerImg.af_setImageWithURL(URL)
         
         
-        if data is Float {
+        if let message = user["message"] {
+            cell.playerProgress.hidden = true
+            cell.messageLabel.hidden = false
+            cell.messageLabel.text = (message as! String)
+        } else {
             cell.playerProgress.hidden = false
             cell.messageLabel.hidden = true
             
-            cell.playerProgress.progress = data as! Float
+            cell.playerProgress.progress = user["progress"] as! Float
             cell.playerProgress.tintColor = colors[indexPath.row]
-            cell.playerProgress.trackTintColor = colors[indexPath.row].colorWithAlphaComponent(0.5)
-            cell.playerProgress.backgroundColor = UIColor.blackColor()
-        } else {
-            cell.playerProgress.hidden = true
-            cell.messageLabel.hidden = false
-            cell.messageLabel.text = data as! String
+            cell.playerProgress.trackTintColor = colors[indexPath.row].colorWithAlphaComponent(0.2)
         }
         
         return cell
+        
     }
     
     //MARK: Override Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator.startAnimating()
         
         setupProgressAllListener()
         setupFinishListener()
@@ -150,11 +168,6 @@ class PostWaitingViewController: UIViewController, UITableViewDataSource, UITabl
             let viewController = segue.destinationViewController as! ResultsViewController
             
             viewController.eventData = self.eventData
-            
         }
-        
     }
-
-    
-    
 }
